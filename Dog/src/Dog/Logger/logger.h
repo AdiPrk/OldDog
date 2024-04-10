@@ -8,25 +8,28 @@ namespace Dog {
 	public:
 		static void Init();
 
-		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
-		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+		inline static std::shared_ptr<spdlog::logger>& GetLogger() { return s_Logger; }
 
 	private:
-		static std::shared_ptr<spdlog::logger> s_CoreLogger;
-		static std::shared_ptr<spdlog::logger> s_ClientLogger;
+		static std::shared_ptr<spdlog::logger> s_Logger;
 	};
 }
 
-// Core log macros
-#define DOG_CORE_TRACE(...)    ::Dog::Logger::GetCoreLogger()->trace(__VA_ARGS__)
-#define DOG_CORE_INFO(...)     ::Dog::Logger::GetCoreLogger()->info(__VA_ARGS__)
-#define DOG_CORE_WARN(...)     ::Dog::Logger::GetCoreLogger()->warn(__VA_ARGS__)
-#define DOG_CORE_ERROR(...)    ::Dog::Logger::GetCoreLogger()->error(__VA_ARGS__)
-#define DOG_CORE_CRITICAL(...) ::Dog::Logger::GetCoreLogger()->critical(__VA_ARGS__)
+// Log & Assert macros
+#ifdef _DEBUG
+#define DOG_ASSERT(x, ...) { if(!(x)) { DOG_CRITICAL("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#define DOG_STATIC_ASSERT(x, ...) static_assert(x, __VA_ARGS__)
 
-// Client log macros
-#define DOG_TRACE(...)         ::Dog::Logger::GetClientLogger()->trace(__VA_ARGS__)
-#define DOG_INFO(...)          ::Dog::Logger::GetClientLogger()->info(__VA_ARGS__)
-#define DOG_WARN(...)          ::Dog::Logger::GetClientLogger()->warn(__VA_ARGS__)
-#define DOG_ERROR(...)         ::Dog::Logger::GetClientLogger()->error(__VA_ARGS__)
-#define DOG_CRITICAL(...)      ::Dog::Logger::GetClientLogger()->critical(__VA_ARGS__)
+#define DOG_TRACE(...)    ::Dog::Logger::GetLogger()->trace(__VA_ARGS__)
+#define DOG_INFO(...)     ::Dog::Logger::GetLogger()->info(__VA_ARGS__)
+#define DOG_WARN(...)     ::Dog::Logger::GetLogger()->warn(__VA_ARGS__)
+#define DOG_ERROR(...)    ::Dog::Logger::GetLogger()->error(__VA_ARGS__)
+#define DOG_CRITICAL(...) ::Dog::Logger::GetLogger()->critical(__VA_ARGS__)
+#else
+#define DOG_ASSERT(...)
+#define DOG_TRACE(...)
+#define DOG_INFO(...)
+#define DOG_WARN(...)
+#define DOG_ERROR(...)
+#define DOG_CRITICAL(...)
+#endif

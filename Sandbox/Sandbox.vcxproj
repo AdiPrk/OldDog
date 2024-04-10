@@ -5,6 +5,14 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -15,6 +23,14 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -39,6 +55,20 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -46,6 +76,20 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -63,20 +107,42 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(ProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(ProjectName)\bin\int\$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(ProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(ProjectName)\bin\int\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <OutDir>$(SolutionDir)$(ProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(ProjectName)\bin\int\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <OutDir>$(SolutionDir)$(ProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(ProjectName)\bin\int\$(Platform)\$(Configuration)\</IntDir>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(ProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
@@ -86,23 +152,33 @@
     <OutDir>$(SolutionDir)$(ProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(ProjectName)\bin\int\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <OutDir>$(SolutionDir)$(ProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(ProjectName)\bin\int\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <OutDir>$(SolutionDir)$(ProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(ProjectName)\bin\int\$(Platform)\$(Configuration)\</IntDir>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(SolutionDir)Dog\bin\int\$(Platform)\$(Configuration)\Dog.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>common_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\PCH.pch</PrecompiledHeaderOutputFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Dog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Dog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.dll" "$(TargetDir)"
@@ -110,6 +186,11 @@ copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.pdb" "$(TargetDir)"
 robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(TargetDir)DogAssets" /MIR
 robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(ProjectDir)DogAssets" /MIR</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
+if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -119,11 +200,47 @@ robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(Proje
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(SolutionDir)Dog\bin\int\$(Platform)\$(Configuration)\Dog.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>common_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\PCH.pch</PrecompiledHeaderOutputFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Dog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.pdb" "$(TargetDir)"
+robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(TargetDir)DogAssets" /MIR
+robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(ProjectDir)DogAssets" /MIR</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
+if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
+</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>common_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\PCH.pch</PrecompiledHeaderOutputFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,7 +248,7 @@ robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(Proje
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Dog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Dog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.dll" "$(TargetDir)"
@@ -139,6 +256,50 @@ copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.pdb" "$(TargetDir)"
 robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(TargetDir)DogAssets" /MIR
 robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(ProjectDir)DogAssets" /MIR</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
+if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
+</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>common_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\PCH.pch</PrecompiledHeaderOutputFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Dog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.pdb" "$(TargetDir)"
+robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(TargetDir)DogAssets" /MIR
+robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(ProjectDir)DogAssets" /MIR</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
+if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -146,17 +307,18 @@ robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(Proje
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>common_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\PCH.pch</PrecompiledHeaderOutputFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Dog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Dog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.dll" "$(TargetDir)"
@@ -164,6 +326,11 @@ copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.pdb" "$(TargetDir)"
 robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(TargetDir)DogAssets" /MIR
 robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(ProjectDir)DogAssets" /MIR</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
+if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -173,19 +340,20 @@ robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(Proje
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>common_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\PCH.pch</PrecompiledHeaderOutputFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Dog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Dog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.dll" "$(TargetDir)"
@@ -193,11 +361,92 @@ copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.pdb" "$(TargetDir)"
 robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(TargetDir)DogAssets" /MIR
 robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(ProjectDir)DogAssets" /MIR</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
+if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
+</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>common_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\PCH.pch</PrecompiledHeaderOutputFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Dog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.pdb" "$(TargetDir)"
+robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(TargetDir)DogAssets" /MIR
+robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(ProjectDir)DogAssets" /MIR</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
+if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
+</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dog\src;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>common_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\PCH.pch</PrecompiledHeaderOutputFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Dog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\Dog.pdb" "$(TargetDir)"
+robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(TargetDir)DogAssets" /MIR
+robocopy "$(SolutionDir)Dog\bin\$(Platform)\$(Configuration)\DogAssets" "$(ProjectDir)DogAssets" /MIR</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
+if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Use</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

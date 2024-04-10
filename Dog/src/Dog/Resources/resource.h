@@ -8,6 +8,8 @@ namespace Dog {
 	public:
 		virtual ~Resource() {};
 
+		static const char* GetTypeName() { return "Resource"; }
+
 		// Must be implemented by every resource.
 		// Loads the resource from a given path.
 		virtual void load(const std::string& path) = 0;

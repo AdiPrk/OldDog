@@ -23,6 +23,7 @@ namespace Dog {
 		void SetKeyCallback(GLFWkeyfun callback);
 		void SetFramebufferSizeCallback(GLFWframebuffersizefun callback);
 
+		const char* GetTitle();
 		void SetTitle(const char* title);
 
 		constexpr static double targetFrameLength = 1.0 / 120.0;

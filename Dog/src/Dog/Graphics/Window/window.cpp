@@ -217,6 +217,10 @@ namespace Dog {
         glfwSetFramebufferSizeCallback(window, callback);
     }
 
+    const char* Window::GetTitle() {
+		return glfwGetWindowTitle(window);
+	}
+
     void Window::SetTitle(const char* title) {
         glfwSetWindowTitle(window, title);
     }

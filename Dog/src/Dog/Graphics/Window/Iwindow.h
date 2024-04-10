@@ -12,6 +12,7 @@ namespace Dog {
 		virtual bool IsRunning() = 0;
 		virtual void SetFullscreen(bool fullScreen = true) = 0;
 		GLFWwindow* GetWindowHandle() { return window; }
+		virtual const char* GetTitle() = 0;
 		virtual void SetTitle(const char* title) = 0;
 		virtual unsigned int GetWidth() = 0;
 		virtual unsigned int GetHeight() = 0;

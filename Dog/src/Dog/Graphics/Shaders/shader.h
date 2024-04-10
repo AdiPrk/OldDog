@@ -11,6 +11,8 @@ namespace Dog {
     class DOG_API Shader : public Resource
     {
     public:
+        static const char* GetTypeName() { return "Shader"; }
+
         void load(const std::string& path) override;
         void save(const std::string& path) override {};
         

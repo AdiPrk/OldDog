@@ -14,21 +14,12 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+// Common PCH
+#include <common_pch.h>
+
 // STL
-#include <iostream>
-#include <string>
 #include <chrono>
 #include <thread>
-#include <algorithm>
-#include <math.h>
-#include <unordered_map>
-#include <memory>
-#include <functional>
-
-// GLM
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 // spdlog
 #include "spdlog/spdlog.h"

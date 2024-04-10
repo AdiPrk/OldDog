@@ -7,6 +7,10 @@
 #include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
 #include "Dog/Graphics/Renderer/Renderer3D/DeferredRenderer.h"
 #include "Dog/Graphics/Camera/camera2d.h"
+#include "Dog/Input/input.h"
+
+#include "Dog/Scene/sceneManager.h"
+#include "Dog/Scene/scene.h"
 
 namespace Dog {
 
@@ -23,13 +27,13 @@ namespace Dog {
 
 		Shader::SetupUBO();
 
+		Input::Init(window->GetWindowHandle());
+
 		renderer2D->initialize();
 		deferredRenderer->initialize();
 
-		auto sp = resources->Load("Shader", "DogAssets/Shaders/defaultsprite");
-
-
-		renderer2D->SetShader(*std::dynamic_pointer_cast<Shader>(sp));
+		std::shared_ptr<Shader> sp = resources->Load<Shader>("DogAssets/Shaders/defaultsprite");
+		renderer2D->SetShader(*sp);
 
 		camera->UpdateUniforms();
 	}
@@ -46,18 +50,40 @@ namespace Dog {
 	{
 	}
 
-	int Engine::Run()
+	int Engine::Run(Scene* startScene)
 	{
-		auto rs = resources->Load("Texture2D", "DogAssets/Images/square.png");
-		
+		SceneManager::Init(startScene);
+
+		auto texture = resources->Load<Texture2D>("DogAssets/Images/square.png");
+
+		/* Loop until the user closes the window */
+		const float fixedTimeStep = 1.0f / 60.0f;
+		float deltaTime = 0.0f;
+		float lastTime = 0.0f;
+		float accumulator = 0.0f;
+				
 		while (running && !glfwWindowShouldClose(window->GetWindowHandle())) {
-			glfwPollEvents();
-			if (glfwGetKey(window->GetWindowHandle(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+
+			Input::Update();
+			if (Input::isKeyDown(Key::ESCAPE)) {
 				running = false;
+				break;
 			}
 
+			float currentTime = (float)glfwGetTime();
+			deltaTime = std::min(currentTime - lastTime, 0.1f); // 10fps min
+			accumulator += deltaTime;
+			lastTime = currentTime;
 
-			std::shared_ptr<Texture2D> texture = std::dynamic_pointer_cast<Texture2D>(rs);
+			std::string curTitle = window->GetTitle();
+			// cut so it only keeps until it finds "- FPS: "
+			curTitle = curTitle.substr(0, curTitle.find(" - FPS: "));
+
+			window->SetTitle((curTitle + " - FPS: " + std::to_string(1.0f / deltaTime).c_str()).c_str());
+
+			SceneManager::Update(deltaTime);
+
+			SceneManager::Render(deltaTime);
 
 			renderer2D->beginFrame();
 
@@ -66,9 +92,9 @@ namespace Dog {
 			renderer2D->endFrame();
 
 			glfwSwapBuffers(window->GetWindowHandle());
-
 		}
 
+		SceneManager::Exit();
 
 		return 0;
 	}

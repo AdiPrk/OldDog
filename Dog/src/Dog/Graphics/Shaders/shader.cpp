@@ -15,7 +15,7 @@ namespace Dog {
 
     void Shader::load(const std::string& path)
     {
-        std::cout << "Loading Shader: " << path << std::endl;
+        DOG_INFO("Loading Shader: {0}", path);
 
         std::string vShaderFile = path + ".vert";
         std::string fShaderFile = path + ".frag";
@@ -24,10 +24,12 @@ namespace Dog {
         std::ifstream vFile(vShaderFile);
         std::ifstream fFile(fShaderFile);
         if (!vFile.good() || !fFile.good()) {
-            if (!vFile.good())
-                DOG_CORE_CRITICAL("Shader files not found: {0}", vShaderFile);
-            if (!fFile.good())
-				DOG_CORE_CRITICAL("Shader files not found: {0}", fShaderFile);
+            if (!vFile.good()) {
+                DOG_CRITICAL("Shader files not found: {0}", vShaderFile);
+            }
+            if (!fFile.good()) {
+                DOG_CRITICAL("Shader files not found: {0}", fShaderFile);
+            }
             return;
 		}
 
@@ -201,8 +203,8 @@ namespace Dog {
                     << infoLog << "\n -- --------------------------------------------------- -- "
                     << std::endl;
 
-                DOG_CORE_CRITICAL("Shader Compile-time error: Type: {0}", type);
-                DOG_CORE_CRITICAL("{0}", infoLog);
+                DOG_CRITICAL("Shader Compile-time error: Type: {0}", type);
+                DOG_CRITICAL("{0}", infoLog);
             }
         }
         else
@@ -215,8 +217,8 @@ namespace Dog {
                     << infoLog << "\n -- --------------------------------------------------- -- "
                     << std::endl;
 
-                DOG_CORE_CRITICAL("Shader Link-time error: Type: {0}", type);
-                DOG_CORE_CRITICAL("{0}", infoLog);
+                DOG_CRITICAL("Shader Link-time error: Type: {0}", type);
+                DOG_CRITICAL("{0}", infoLog);
             }
         }
     }

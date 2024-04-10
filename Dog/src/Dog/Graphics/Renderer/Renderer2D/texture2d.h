@@ -9,6 +9,7 @@ namespace Dog {
     class DOG_API Texture2D : public Resource
     {
     public:
+        static const char* GetTypeName() { return "Texture2D"; }
         void load(const std::string& path) override;
 
         // holds the ID of the texture object, used for all texture operations to reference to this particular texture

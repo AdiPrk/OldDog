@@ -6,13 +6,15 @@
 #include "Dog/Graphics/Shaders/shader.h"
 #include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
 
+#define REGISTER_TYPE(type) factory->registerType<type>(type::GetTypeName())
+
 namespace Dog {
 
 	Resources::Resources()
 		: factory(new ResourceFactory)
 	{
-		factory->registerType<Shader>("Shader");
-		factory->registerType<Texture2D>("Texture2D");
+		REGISTER_TYPE(Shader);
+		REGISTER_TYPE(Texture2D);
 	}
 
 	Resources::~Resources()
@@ -22,7 +24,7 @@ namespace Dog {
 
 	std::shared_ptr<Resource> Resources::Load(const std::string& type, const std::string& filePath)
 	{
-		DOG_CORE_TRACE("Loading resource: {}", "'" + type + "' from " + filePath);
+		DOG_TRACE("Loading resource: {}", "'" + type + "' from " + filePath);
 
 		auto resource = factory->create(type);
 		if (resource) {
@@ -31,10 +33,8 @@ namespace Dog {
 		}
 		else {
 			// also include file and line number that the log came from.
-			DOG_CORE_CRITICAL("Failed to load resource: {}", filePath);
-			DOG_CORE_CRITICAL("From file: {}", __FILE__);
-			DOG_CORE_CRITICAL("From line: {}", __LINE__);
-			DOG_CORE_INFO("*Sad Woof*");
+			DOG_INFO("*Sad Woof*");
+			DOG_ASSERT(false, "Failed to load resource: {}", filePath);
 		}
 		return resource;
 	}

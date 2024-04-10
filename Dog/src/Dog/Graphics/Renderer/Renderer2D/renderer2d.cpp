@@ -4,8 +4,6 @@
 
 namespace Dog {
 
-    Shader Renderer2D::activeShader;
-
 	Renderer2D::~Renderer2D()
 	{
 	}
@@ -58,7 +56,41 @@ namespace Dog {
 
 	}
 
-    void Renderer2D::DrawSprite(Texture2D& texture, glm::vec2 position, glm::vec2 size, float rotation, glm::vec4 color, glm::vec2 repetition, float depth)
+    void Renderer2D::DrawSprite(const Texture2D& texture, const glm::mat4& transform, glm::vec4 color, glm::vec2 repetition, float depth) const
+    {
+        Shader::GetActiveShader().SetMatrix4("model", transform);
+        //Renderer::GetActiveShader().SetFloat("depth", RandomFloat());
+
+        // render textured quad
+        Shader::GetActiveShader().SetVector4f("spriteColor", color);
+
+        if (texture.IsSpriteSheet) {
+            static unsigned index = texture.Index;
+            if (texture.Index != index) {
+                index = texture.Index;
+                Shader::GetActiveShader().SetUnsigned("spriteIndex", index);
+            }
+        }
+
+        if ((repetition.x == 0 || repetition.y == 0)) {
+            Shader::GetActiveShader().SetVector2f("repetition", 1.0f, 1.0f);
+        }
+        else {
+            glm::vec2 size = {
+                glm::length(glm::vec3(transform[0])),
+                glm::length(glm::vec3(transform[1]))
+            };
+            Shader::GetActiveShader().SetVector2f("repetition", size.x / repetition.x, size.y / repetition.y);
+        }
+
+        // Set the texture handle as a uniform
+        Shader::GetActiveShader().SetUniformHandle("textureHandle", texture.textureHandle);
+
+        glBindVertexArray(this->quadVAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    }
+
+    void Renderer2D::DrawSprite(const Texture2D& texture, glm::vec2 position, glm::vec2 size, float rotation, glm::vec4 color, glm::vec2 repetition, float depth) const
     {
         // prepare transformations
         glm::mat4 model = glm::mat4(1.0f);
@@ -68,32 +100,7 @@ namespace Dog {
         model = glm::scale(model, glm::vec3(size, 1.0f)); // scale by size
         //model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
 
-        Renderer2D::GetActiveShader().SetMatrix4("model", model);
-        //Renderer::GetActiveShader().SetFloat("depth", RandomFloat());
-
-        // render textured quad
-        Renderer2D::GetActiveShader().SetVector4f("spriteColor", color);
-
-        if (texture.IsSpriteSheet) {
-            static unsigned index = texture.Index;
-            if (texture.Index != index) {
-                index = texture.Index;
-                Renderer2D::GetActiveShader().SetUnsigned("spriteIndex", index);
-            }
-        }
-
-        if ((repetition.x == 0 || repetition.y == 0)) {
-            Renderer2D::GetActiveShader().SetVector2f("repetition", 1.0f, 1.0f);
-        }
-        else {
-            Renderer2D::GetActiveShader().SetVector2f("repetition", size.x / repetition.x, size.y / repetition.y);
-        }
-
-        // Set the texture handle as a uniform
-        Renderer2D::GetActiveShader().SetUniformHandle("textureHandle", texture.textureHandle);
-
-        glBindVertexArray(this->quadVAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        DrawSprite(texture, model, color, repetition, depth);
     }
 
 }

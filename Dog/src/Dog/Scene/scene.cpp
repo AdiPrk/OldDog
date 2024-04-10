@@ -3,8 +3,10 @@
 #include "Dog/Logger/logger.h"
 
 #include "Entity/entity.h"
-#include "Entity/common.h"
+#include "Entity/components.h"
 #include "sceneData.h"
+#include "Dog/engine.h"
+#include "Dog/Graphics/Renderer/Renderer2D/renderer2d.h"
 
 #define DOG_SCENE_LOGGING 0
 
@@ -27,53 +29,53 @@ namespace Dog {
 	{
 	}
 
-	void Scene::AddEntity(Entity* entity)
+	Entity Scene::CreateEntity()
 	{
 		Entity newEnt(this);
-		//entity->AddComponent(Component::Tag);
 
-		newEnt.AddComponent<TagComponent>();
+		TagComponent& tg = newEnt.AddComponent<TagComponent>();
+		TransformComponent& tr = newEnt.AddComponent<TransformComponent>();
+		SpriteComponent& sc = newEnt.AddComponent<SpriteComponent>();
+
+		return newEnt;
 	}
-
-	//void Scene::AddComponent(Entity* entity, const Component& component)
-	//{
-	//	auto it = sceneData->componentAdders.find(component);
-	//	if (it != sceneData->componentAdders.end())
-	//	{
-	//		// Call the add respective component function.
-	//		it->second(entity);
-	//	}
-	//	else
-	//	{
-	//		// Component not found!
-	//	}
-	//}
 
 	void Scene::InternalInit()
 	{
 #if DOG_SCENE_LOGGING
-		DOG_INFO("Scene {0} initialized.", sceneName);
+		DOG_INFO("Scene {0} init.", sceneName);
 #endif
 	}
 
 	void Scene::InternalUpdate(float dt)
 	{
 #if DOG_SCENE_LOGGING
-		DOG_INFO("Scene {0} updated.", sceneName);
+		DOG_INFO("Scene {0} Update.", sceneName);
 #endif
 	}
 
 	void Scene::InternalRender(float dt)
 	{
 #if DOG_SCENE_LOGGING
-		DOG_INFO("Scene {0} rendered.", sceneName);
+		DOG_INFO("Scene {0} Render.", sceneName);
 #endif
+
+		std::shared_ptr<Renderer2D>& renderer2D = Engine::Get().GetRenderer2D();
+
+		renderer2D->beginFrame();
+
+		sceneData->registry.view<TransformComponent, SpriteComponent>().each
+		([renderer2D](const auto& entity, const TransformComponent& transform, const SpriteComponent& sprite) {
+			renderer2D->DrawSprite(sprite.Texture, transform.GetTransform(), sprite.Color);
+		});
+
+		renderer2D->endFrame();
 	}
 
 	void Scene::InternalExit()
 	{
 #if DOG_SCENE_LOGGING
-		DOG_INFO("Scene {0} exited.", sceneName);
+		DOG_INFO("Scene {0} exit.", sceneName);
 #endif
 	}
 

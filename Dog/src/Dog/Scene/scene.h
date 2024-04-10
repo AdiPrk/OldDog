@@ -18,7 +18,7 @@ namespace Dog {
 
 		const char* GetName() const { return sceneName; }
 
-		void AddEntity(class Entity* entity);
+		class Entity CreateEntity();
 
 	private:
 

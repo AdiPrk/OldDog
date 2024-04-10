@@ -19,11 +19,11 @@ namespace Dog {
 	{
 		Logger::Init();
 
-		window = std::make_unique<Window>(width, height, name);
-		resources = std::make_unique<Resources>();
-		renderer2D = std::make_unique<Renderer2D>();
-		deferredRenderer = std::make_unique<DeferredRenderer>();
-		camera = std::make_unique<Camera2D>(width, height);
+		window = std::make_shared<Window>(width, height, name);
+		resources = std::make_shared<Resources>();
+		renderer2D = std::make_shared<Renderer2D>();
+		deferredRenderer = std::make_shared<DeferredRenderer>();
+		camera = std::make_shared<Camera2D>(width, height);
 
 		Shader::SetupUBO();
 
@@ -33,9 +33,14 @@ namespace Dog {
 		deferredRenderer->initialize();
 
 		std::shared_ptr<Shader> sp = resources->Load<Shader>("DogAssets/Shaders/defaultsprite");
-		renderer2D->SetShader(*sp);
+		Shader::SetShader(sp);
+
+		resources->Load("Texture2D", "DogAssets/Images/square.png");
 
 		camera->UpdateUniforms();
+
+
+
 	}
 
 	Engine::~Engine()
@@ -75,21 +80,14 @@ namespace Dog {
 			accumulator += deltaTime;
 			lastTime = currentTime;
 
-			std::string curTitle = window->GetTitle();
 			// cut so it only keeps until it finds "- FPS: "
+			std::string curTitle = window->GetTitle();
 			curTitle = curTitle.substr(0, curTitle.find(" - FPS: "));
-
-			window->SetTitle((curTitle + " - FPS: " + std::to_string(1.0f / deltaTime).c_str()).c_str());
+			window->SetTitle((curTitle + " - FPS: " + std::to_string(1.0f / deltaTime)).c_str());
 
 			SceneManager::Update(deltaTime);
 
 			SceneManager::Render(deltaTime);
-
-			renderer2D->beginFrame();
-
-			renderer2D->DrawSprite(*texture, glm::vec2(0.0f, 0.0f), glm::vec2(100.0f, 100.0f));
-			
-			renderer2D->endFrame();
 
 			glfwSwapBuffers(window->GetWindowHandle());
 		}

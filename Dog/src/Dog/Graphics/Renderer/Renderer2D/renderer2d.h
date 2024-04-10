@@ -18,13 +18,11 @@ namespace Dog {
 		virtual void beginFrame() override;
 		virtual void endFrame() override;
 
-		void DrawSprite(Texture2D& texture, glm::vec2 position, glm::vec2 size = glm::vec2(10.0f, 10.0f), float rotation = 0.0f, glm::vec4 color = glm::vec4(1.0f), glm::vec2 repetition = glm::vec2(0), float depth = 0);
+		void DrawSprite(const Texture2D& texture, const glm::mat4& transform, glm::vec4 color = glm::vec4(1.0f), glm::vec2 repetition = glm::vec2(0), float depth = 0) const;
+		void DrawSprite(const Texture2D& texture, glm::vec2 position, glm::vec2 size = glm::vec2(10.0f, 10.0f), float rotation = 0.0f, glm::vec4 color = glm::vec4(1.0f), glm::vec2 repetition = glm::vec2(0), float depth = 0) const;
 
-		static void SetShader(Shader& shader) { activeShader = shader.Use(); }
-		static Shader& GetActiveShader() { return activeShader; }
 	private:
 		unsigned int quadVAO = 0;
-		static Shader activeShader;
 	};
 
 } // namespace Dog

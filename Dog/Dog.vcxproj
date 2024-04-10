@@ -184,7 +184,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DOG_DEBUG;DOG_EXPORTS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(ProjectDir)externals\imgui;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
@@ -220,7 +220,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DOG_EXPORTS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(ProjectDir)externals\imgui;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
@@ -258,7 +258,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DOG_EXPORTS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(ProjectDir)externals\imgui;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
@@ -296,7 +296,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DOG_EXPORTS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(ProjectDir)externals\imgui;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
@@ -336,7 +336,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DOG_DEBUG;DOG_EXPORTS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(ProjectDir)externals\imgui;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
@@ -372,7 +372,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DOG_EXPORTS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(ProjectDir)externals\imgui;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
@@ -410,7 +410,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DOG_EXPORTS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(ProjectDir)externals\imgui;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
@@ -448,7 +448,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DOG_EXPORTS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(ProjectDir)externals\imgui;$(SolutionDir)PCH;$(SolutionDir)SharedDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
@@ -496,7 +496,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
     <ClCompile Include="src\Dog\Resources\resource.cpp" />
     <ClCompile Include="src\Dog\Resources\resourceFactory.cpp" />
     <ClCompile Include="src\Dog\Resources\resources.cpp" />
-    <ClCompile Include="src\Dog\Scene\Entity\common.cpp" />
+    <ClCompile Include="src\Dog\Scene\Entity\components.cpp" />
     <ClCompile Include="src\Dog\Scene\Entity\entity.cpp" />
     <ClCompile Include="src\Dog\Scene\scene.cpp" />
     <ClCompile Include="src\Dog\Scene\sceneData.cpp" />
@@ -539,8 +539,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
     <ClInclude Include="src\Dog\Resources\resource.h" />
     <ClInclude Include="src\Dog\Resources\resourceFactory.h" />
     <ClInclude Include="src\Dog\Resources\resources.h" />
-    <ClInclude Include="src\Dog\Scene\Entity\common.h" />
-    <ClInclude Include="src\Dog\Scene\Entity\component.h" />
+    <ClInclude Include="src\Dog\Scene\Entity\components.h" />
     <ClInclude Include="src\Dog\Scene\Entity\entity.h" />
     <ClInclude Include="src\Dog\Scene\Entity\instantiation.h" />
     <ClInclude Include="src\Dog\Scene\scene.h" />

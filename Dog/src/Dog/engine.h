@@ -20,6 +20,12 @@ namespace Dog {
 		Engine(unsigned int width, unsigned int height, const char* name);
 		~Engine();
 
+		static Engine& Get(unsigned int width = 1280, unsigned int height = 720, const char* name = "Dog Engine")
+		{
+			static Engine instance(width, height, name);
+			return instance;
+		}
+
 		Engine(const Engine&) = delete;
 		Engine& operator=(const Engine&) = delete;
 
@@ -28,15 +34,19 @@ namespace Dog {
 
 		int Run(Scene* startScene);
 
-		IWindow* GetWindow() { return window.get(); }
+		std::shared_ptr<IWindow>& GetWindow() { return window; }
+		std::shared_ptr<Resources>& GetResources() { return resources; }
+		std::shared_ptr<Renderer2D>& GetRenderer2D() { return renderer2D; }
+		std::shared_ptr<DeferredRenderer>& GetDeferredRenderer() { return deferredRenderer; }
+		std::shared_ptr<Camera2D>& GetCamera() { return camera; }
 
 	private:
 		bool running;
-		std::unique_ptr<IWindow> window;
-		std::unique_ptr<Resources> resources;
-		std::unique_ptr<Renderer2D> renderer2D;
-		std::unique_ptr<DeferredRenderer> deferredRenderer;
-		std::unique_ptr<Camera2D> camera;
+		std::shared_ptr<IWindow> window;
+		std::shared_ptr<Resources> resources;
+		std::shared_ptr<Renderer2D> renderer2D;
+		std::shared_ptr<DeferredRenderer> deferredRenderer;
+		std::shared_ptr<Camera2D> camera;
 	};
 
 }

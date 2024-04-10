@@ -10,6 +10,7 @@ namespace Dog {
     class DOG_API Entity {
     public:
         Entity(Scene* scene);
+        Entity(const Entity& other);
         ~Entity();
 
         template<typename T, typename... Args>

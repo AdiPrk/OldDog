@@ -59,10 +59,15 @@ namespace Dog {
         static void SetTimeUBO(float time);
         void BindUBO(const std::string& blockName, unsigned int bindingPoint);
 
+        static void SetShader(std::shared_ptr<Shader> shader) { activeShader = shader->Use(); }
+        static void SetShader(Shader& shader) { activeShader = shader.Use(); }
+        static Shader& GetActiveShader() { return activeShader; }
     private:
         // checks if compilation or linking failed and if so, print the error logs
         void checkCompileErrors(unsigned int object, std::string type);
         void loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile);
+
+        static Shader activeShader;
     };
 
 }

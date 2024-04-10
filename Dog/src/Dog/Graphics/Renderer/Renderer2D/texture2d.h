@@ -29,10 +29,12 @@ namespace Dog {
         unsigned int Wrap_T; // wrapping mode on T axis
         unsigned int Filter_Min; // filtering mode if texture pixels < screen pixels
         unsigned int Filter_Max; // filtering mode if texture pixels > screen pixels
-        GLuint64 textureHandle; // texture handle for bindless textures
+        unsigned long long textureHandle; // texture handle for bindless textures
 
         // constructor (sets default texture modes)
         Texture2D();
+        Texture2D(const Texture2D& other) = default;
+        Texture2D(std::shared_ptr<Texture2D> other) : Texture2D(*other) {}
         ~Texture2D() {};
         // generates texture from image data
         void Generate(unsigned int width, unsigned int height, unsigned char* data, unsigned int numSprites = 1);
@@ -40,7 +42,7 @@ namespace Dog {
         void Bind() const;
 
         // keeps track of the currently bound texture ID
-        static GLuint CurrentTextureID;
+        static unsigned int CurrentTextureID;
     };
 
 }

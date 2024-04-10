@@ -1,4 +1,4 @@
-#include "common.h"
+#include "components.h"
 
 namespace Dog {
 
@@ -11,5 +11,7 @@ namespace Dog {
     
 // Explicitly instantiate all components
     INSTANTIATE_COMPONENT(TagComponent)
+    INSTANTIATE_COMPONENT(TransformComponent)
+    INSTANTIATE_COMPONENT(SpriteComponent)
 
 }

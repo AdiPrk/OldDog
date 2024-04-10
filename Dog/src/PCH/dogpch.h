@@ -25,5 +25,22 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 
+// ImGui
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_opengl3.h"
+#include "imgui/imgui_impl_win32.h"
+#include "imgui/imgui_stdlib.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_node_editor.h"
+
+// Imgui Gizmos
+#include "imgui/GraphEditor.h"
+#include "imgui/ImCurveEdit.h"
+#include "imgui/ImGradient.h"
+#include "imgui/ImGuizmo.h"
+#include "imgui/ImSequencer.h"
+#include "imgui/ImZoomSlider.h"
+
 // Dog headers:
 #include "Dog/Math/rect.h"

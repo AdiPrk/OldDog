@@ -29,20 +29,11 @@ public:
 };
 
 int main() {
-	Dog::Engine Engine(1280, 720, "Woof");
+	Dog::Engine& Engine = Engine::Get(1280, 720, "Woof");
 
 	Sandbox sandbox;
-	Entity entity(&sandbox);
 
-	std::vector<int> asdf = { 1, 9, 4, 7, 5 };
-	std::sort(asdf.begin(), asdf.end());
-
-	glm::vec4 omg(1.0f);
-
-	entity.AddComponent<TagComponent>();
-	entity.GetComponent<TagComponent>().Tag = "noway";
-
-	std::string how;
+	Entity se = sandbox.CreateEntity();
 
 	return Engine.Run(&sandbox);
 }

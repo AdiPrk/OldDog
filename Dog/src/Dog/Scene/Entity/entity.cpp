@@ -2,7 +2,6 @@
 #include "entt/entt.hpp"
 
 #include "entity.h"
-#include "common.h"
 
 #include "../scene.h"
 #include "../sceneData.h"
@@ -23,6 +22,11 @@ namespace Dog {
 
     Entity::Entity(Scene* scene)
         : impl(std::make_unique<EntityImpl>(scene))
+    {
+    }
+
+    Entity::Entity(const Entity& other) 
+        : impl(std::make_unique<EntityImpl>(other.impl->scene))
     {
     }
 

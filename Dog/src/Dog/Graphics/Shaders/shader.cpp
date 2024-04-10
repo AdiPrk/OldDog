@@ -13,6 +13,8 @@ namespace Dog {
     GLuint Shader::uboTimeBindingPoint = 1;
     int Shader::CurrentID = 0;
 
+    Shader Shader::activeShader;
+
     void Shader::load(const std::string& path)
     {
         DOG_INFO("Loading Shader: {0}", path);

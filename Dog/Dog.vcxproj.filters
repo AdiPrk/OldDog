@@ -69,10 +69,10 @@
     <ClCompile Include="src\Dog\Scene\Entity\entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Scene\Entity\common.cpp">
+    <ClCompile Include="src\Dog\Scene\sceneData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Scene\sceneData.cpp">
+    <ClCompile Include="src\Dog\Scene\Entity\components.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,10 +143,7 @@
     <ClInclude Include="src\Dog\Scene\Entity\entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Scene\Entity\common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Dog\Scene\Entity\component.h">
+    <ClInclude Include="src\Dog\Scene\Entity\components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dog\Scene\sceneData.h">

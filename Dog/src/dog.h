@@ -8,6 +8,6 @@
 #include "Dog/Input/input.h"
 #include "Dog/Scene/scene.h"
 #include "Dog/Scene/Entity/entity.h"
-#include "Dog/Scene/Entity/common.h"
+#include "Dog/Scene/Entity/components.h"
 
 #endif // DOG_H

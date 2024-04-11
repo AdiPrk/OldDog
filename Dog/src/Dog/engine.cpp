@@ -87,7 +87,7 @@ namespace Dog {
 			accumulator += deltaTime;
 			lastTime = currentTime;
 
-			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM1));
+			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM2));
 			window->UpdateTitle();
 
 			SceneManager::Update(deltaTime);

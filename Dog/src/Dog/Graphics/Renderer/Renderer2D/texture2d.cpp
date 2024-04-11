@@ -76,6 +76,11 @@ namespace Dog {
         glGenTextures(1, &this->ID);
     }
 
+    Texture2D::~Texture2D()
+	{
+		glDeleteTextures(1, &this->ID);
+	}
+
     void Texture2D::Generate(unsigned int width, unsigned int height, unsigned char* data, unsigned int numSprites)
     {
         this->Width = width;

@@ -35,7 +35,7 @@ namespace Dog {
         Texture2D();
         Texture2D(const Texture2D& other) = default;
         Texture2D(std::shared_ptr<Texture2D> other) : Texture2D(*other) {}
-        ~Texture2D() {};
+        ~Texture2D();
         // generates texture from image data
         void Generate(unsigned int width, unsigned int height, unsigned char* data, unsigned int numSprites = 1);
         // binds the texture as the current active GL_TEXTURE_2D texture object

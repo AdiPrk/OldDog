@@ -295,8 +295,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DogAssets\Shaders\defaultsprite.frag" />
-    <None Include="DogAssets\Shaders\defaultsprite.vert" />
     <None Include="externals\imgui\imgui_bezier_math.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -305,6 +303,12 @@
     </None>
     <None Include="externals\imgui\imgui_node_editor_internal.inl">
       <Filter>Header Files</Filter>
+    </None>
+    <None Include="DogAssets\Shaders\defaultsprite.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="DogAssets\Shaders\defaultsprite.frag">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

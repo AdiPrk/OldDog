@@ -12,7 +12,11 @@ namespace Dog {
 
 		bool IsRunning();
 
+		void UpdateTitle();
+
 		void ToggleFullscreen();
+
+		void SetVSync(bool enabled = true);
 
 		void SwapBuffers();
 		void LimitFPS();

@@ -44,6 +44,14 @@ namespace Dog {
 
 	void Input::keyPressCallback(GLFWwindow* windowPointer, int key, int scanCode, int action, int mod)
 	{
+		// check if imgui is capturing the keyboard
+		if (ImGui::GetIO().WantCaptureKeyboard) {
+#if DO_INPUT_LOGGING
+			DOG_INFO("Key {0} Ignored - ImGui is capturing it.", key);
+#endif
+			return;
+		}
+
 		if (key < 0 || key > static_cast<int>(Key::LAST))
 			return;
 
@@ -65,6 +73,14 @@ namespace Dog {
 
 	void Input::mousePressCallback(GLFWwindow* windowPointer, int mouseButton, int action, int mod)
 	{
+		// check if imgui is capturing the mouse
+		if (ImGui::GetIO().WantCaptureMouse) {
+#if DO_INPUT_LOGGING
+			DOG_INFO("Mouse Press {0} Ignored - ImGui is capturing it.", mouseButton);
+#endif
+			return;
+		}
+
 		if (mouseButton < 0 || mouseButton > static_cast<int>(Mouse::LAST))
 			return;
 
@@ -86,6 +102,13 @@ namespace Dog {
 
 	void Input::mouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 	{
+		if (ImGui::GetIO().WantCaptureMouse) {
+#if DO_INPUT_LOGGING
+			DOG_INFO("Mouse Scroll Ignored - ImGui is capturing it.");
+#endif
+			return;
+		}
+
 		degree += float(yoffset);
 #if DO_INPUT_LOGGING
 		DOG_INFO("Mouse Scrolled: {0}", degree);

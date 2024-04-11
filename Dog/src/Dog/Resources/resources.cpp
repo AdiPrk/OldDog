@@ -3,7 +3,7 @@
 #include "resourceFactory.h"
 #include "resource.h"
 #include "Dog/Logger/logger.h"
-#include "Dog/Graphics/Shaders/shader.h"
+#include "Dog/Graphics/Renderer/Shaders/shader.h"
 #include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
 
 #define REGISTER_TYPE(type) factory->registerType<type>(type::GetTypeName())

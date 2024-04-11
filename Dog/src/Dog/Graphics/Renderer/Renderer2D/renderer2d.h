@@ -2,7 +2,7 @@
 
 #include "Dog/core.h"
 #include "../IRenderer.h"
-#include "Dog/Graphics/Shaders/shader.h"
+#include "Dog/Graphics/Renderer/Shaders/shader.h"
 
 namespace Dog {
 

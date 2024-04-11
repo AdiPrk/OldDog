@@ -13,6 +13,7 @@
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 
 // Common PCH
 #include <common_pch.h>
@@ -27,20 +28,20 @@
 
 // ImGui
 #define IMGUI_DEFINE_MATH_OPERATORS
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_opengl3.h"
-#include "imgui/imgui_impl_win32.h"
-#include "imgui/imgui_stdlib.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_node_editor.h"
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_win32.h"
+#include "imgui_stdlib.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_node_editor.h"
 
 // Imgui Gizmos
-#include "imgui/GraphEditor.h"
-#include "imgui/ImCurveEdit.h"
-#include "imgui/ImGradient.h"
-#include "imgui/ImGuizmo.h"
-#include "imgui/ImSequencer.h"
-#include "imgui/ImZoomSlider.h"
+#include "GraphEditor.h"
+#include "ImCurveEdit.h"
+#include "ImGradient.h"
+#include "ImGuizmo.h"
+#include "ImSequencer.h"
+#include "ImZoomSlider.h"
 
 // Dog headers:
 #include "Dog/Math/rect.h"

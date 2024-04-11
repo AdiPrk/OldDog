@@ -18,7 +18,6 @@
 # include <imgui.h>
 # include <cstdint> // std::uintXX_t
 # include <utility> // std::move
-#include <rttr/registration_friend.h>
 
 
 //------------------------------------------------------------------------------
@@ -459,9 +458,6 @@ struct SafeType
 
 private:
     T m_Value;
-
-
-    RTTR_REGISTRATION_FRIEND
 };
 
 

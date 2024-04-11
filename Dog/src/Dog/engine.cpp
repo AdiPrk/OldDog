@@ -6,11 +6,13 @@
 #include "Dog/Graphics/Renderer/Renderer2D/renderer2d.h"
 #include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
 #include "Dog/Graphics/Renderer/Renderer3D/DeferredRenderer.h"
-#include "Dog/Graphics/Camera/camera2d.h"
+#include "Dog/Graphics/Renderer/Camera/camera2d.h"
 #include "Dog/Input/input.h"
 
 #include "Dog/Scene/sceneManager.h"
 #include "Dog/Scene/scene.h"
+
+#include "Dog/Graphics/Editor/editor.h"
 
 namespace Dog {
 
@@ -24,6 +26,7 @@ namespace Dog {
 		renderer2D = std::make_shared<Renderer2D>();
 		deferredRenderer = std::make_shared<DeferredRenderer>();
 		camera = std::make_shared<Camera2D>(width, height);
+		editor = std::make_shared<Editor>();
 
 		Shader::SetupUBO();
 
@@ -39,8 +42,10 @@ namespace Dog {
 
 		camera->UpdateUniforms();
 
+		// Setup Editor
+		editor->Init(window->GetWindowHandle());
 
-
+		window->SetVSync(false);
 	}
 
 	Engine::~Engine()
@@ -75,24 +80,27 @@ namespace Dog {
 				break;
 			}
 
+			editor->beginFrame();
+
 			float currentTime = (float)glfwGetTime();
 			deltaTime = std::min(currentTime - lastTime, 0.1f); // 10fps min
 			accumulator += deltaTime;
 			lastTime = currentTime;
 
-			// cut so it only keeps until it finds "- FPS: "
-			std::string curTitle = window->GetTitle();
-			curTitle = curTitle.substr(0, curTitle.find(" - FPS: "));
-			window->SetTitle((curTitle + " - FPS: " + std::to_string(1.0f / deltaTime)).c_str());
+			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM1));
+			window->UpdateTitle();
 
 			SceneManager::Update(deltaTime);
 
 			SceneManager::Render(deltaTime);
 
+			editor->endFrame();
+
 			glfwSwapBuffers(window->GetWindowHandle());
 		}
 
 		SceneManager::Exit();
+		editor->Exit();
 
 		return 0;
 	}

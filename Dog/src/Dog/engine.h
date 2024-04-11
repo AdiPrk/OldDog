@@ -10,6 +10,7 @@ namespace Dog {
 	class Camera2D;
 	class DeferredRenderer;
 	class Scene;
+	class Editor;
 
 	class DOG_API Engine {
 	public:
@@ -39,6 +40,7 @@ namespace Dog {
 		std::shared_ptr<Renderer2D>& GetRenderer2D() { return renderer2D; }
 		std::shared_ptr<DeferredRenderer>& GetDeferredRenderer() { return deferredRenderer; }
 		std::shared_ptr<Camera2D>& GetCamera() { return camera; }
+		std::shared_ptr<Editor>& GetEditor() { return editor; }
 
 	private:
 		bool running;
@@ -47,6 +49,7 @@ namespace Dog {
 		std::shared_ptr<Renderer2D> renderer2D;
 		std::shared_ptr<DeferredRenderer> deferredRenderer;
 		std::shared_ptr<Camera2D> camera;
+		std::shared_ptr<Editor> editor;
 	};
 
 }

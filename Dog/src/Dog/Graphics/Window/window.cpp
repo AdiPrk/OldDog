@@ -126,7 +126,7 @@ namespace Dog {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        glfwSwapInterval(1);
+        glfwSwapInterval(0);
 
         SetFramebufferSizeCallback(framebuffer_size_callback);
 
@@ -149,6 +149,29 @@ namespace Dog {
 
     bool Window::IsRunning() {
         return glfwWindowShouldClose(window) == 0;
+    }
+
+    void Window::UpdateTitle()
+    {
+        static bool lastShowFPS = showFPS;
+
+        if (showFPS) {
+            std::string curTitle = GetTitle();
+            curTitle = curTitle.substr(0, curTitle.find(" - FPS: "));
+
+            std::string fpsStr = std::to_string(ImGui::GetIO().Framerate);
+            fpsStr = fpsStr.substr(0, fpsStr.find(".") + 2);
+            fpsStr = curTitle + " - FPS: " + fpsStr;
+
+            SetTitle(fpsStr.c_str());
+        }
+        else if (lastShowFPS != showFPS) {
+            std::string curTitle = GetTitle();
+            curTitle = curTitle.substr(0, curTitle.find(" - FPS: "));
+            SetTitle(curTitle.c_str());
+        }
+
+        lastShowFPS = showFPS;
     }
 
     void Window::SwapBuffers()
@@ -200,6 +223,16 @@ namespace Dog {
             glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
             m_IsFullscreen = true;
         }
+    }
+
+    void Window::SetVSync(bool enabled)
+    {
+        if (enabled) {
+			glfwSwapInterval(1);
+		}
+        else {
+			glfwSwapInterval(0);
+		}
     }
 
     void Window::SetFullscreen(bool fullScreen)

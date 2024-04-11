@@ -15,12 +15,23 @@
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
-// Common PCH
-#include <common_pch.h>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 // STL
 #include <chrono>
 #include <thread>
+#include <algorithm>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <memory>
+#include <functional>
+#include <math.h>
 
 // spdlog
 #include "spdlog/spdlog.h"

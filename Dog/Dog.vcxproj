@@ -193,8 +193,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\$(Platform);$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;glew32s.lib;opengl32.lib;glfw3_mt.lib;spdlog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\;$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;glew32s.lib;spdlog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -207,9 +207,7 @@
       <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
 if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
 
-robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
-copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
-</Command>
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -231,8 +229,8 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\$(Platform);$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;glew32s.lib;opengl32.lib;glfw3_mt.lib;spdlog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\;$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;glew32s.lib;spdlog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -245,9 +243,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
 if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
 
-robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
-copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
-</Command>
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
@@ -269,8 +265,8 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\$(Platform);$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;glew32s.lib;opengl32.lib;glfw3_mt.lib;spdlog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\;$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;glew32s.lib;spdlog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -283,9 +279,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
 if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
 
-robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
-copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
-</Command>
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
@@ -310,8 +304,8 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\$(Platform);$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;glew32s.lib;opengl32.lib;glfw3_mt.lib;spdlog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\;$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;glew32s.lib;spdlog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -325,9 +319,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
 if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
 
-robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
-copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
-</Command>
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -345,8 +337,8 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\$(Platform);$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;glew32s.lib;opengl32.lib;glfw3_mt.lib;spdlog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\;$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;glew32s.lib;spdlog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -359,9 +351,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
 if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
 
-robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
-copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
-</Command>
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -383,8 +373,8 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\$(Platform);$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;glew32s.lib;opengl32.lib;glfw3_mt.lib;spdlog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\;$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;glew32s.lib;spdlog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -397,9 +387,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
 if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
 
-robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
-copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
-</Command>
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
@@ -421,8 +409,8 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\$(Platform);$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;glew32s.lib;opengl32.lib;glfw3_mt.lib;spdlog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\;$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;glew32s.lib;spdlog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -435,9 +423,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
 if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
 
-robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
-copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
-</Command>
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
@@ -462,8 +448,8 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\$(Platform);$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;glew32s.lib;opengl32.lib;glfw3_mt.lib;spdlog.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)externals\glfw\lib-vc2022;$(ProjectDir)externals\glew\lib\;$(ProjectDir)externals\spdlog\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;glew32s.lib;spdlog.lib;$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\common_pch.obj;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -477,9 +463,7 @@ copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
       <Command>if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).pdb" "$(IntDir)"
 if EXIST "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" xcopy /Y /F "$(SolutionDir)SharedPCH\$(Platform)\$(Configuration)\vc$(PlatformToolsetVersion).idb" "$(IntDir)"
 
-robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
-copy "$(ProjectDir)externals\glew\lib\dll" "$(TargetDir)"
-</Command>
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

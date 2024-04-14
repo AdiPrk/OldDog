@@ -12,6 +12,11 @@ namespace Dog {
         // Cleanup GBuffer and shaders
     }
 
+    void DeferredRenderer::clearFrame()
+    {
+        // Clear GBuffer textures
+    }
+
     void DeferredRenderer::beginFrame() {
         // Bind GBuffer and prepare for geometry pass
     }

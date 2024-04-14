@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Dog/core.h"
+
 #include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
 
 namespace Dog {
 
-	struct DOG_API TagComponent
+	struct TagComponent
 	{
 		std::string Tag;
 
@@ -17,11 +17,11 @@ namespace Dog {
 		}
 	};
 
-	struct DOG_API TransformComponent
+	struct TransformComponent
 	{
 		glm::vec3 Translation = { 0.0f, 0.0f, 0.0f };
 		glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 Scale = { 100.0f, 100.0f, 100.0f };
+		glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
@@ -37,7 +37,7 @@ namespace Dog {
 		}
 	};
 
-	struct DOG_API SpriteComponent
+	struct SpriteComponent
 	{
 		glm::vec4 Color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		Texture2D Texture;

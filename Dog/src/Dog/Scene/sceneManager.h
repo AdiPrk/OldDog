@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Dog/core.h"
-
 namespace Dog {
 
 	class Scene;
@@ -17,6 +15,7 @@ namespace Dog {
 		static void SetNextScene(Scene* next);
 
 		static void Init(Scene* startScene);
+		static void SwapScenes();
 		static void Update(float dt);
 		static void Render(float dt);
 		static void Exit();

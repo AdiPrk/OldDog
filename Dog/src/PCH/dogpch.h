@@ -32,6 +32,7 @@
 #include <memory>
 #include <functional>
 #include <math.h>
+#include <typeindex>
 
 // spdlog
 #include "spdlog/spdlog.h"
@@ -54,5 +55,10 @@
 #include "ImSequencer.h"
 #include "ImZoomSlider.h"
 
+// EnTT
+#include "entt/entt.hpp"
+
 // Dog headers:
 #include "Dog/Math/rect.h"
+#include "Dog/Logger/logger.h"
+#include "Dog/Events/event.h"

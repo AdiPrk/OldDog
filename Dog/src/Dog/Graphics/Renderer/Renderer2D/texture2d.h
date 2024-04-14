@@ -6,10 +6,10 @@ namespace Dog {
 
     // Texture2D is able to store and configure a texture in OpenGL.
     // It also hosts utility functions for easy management.
-    class DOG_API Texture2D : public Resource
+    class Texture2D : public Resource
     {
     public:
-        static const char* GetTypeName() { return "Texture2D"; }
+        static const std::string GetTypeName() { return "Texture2D"; }
         void load(const std::string& path) override;
 
         // holds the ID of the texture object, used for all texture operations to reference to this particular texture

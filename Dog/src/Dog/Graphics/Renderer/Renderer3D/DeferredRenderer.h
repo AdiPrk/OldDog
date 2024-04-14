@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Dog/core.h"
 #include "../IRenderer.h"
 
 namespace Dog {
@@ -10,6 +9,7 @@ namespace Dog {
         void initialize() override;
         void shutdown() override;
 
+        void clearFrame() override;
         void beginFrame() override;
         void endFrame() override;
 

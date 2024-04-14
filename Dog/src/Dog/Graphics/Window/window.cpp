@@ -1,6 +1,7 @@
 #include <PCH/dogpch.h>
 #include "window.h"
 #include "Dog/engine.h"
+#include "Dog/Events/event.h"
 
 namespace Dog {
 
@@ -69,7 +70,7 @@ namespace Dog {
     unsigned int windowHeight = 900;
     float aspectRatio = static_cast<float>(windowWidth) / static_cast<float>(windowHeight);
 
-    Window::Window(unsigned int screenWidth, unsigned int screenHeight, const char* name)
+    Window::Window(unsigned int screenWidth, unsigned int screenHeight, const std::string& name)
     {
         m_Width = screenWidth;
         m_Height = screenHeight;
@@ -98,7 +99,7 @@ namespace Dog {
 
         glfwSetErrorCallback(glfw_error_callback);
 
-        window = glfwCreateWindow((int)screenWidth, (int)screenHeight, name, NULL, NULL);
+        window = glfwCreateWindow((int)screenWidth, (int)screenHeight, name.c_str(), NULL, NULL);
         glViewport(0, 0, (int)screenWidth, (int)screenHeight);
 
         if (!window)
@@ -250,16 +251,18 @@ namespace Dog {
         glfwSetFramebufferSizeCallback(window, callback);
     }
 
-    const char* Window::GetTitle() {
+    const std::string Window::GetTitle() {
 		return glfwGetWindowTitle(window);
 	}
 
-    void Window::SetTitle(const char* title) {
-        glfwSetWindowTitle(window, title);
+    void Window::SetTitle(const std::string& title) {
+        glfwSetWindowTitle(window, title.c_str());
     }
 
     void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     {
+        PUBLISH_EVENT(Event::WindowResize, width, height);
+
         int newWidth = width;
         int newHeight = (int)(width / aspectRatio);
 

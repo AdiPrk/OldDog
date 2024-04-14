@@ -1,31 +1,33 @@
 #pragma once
 
-#include "Dog/core.h"
+#include "../scene.h"
 
 namespace Dog {
 
-    class DOG_API EntityImpl; // Forward declaration
-    class DOG_API Scene;
-
-    class DOG_API Entity {
+    class Entity {
     public:
         Entity(Scene* scene);
         Entity(const Entity& other);
         ~Entity();
 
         template<typename T, typename... Args>
-        T& AddComponent(Args&&... args);
+        T& AddComponent(Args&&... args) {
+            return scene->GetRegistry().emplace<T>(handle, std::forward<Args>(args)...);
+        }
 
         template<typename T>
-        T& GetComponent();
+        T& GetComponent() {
+            return scene->GetRegistry().get<T>(handle);
+        }
 
         template<typename T>
-        bool HasComponent();
+        bool HasComponent() {
+            return scene->GetRegistry().all_of<T>(handle);
+        }
 
     private:
-        std::unique_ptr<EntityImpl> impl; // Pimpl idiom
+        Scene* scene;
+        entt::entity handle;
     };
 
 }
-
-#include "instantiation.h"

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Dog/core.h"
+
 
 namespace Dog {
-	class DOG_API Logger
+	class Logger
 	{
 	public:
 		static void Init();
@@ -27,6 +27,7 @@ namespace Dog {
 #define DOG_CRITICAL(...) ::Dog::Logger::GetLogger()->critical(__VA_ARGS__)
 #else
 #define DOG_ASSERT(...)
+#define DOG_STATIC_ASSERT(...)
 #define DOG_TRACE(...)
 #define DOG_INFO(...)
 #define DOG_WARN(...)

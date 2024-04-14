@@ -24,7 +24,15 @@ namespace Dog {
 
 	std::shared_ptr<Resource> Resources::Load(const std::string& type, const std::string& filePath)
 	{
-		DOG_TRACE("Loading resource: {}", "'" + type + "' from " + filePath);
+		DOG_INFO("Loading resource: {}", "'" + type + "' from " + filePath);
+
+		// first check if it already exists
+		auto it = resources.find(filePath);
+		if (it != resources.end()) {
+			DOG_WARN("Warning: Loading an already loaded resource: {}", filePath);
+			DOG_WARN("Returning the previously loaded resource.");
+			return it->second;
+		}
 
 		auto resource = factory->create(type);
 		if (resource) {

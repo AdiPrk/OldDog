@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Dog/core.h"
+
 #include "inputMap.h"
 
 struct GLFWwindow;
@@ -8,13 +8,21 @@ struct GLFWcursor;
 
 namespace Dog {
 
-	class DOG_API Input {
+	class Input {
 	public:
 		static void Init(GLFWwindow* window);
 		static void Update();
 
 		static bool isKeyDown(const Key& key);
 		static bool isMouseDown(const Mouse& button);
+
+		static glm::vec2 getMousePosition() { return { mouseX, mouseY }; }
+		static float getMouseX() { return mouseX; }
+		static float getMouseY() { return mouseY; }
+
+		static void SetKeyInputLocked(bool locked);
+		static void SetMouseInputLocked(bool locked);
+
 	private:
 		struct KeyStates
 		{
@@ -41,6 +49,9 @@ namespace Dog {
 		static float degree;
 		static float mouseX;
 		static float mouseY;
+
+		static bool keyInputLocked;
+		static bool mouseInputLocked;
 
 		static void keyPressCallback(GLFWwindow* windowPointer, int key, int scanCode, int action, int mod);
 		static void mousePressCallback(GLFWwindow* windowPointer, int mouseButton, int action, int mod);

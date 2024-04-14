@@ -200,8 +200,10 @@
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>:copy_assets
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
+if %ERRORLEVEL% leq 3 goto :eof
+goto copy_assets</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -234,8 +236,7 @@
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -268,8 +269,7 @@
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -306,8 +306,7 @@
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -336,8 +335,10 @@
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>:copy_assets
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
+if %ERRORLEVEL% leq 3 goto :eof
+goto copy_assets</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -370,8 +371,7 @@
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -404,8 +404,7 @@
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -442,8 +441,7 @@
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -652,8 +650,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Dog\engine.cpp" />
+    <ClCompile Include="src\Dog\Events\event.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\editor.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Framebuffer\framebuffer.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\camera2d.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCameraController.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer2D\texture2d.cpp" />
@@ -668,7 +670,6 @@
     <ClCompile Include="src\Dog\Scene\Entity\components.cpp" />
     <ClCompile Include="src\Dog\Scene\Entity\entity.cpp" />
     <ClCompile Include="src\Dog\Scene\scene.cpp" />
-    <ClCompile Include="src\Dog\Scene\sceneData.cpp" />
     <ClCompile Include="src\Dog\Scene\sceneManager.cpp" />
     <ClCompile Include="src\PCH\dogpch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -688,7 +689,20 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">dogpch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">dogpch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PCH\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\Sandbox\main.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PCH/pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\Sandbox\Scenes\sandbox.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PCH/pch.h</PrecompiledHeaderFile>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\crude_json.h" />
@@ -716,10 +730,14 @@
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
     <ClInclude Include="externals\imgui\ImZoomSlider.h" />
-    <ClInclude Include="src\dog.h" />
+    <ClInclude Include="src\Dog\dog.h" />
     <ClInclude Include="src\Dog\engine.h" />
+    <ClInclude Include="src\Dog\Events\event.h" />
     <ClInclude Include="src\Dog\Graphics\Editor\editor.h" />
+    <ClInclude Include="src\Dog\Graphics\Framebuffer\framebuffer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\camera2d.h" />
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.h" />
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCameraController.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\IRenderer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.h" />
@@ -736,12 +754,11 @@
     <ClInclude Include="src\Dog\Resources\resources.h" />
     <ClInclude Include="src\Dog\Scene\Entity\components.h" />
     <ClInclude Include="src\Dog\Scene\Entity\entity.h" />
-    <ClInclude Include="src\Dog\Scene\Entity\instantiation.h" />
     <ClInclude Include="src\Dog\Scene\scene.h" />
-    <ClInclude Include="src\Dog\Scene\sceneData.h" />
     <ClInclude Include="src\Dog\Scene\sceneManager.h" />
     <ClInclude Include="src\PCH\dogpch.h" />
-    <ClInclude Include="src\Dog\core.h" />
+    <ClInclude Include="src\PCH\pch.h" />
+    <ClInclude Include="src\Sandbox\Scenes\sandbox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DogAssets\Shaders\defaultsprite.frag" />

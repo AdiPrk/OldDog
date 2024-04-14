@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Dog/core.h"
 #include "Dog/Resources/resource.h"
 
 namespace Dog {
@@ -8,10 +7,10 @@ namespace Dog {
     // General purpose shader object. Compiles from file, generates
     // compile/link-time error messages and hosts several utility 
     // functions for easy management.
-    class DOG_API Shader : public Resource
+    class Shader : public Resource
     {
     public:
-        static const char* GetTypeName() { return "Shader"; }
+        static const std::string GetTypeName() { return "Shader"; }
 
         void load(const std::string& path) override;
         void save(const std::string& path) override {};
@@ -52,10 +51,10 @@ namespace Dog {
         static GLuint uboTime;
         static GLuint uboTimeBindingPoint;
         static void SetupUBO();
-        static void SetProjectionUBO(glm::mat4& projection);
-        static void SetViewUBO(glm::mat4& view);
-        static void SetProjectionViewUBO(glm::mat4& projectionView);
-        static void SetViewAndProjectionView(glm::mat4& view, glm::mat4& projectionView);
+        static void SetProjectionUBO(const glm::mat4& projection);
+        static void SetViewUBO(const glm::mat4& view);
+        static void SetProjectionViewUBO(const glm::mat4& projectionView);
+        static void SetViewAndProjectionView(const glm::mat4& view, const glm::mat4& projectionView);
         static void SetTimeUBO(float time);
         void BindUBO(const std::string& blockName, unsigned int bindingPoint);
 

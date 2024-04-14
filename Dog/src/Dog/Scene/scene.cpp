@@ -4,25 +4,40 @@
 
 #include "Entity/entity.h"
 #include "Entity/components.h"
-#include "sceneData.h"
 #include "Dog/engine.h"
 #include "Dog/Graphics/Renderer/Renderer2D/renderer2d.h"
+
+#include "Dog/Graphics/Framebuffer/framebuffer.h"
+
+#include "Dog/Graphics/Renderer/Camera/orthoCamera.h"
+#include "Dog/Graphics/Renderer/Camera/orthoCameraController.h"
+
+#include "Dog/Graphics/Window/Iwindow.h"
 
 #define DOG_SCENE_LOGGING 0
 
 namespace Dog {
 
-//#define REGISTER_COMPONENT(ComponentType) \
-//    sceneData->componentAdders[Component::ComponentType] = [this](Entity* entity) { \
-//        sceneData->registry.emplace<ComponentType##Component>(entity->m_EntityHandle); \
-//    };
-
-	Scene::Scene(const char* name)
+	Scene::Scene(const std::string& name)
 	{
-		strcpy_s(sceneName, sizeof(sceneName), name);
-		sceneData = std::make_unique<SceneData>();
+		sceneName = name;
 
-		//REGISTER_COMPONENT(Tag)
+		FrameBufferSpecification fbSpec;
+		fbSpec.width = 1280;
+		fbSpec.height = 720;
+		fbSpec.samples = 1;
+		frameBuffer = std::make_shared<FrameBuffer>(fbSpec);
+
+		width = Engine::Get().GetWindow()->GetWidth();
+		height = Engine::Get().GetWindow()->GetHeight();
+
+		cameraController = std::make_shared<OrthographicCameraController>((float)width / (float)height);
+		camera = cameraController->GetCamera();
+
+		camera->UpdateUniforms(); // Should be moved to the renderer (?) or somewhere else
+
+		sceneFBResizeEventHandle = SUBSCRIBE_EVENT(Event::SceneResize, frameBuffer->OnResize);
+		sceneCamResizeEventHandle = SUBSCRIBE_EVENT(Event::SceneResize, cameraController->OnResize);
 	}
 
 	Scene::~Scene()
@@ -35,6 +50,7 @@ namespace Dog {
 
 		TagComponent& tg = newEnt.AddComponent<TagComponent>();
 		TransformComponent& tr = newEnt.AddComponent<TransformComponent>();
+		tr.Translation -= tr.Scale * 0.5f;
 		SpriteComponent& sc = newEnt.AddComponent<SpriteComponent>();
 
 		return newEnt;
@@ -52,6 +68,9 @@ namespace Dog {
 #if DOG_SCENE_LOGGING
 		DOG_INFO("Scene {0} Update.", sceneName);
 #endif
+
+		cameraController->OnUpdate(dt);
+		camera->UpdateUniforms();
 	}
 
 	void Scene::InternalRender(float dt)
@@ -62,14 +81,18 @@ namespace Dog {
 
 		std::shared_ptr<Renderer2D>& renderer2D = Engine::Get().GetRenderer2D();
 
+		frameBuffer->Bind();
+
 		renderer2D->beginFrame();
 
-		sceneData->registry.view<TransformComponent, SpriteComponent>().each
+		registry.view<TransformComponent, SpriteComponent>().each
 		([renderer2D](const auto& entity, const TransformComponent& transform, const SpriteComponent& sprite) {
 			renderer2D->DrawSprite(sprite.Texture, transform.GetTransform(), sprite.Color);
 		});
 
 		renderer2D->endFrame();
+
+		frameBuffer->Unbind();
 	}
 
 	void Scene::InternalExit()

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Dog/core.h"
+
 
 namespace Dog {
 
@@ -8,6 +8,8 @@ namespace Dog {
     public:
 
         Camera2D(int width, int height);
+
+        void OnResize(const Event::SceneResize& event);
 
         glm::mat4 GetViewMatrix();
 
@@ -41,6 +43,9 @@ namespace Dog {
         float m_TargetZoom = 1.0f;
         int window_width = 0;
         int window_height = 0;
+        float aspect_ratio = 16.0f / 9.0f;
+
+        float left, right, top, bottom;
     };
 
 }

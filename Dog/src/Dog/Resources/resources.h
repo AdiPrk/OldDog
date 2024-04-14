@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Dog/core.h"
+
 #include "Dog/Resources/resource.h"
 
 namespace Dog {
 	
 	class ResourceFactory;
 
-	class DOG_API Resources {
+	class Resources {
 	public:
 		Resources();
 		~Resources();

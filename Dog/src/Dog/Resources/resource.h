@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Dog/core.h"
+
 
 namespace Dog {
 
-	class DOG_API Resource {
+	class Resource {
 	public:
 		virtual ~Resource() {};
 
-		static const char* GetTypeName() { return "Resource"; }
+		static const std::string GetTypeName() { return "Resource"; }
 
 		// Must be implemented by every resource.
 		// Loads the resource from a given path.

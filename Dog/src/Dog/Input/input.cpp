@@ -3,7 +3,7 @@
 #include "inputMap.h"
 #include "Dog/Logger/logger.h"
 
-#define DO_INPUT_LOGGING 1
+#define DO_INPUT_LOGGING 0
 
 namespace Dog {
 	
@@ -11,6 +11,9 @@ namespace Dog {
 
 	Input::KeyStates Input::keyStates[static_cast<int>(Key::LAST)];
 	Input::MouseStates Input::mouseStates[static_cast<int>(Mouse::LAST)];
+
+	bool Input::keyInputLocked = false;
+	bool Input::mouseInputLocked = false;
 
 	float Input::degree = 0;
 	float Input::mouseX = 0;
@@ -42,10 +45,20 @@ namespace Dog {
 		return mouseStates[IND(button)].mouseDown;
 	}
 
+	void Input::SetKeyInputLocked(bool locked)
+	{
+		keyInputLocked = locked;
+	}
+
+	void Input::SetMouseInputLocked(bool locked)
+	{
+		mouseInputLocked = locked;
+	}
+
 	void Input::keyPressCallback(GLFWwindow* windowPointer, int key, int scanCode, int action, int mod)
 	{
 		// check if imgui is capturing the keyboard
-		if (ImGui::GetIO().WantCaptureKeyboard) {
+		if (keyInputLocked) {
 #if DO_INPUT_LOGGING
 			DOG_INFO("Key {0} Ignored - ImGui is capturing it.", key);
 #endif
@@ -74,7 +87,7 @@ namespace Dog {
 	void Input::mousePressCallback(GLFWwindow* windowPointer, int mouseButton, int action, int mod)
 	{
 		// check if imgui is capturing the mouse
-		if (ImGui::GetIO().WantCaptureMouse) {
+		if (mouseInputLocked) {
 #if DO_INPUT_LOGGING
 			DOG_INFO("Mouse Press {0} Ignored - ImGui is capturing it.", mouseButton);
 #endif
@@ -102,7 +115,7 @@ namespace Dog {
 
 	void Input::mouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 	{
-		if (ImGui::GetIO().WantCaptureMouse) {
+		if (mouseInputLocked) {
 #if DO_INPUT_LOGGING
 			DOG_INFO("Mouse Scroll Ignored - ImGui is capturing it.");
 #endif

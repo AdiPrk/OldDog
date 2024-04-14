@@ -17,8 +17,6 @@ namespace Dog {
 
     void Shader::load(const std::string& path)
     {
-        DOG_INFO("Loading Shader: {0}", path);
-
         std::string vShaderFile = path + ".vert";
         std::string fShaderFile = path + ".frag";
 
@@ -238,25 +236,25 @@ namespace Dog {
         glBindBufferRange(GL_UNIFORM_BUFFER, 1, uboTime, 0, sizeof(float));
     }
 
-    void Shader::SetProjectionUBO(glm::mat4& projection)
+    void Shader::SetProjectionUBO(const glm::mat4& projection)
     {
         glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
         glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
     }
 
-    void Shader::SetViewUBO(glm::mat4& view)
+    void Shader::SetViewUBO(const glm::mat4& view)
     {
         glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
         glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
     }
 
-    void Shader::SetProjectionViewUBO(glm::mat4& projectionView)
+    void Shader::SetProjectionViewUBO(const glm::mat4& projectionView)
     {
         glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
         glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(projectionView));
     }
 
-    void Shader::SetViewAndProjectionView(glm::mat4& view, glm::mat4& projectionView)
+    void Shader::SetViewAndProjectionView(const glm::mat4& view, const glm::mat4& projectionView)
     {
         glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
         glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));

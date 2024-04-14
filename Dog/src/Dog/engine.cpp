@@ -6,7 +6,6 @@
 #include "Dog/Graphics/Renderer/Renderer2D/renderer2d.h"
 #include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
 #include "Dog/Graphics/Renderer/Renderer3D/DeferredRenderer.h"
-#include "Dog/Graphics/Renderer/Camera/camera2d.h"
 #include "Dog/Input/input.h"
 
 #include "Dog/Scene/sceneManager.h"
@@ -16,7 +15,7 @@
 
 namespace Dog {
 
-	Engine::Engine(unsigned int width, unsigned int height, const char* name)
+	Engine::Engine(unsigned int width, unsigned int height, const std::string& name)
 		: running(true)
 	{
 		Logger::Init();
@@ -25,7 +24,7 @@ namespace Dog {
 		resources = std::make_shared<Resources>();
 		renderer2D = std::make_shared<Renderer2D>();
 		deferredRenderer = std::make_shared<DeferredRenderer>();
-		camera = std::make_shared<Camera2D>(width, height);
+		//camera->SetPosition(glm::vec3(width * -0.5f, height * -0.5f, 0.0f));
 		editor = std::make_shared<Editor>();
 
 		Shader::SetupUBO();
@@ -38,10 +37,6 @@ namespace Dog {
 		std::shared_ptr<Shader> sp = resources->Load<Shader>("DogAssets/Shaders/defaultsprite");
 		Shader::SetShader(sp);
 
-		resources->Load("Texture2D", "DogAssets/Images/square.png");
-
-		camera->UpdateUniforms();
-
 		// Setup Editor
 		editor->Init(window->GetWindowHandle());
 
@@ -52,19 +47,25 @@ namespace Dog {
 	{
 	}
 
-	void Engine::Init()
+	void Engine::Init(Scene* startScene)
 	{
+		SceneManager::Init(startScene);
 	}
 
 	void Engine::Shutdown()
 	{
+		SceneManager::Exit();
+		editor->Exit();
 	}
 
 	int Engine::Run(Scene* startScene)
 	{
-		SceneManager::Init(startScene);
+		Init(startScene);
 
-		auto texture = resources->Load<Texture2D>("DogAssets/Images/square.png");
+		// A test for loading a duplicate resource. Should emit a warning in Debug mode.
+		resources->Load("Texture2D", "DogAssets/Images/square.png");
+		resources->Load<Texture2D>("DogAssets/Images/square.png");
+		resources->Load("Texture2D", "DogAssets/Images/circle.png");
 
 		/* Loop until the user closes the window */
 		const float fixedTimeStep = 1.0f / 60.0f;
@@ -72,35 +73,44 @@ namespace Dog {
 		float lastTime = 0.0f;
 		float accumulator = 0.0f;
 				
-		while (running && !glfwWindowShouldClose(window->GetWindowHandle())) {
-
+		while (running && !glfwWindowShouldClose(window->GetWindowHandle())) 
+		{
 			Input::Update();
 			if (Input::isKeyDown(Key::ESCAPE)) {
 				running = false;
 				break;
 			}
 
+			// Initialize/Swap scenes.
+			SceneManager::SwapScenes();
+
+			// Update Editor.
 			editor->beginFrame();
 
+			// Calculate delta time.
 			float currentTime = (float)glfwGetTime();
 			deltaTime = std::min(currentTime - lastTime, 0.1f); // 10fps min
 			accumulator += deltaTime;
 			lastTime = currentTime;
 
-			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM2));
+			// Just a little window fps counter.
+			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM1));
 			window->UpdateTitle();
 
+			// Update scenes.
 			SceneManager::Update(deltaTime);
 
+			// Render scenes.
 			SceneManager::Render(deltaTime);
 
+			// Render Editor.
 			editor->endFrame();
-
+			
+			// Swap buffers
 			glfwSwapBuffers(window->GetWindowHandle());
 		}
 
-		SceneManager::Exit();
-		editor->Exit();
+		Shutdown();
 
 		return 0;
 	}

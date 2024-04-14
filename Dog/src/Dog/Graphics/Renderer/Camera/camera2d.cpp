@@ -1,6 +1,8 @@
 #include <PCH/dogpch.h>
 #include "camera2d.h"
 #include "Dog/Graphics/Renderer/Shaders/shader.h"
+#include "Dog/engine.h"
+#include "Dog/Graphics/Window/window.h"
 
 namespace Dog {
 
@@ -10,21 +12,56 @@ namespace Dog {
         , window_width(width)
         , window_height(height)
     {
+        aspect_ratio = (float)width / (float)height;
+        left = 0, right = (float)width;
+        bottom = (float)height, top = 0;
+    }
+
+    void Camera2D::OnResize(const Event::SceneResize& event)
+    {
+        const float aspectRatio = 16.0f / 9.0f;
+        const int& width = event.width;
+        const int& height = event.height;
+
+        window_width = width;
+        window_height = height;
+        m_CameraSize = { window_width, window_height };
+
+        // Calculate the new width and height to maintain the aspect ratio
+        float newWidth, newHeight;
+        if (height * aspectRatio <= width) {
+            // Window is wider than the desired aspect ratio
+            newWidth = height * aspectRatio;
+            newHeight = (float)height;
+        }
+        else {
+            // Window is taller than the desired aspect ratio
+            newWidth = (float)width;
+            newHeight = width / aspectRatio;
+        }
+
+        // Calculate the left, right, bottom, and top values for the orthographic projection
+        left = -newWidth / 2.0f;
+        right = newWidth / 2.0f;
+        bottom = -newHeight / 2.0f;
+        top = newHeight / 2.0f;
+
+        DOG_INFO("Camera2D::OnResize: left: {0}, right: {1}, top: {2}, bottom: {3}", left, right, top, bottom);
     }
 
     glm::mat4 Camera2D::GetViewMatrix() {
         glm::mat4 view = glm::mat4(1.0f);
 
-        view = glm::translate(view, { m_CameraSize * 0.5f, 0.f });
-        view = glm::scale(view, glm::vec3(m_Zoom, m_Zoom, 1.0f));
-        view = glm::translate(view, glm::vec3(-m_Position, 0.0f));
+        //view = glm::translate(view, { m_CameraSize * 0.5f, 0.f });
+        //view = glm::scale(view, glm::vec3(m_Zoom, m_Zoom, 1.0f));
+        //view = glm::translate(view, glm::vec3(-m_Position, 0.0f));
 
         return view;
     }
 
     void Camera2D::UpdateUniforms() {
         glm::mat4 view = GetViewMatrix();
-        glm::mat4 proj = glm::ortho(0.f, float(window_width), float(window_height), 0.f, -1.0f, 1.0f);
+        glm::mat4 proj = glm::ortho(left, right, top, bottom, -1.0f, 1.0f);
         glm::mat4 projView = proj * view;
 
         Shader::SetViewAndProjectionView(view, projView);

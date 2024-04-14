@@ -2,7 +2,6 @@
 #define DOG_H
 
 // Window
-#include "Dog/core.h"
 #include "Dog/engine.h"
 #include "Dog/Graphics/Window/Iwindow.h"
 #include "Dog/Input/input.h"

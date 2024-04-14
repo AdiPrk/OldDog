@@ -1,50 +1,36 @@
 #include <PCH/dogpch.h>
-#include "entt/entt.hpp"
 
 #include "entity.h"
 
 #include "../scene.h"
-#include "../sceneData.h"
+
+
 
 namespace Dog {
-        
-    class DOG_API EntityImpl {
-    public:
-        EntityImpl(Scene* s)
-        {
-            scene = s;
-            handle = s->GetSceneData()->registry.create();
-        }
 
-        Scene* scene;
-        entt::entity handle;
-    };
-
-    Entity::Entity(Scene* scene)
-        : impl(std::make_unique<EntityImpl>(scene))
+    Entity::Entity(Scene* scene_)
     {
+        scene = scene_;
+        handle = scene->GetRegistry().create();
     }
 
     Entity::Entity(const Entity& other) 
-        : impl(std::make_unique<EntityImpl>(other.impl->scene))
     {
+        scene = other.scene;
+        handle = scene->GetRegistry().create();
+
+        // Copy all components
+        /*entt::registry& registry = scene->GetRegistry();
+        entt::registry& otherRegistry = other.scene->GetRegistry();*/
+
     }
 
-    Entity::~Entity() = default;
+    Entity::~Entity() {
+        // Shouldn't get destroyed here.
+        // The scene should destroy it in the scene's destructor
+        // Or when asked by the user
 
-    template<typename T, typename... Args>
-    T& Entity::AddComponent(Args&&... args) {
-        return impl->scene->GetSceneData()->registry.emplace<T>(impl->handle, std::forward<Args>(args)...);
-    }
-
-    template<typename T>
-    T& Entity::GetComponent() {
-        return impl->scene->GetSceneData()->registry.get<T>(impl->handle);
-    }
-
-    template<typename T>
-    bool Entity::HasComponent() {
-        return impl->scene->GetSceneData()->registry.all_of<T>(impl->handle);
+        // scene->GetRegistry().destroy(handle);
     }
 
 }

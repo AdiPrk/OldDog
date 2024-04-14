@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include "Dog/core.h"
+
 
 namespace Dog {
 
-    enum class DOG_API Key
+    enum class Key
     {
         // Unknown Key
         UNKNOWN = -1,
@@ -125,7 +125,7 @@ namespace Dog {
         LAST = 349
     };
 
-    enum class DOG_API Mouse
+    enum class Mouse
     {
         LEFT = 0,
         RIGHT = 1,

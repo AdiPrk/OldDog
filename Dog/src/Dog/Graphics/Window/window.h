@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Dog/core.h"
+
 #include "Iwindow.h"
 
 namespace Dog {
 
-	class DOG_API Window : public IWindow {
+	class Window : public IWindow {
 	public:
-		Window(unsigned int screenWidth, unsigned int screenHeight, const char* name);
+		Window(unsigned int screenWidth, unsigned int screenHeight, const std::string& name);
 		~Window();
 
 		bool IsRunning();
@@ -27,8 +27,8 @@ namespace Dog {
 		void SetKeyCallback(GLFWkeyfun callback);
 		void SetFramebufferSizeCallback(GLFWframebuffersizefun callback);
 
-		const char* GetTitle();
-		void SetTitle(const char* title);
+		const std::string GetTitle();
+		void SetTitle(const std::string& title);
 
 		constexpr static double targetFrameLength = 1.0 / 120.0;
 

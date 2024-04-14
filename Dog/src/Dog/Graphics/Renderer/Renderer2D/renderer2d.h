@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Dog/core.h"
 #include "../IRenderer.h"
 #include "Dog/Graphics/Renderer/Shaders/shader.h"
 
@@ -8,13 +7,14 @@ namespace Dog {
 
 	class Texture2D;
 
-	class DOG_API Renderer2D : public IRenderer {
+	class Renderer2D : public IRenderer {
 	public:
 		virtual ~Renderer2D() override;
 
 		virtual void initialize() override;
 		virtual void shutdown() override;
 
+		virtual void clearFrame() override;
 		virtual void beginFrame() override;
 		virtual void endFrame() override;
 

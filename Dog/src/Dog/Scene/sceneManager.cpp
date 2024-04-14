@@ -26,7 +26,7 @@ namespace Dog {
 		m_NextScene = startScene;
 	}
 
-	void SceneManager::Update(float dt)
+	void SceneManager::SwapScenes()
 	{
 		// Check for a scene change.
 		if (IsChangingScenes())
@@ -45,7 +45,10 @@ namespace Dog {
 			m_ActiveScene->InternalInit();
 			m_ActiveScene->Init();
 		}
+	}
 
+	void SceneManager::Update(float dt)
+	{
 		// Update the active scene.
 		m_ActiveScene->InternalUpdate(dt);
 		m_ActiveScene->Update(dt);

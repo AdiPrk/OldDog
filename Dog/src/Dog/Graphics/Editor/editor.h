@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Dog/core.h"
+
 
 namespace Dog {
 
-	class DOG_API Editor {
+	class Editor {
 	public:
 		Editor();
 		~Editor();

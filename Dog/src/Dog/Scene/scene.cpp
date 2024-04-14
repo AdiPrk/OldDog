@@ -36,12 +36,24 @@ namespace Dog {
 
 		camera->UpdateUniforms(); // Should be moved to the renderer (?) or somewhere else
 
-		sceneFBResizeEventHandle = SUBSCRIBE_EVENT(Event::SceneResize, frameBuffer->OnResize);
-		sceneCamResizeEventHandle = SUBSCRIBE_EVENT(Event::SceneResize, cameraController->OnResize);
+		eventSceneFBResize = SUBSCRIBE_EVENT(Event::SceneResize, frameBuffer->OnResize);
+		eventSceneCamResize = SUBSCRIBE_EVENT(Event::SceneResize, cameraController->OnResize);
+		eventPlayButtonPressed = SUBSCRIBE_EVENT(Event::PlayButtonPressed, OnPlayButtonPressed);
+		eventStopButtonPressed = SUBSCRIBE_EVENT(Event::StopButtonPressed, OnStopButtonPressed);
 	}
 
 	Scene::~Scene()
 	{
+	}
+
+	void Scene::OnPlayButtonPressed(const Event::PlayButtonPressed& event)
+	{
+		DOG_INFO("Play button pressed.");
+	}
+
+	void Scene::OnStopButtonPressed(const Event::StopButtonPressed& event)
+	{
+		DOG_INFO("Stop button pressed.");
 	}
 
 	Entity Scene::CreateEntity()
@@ -87,7 +99,7 @@ namespace Dog {
 
 		registry.view<TransformComponent, SpriteComponent>().each
 		([renderer2D](const auto& entity, const TransformComponent& transform, const SpriteComponent& sprite) {
-			renderer2D->DrawSprite(sprite.Texture, transform.GetTransform(), sprite.Color);
+			renderer2D->DrawSprite(sprite.texturePath, transform.GetTransform(), sprite.Color);
 		});
 
 		renderer2D->endFrame();

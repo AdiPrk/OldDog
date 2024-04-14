@@ -15,7 +15,7 @@ namespace Dog {
 
     Shader Shader::activeShader;
 
-    void Shader::load(const std::string& path)
+    bool Shader::load(const std::string& path)
     {
         std::string vShaderFile = path + ".vert";
         std::string fShaderFile = path + ".frag";
@@ -30,17 +30,22 @@ namespace Dog {
             if (!fFile.good()) {
                 DOG_CRITICAL("Shader files not found: {0}", fShaderFile);
             }
-            return;
+            return false;
 		}
 
-        loadShaderFromFile(vShaderFile, fShaderFile);
+        if (!loadShaderFromFile(vShaderFile, fShaderFile)) {
+            return false;
+        }
+
         // shader.SetUniformsFromCode(); // - an optimization which is really not worth completing for now.
 
         BindUBO("Matricies", Shader::uboMatricesBindingPoint);
         BindUBO("Time", Shader::uboTimeBindingPoint);
+
+        return true;
     }
 
-    void Shader::loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile)
+    bool Shader::loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile)
     {
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;
@@ -64,11 +69,25 @@ namespace Dog {
         catch (std::exception e)
         {
             std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
+            return false;
         }
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
         // 2. now create shader object from source code
-        Compile(vShaderCode, fShaderCode);
+        if (!Compile(vShaderCode, fShaderCode)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    Shader::~Shader()
+    {
+        if (activeShader.ID == ID) {
+            activeShader = *Resources::Get<Shader>("DogAssets/Shaders/error").get();
+		}
+
+        glDeleteProgram(ID);
     }
 
     Shader& Shader::Use()
@@ -81,32 +100,35 @@ namespace Dog {
         return *this;
     }
 
-    void Shader::Compile(const char* vertexSource, const char* fragmentSource)
+    bool Shader::Compile(const char* vertexSource, const char* fragmentSource)
     {
         unsigned int sVertex, sFragment;
+        bool retVal = true;
 
         // vertex Shader 
         sVertex = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(sVertex, 1, &vertexSource, NULL);
         glCompileShader(sVertex);
-        checkCompileErrors(sVertex, "VERTEX");
+        if (!checkCompileErrors(sVertex, "VERTEX")) retVal = false;
 
         // fragment Shader
         sFragment = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(sFragment, 1, &fragmentSource, NULL);
         glCompileShader(sFragment);
-        checkCompileErrors(sFragment, "FRAGMENT");
+        if (!checkCompileErrors(sFragment, "FRAGMENT")) retVal = false;
 
         // shader program
         this->ID = glCreateProgram();
         glAttachShader(this->ID, sVertex);
         glAttachShader(this->ID, sFragment);
         glLinkProgram(this->ID);
-        checkCompileErrors(this->ID, "PROGRAM");
+        if (!checkCompileErrors(this->ID, "PROGRAM")) retVal = false;
 
         // delete the shaders as they're linked into our program now and no longer necessary
         glDeleteShader(sVertex);
         glDeleteShader(sFragment);
+
+        return retVal;
     }
 
     void Shader::SetUniformsFromCode()
@@ -189,7 +211,7 @@ namespace Dog {
         return Uniforms.find(name) != Uniforms.end();
     }
 
-    void Shader::checkCompileErrors(unsigned int object, std::string type)
+    bool Shader::checkCompileErrors(unsigned int object, std::string type)
     {
         int success;
         char infoLog[1024];
@@ -205,6 +227,7 @@ namespace Dog {
 
                 DOG_CRITICAL("Shader Compile-time error: Type: {0}", type);
                 DOG_CRITICAL("{0}", infoLog);
+                return false;
             }
         }
         else
@@ -219,8 +242,11 @@ namespace Dog {
 
                 DOG_CRITICAL("Shader Link-time error: Type: {0}", type);
                 DOG_CRITICAL("{0}", infoLog);
+                return false;
             }
         }
+
+        return true;
     }
 
     void Shader::SetupUBO()

@@ -3,18 +3,37 @@
 namespace Dog {
 
     namespace Event {
+        // Window events
         struct WindowResize{ int width, height; };
+
+        // Key events
+        struct KeyTrigger { int key; }; // Not used.
+        struct KeyRelease { int key; }; // Not used.
+        struct KeyDown { int key; };    // Not used.
+
+        // Mouse Events
+        struct MouseButtonTrigger { int button; };      // Not used.
+        struct MouseButtonRelease { int button; };      // Not used.
+        struct MouseDown { int button; };               // Not used.
+        struct MouseMove { float x, y; };               // Not used.
+        struct MouseScroll { float xOffset, yOffset; }; // Not used.
+
+		// Scene events
         struct SceneResize { int width, height; };
 
-        struct KeyTrigger { int key; };
-        struct KeyRelease { int key; };
-        struct KeyDown { int key; };
+        // Toolbar events
+        struct PlayButtonPressed {};
+        struct PauseButtonPressed {};
+        struct StopButtonPressed {};
+        struct StepButtonPressed {};
 
-        struct MouseButtonTrigger { int button; };
-        struct MouseButtonRelease { int button; };
-        struct MouseDown { int button; };
-        struct MouseMove { float x, y; };
-        struct MouseScroll { float xOffset, yOffset; };
+        // File events
+        struct ImageFileDeleted { const std::string& path; };
+        struct ImageFileCreated { const std::string& path; };
+        struct ImageFileModified { const std::string& path; };
+        struct ShaderFileDeleted { const std::string& path; };
+        struct ShaderFileCreated { const std::string& path; };
+        struct ShaderFileModified { const std::string& path; };
     }
 
     // Event manager class
@@ -22,19 +41,19 @@ namespace Dog {
     public:
         // This happens when the event handle (unique pointer) goes out of scope
         template <typename EventType>
-        struct SubscriptionHandleDeleter {
+        struct HandleDeleter {
             void operator()(std::function<void(const EventType&)>* listener) {
                 Events::Unsubscribe<EventType>(listener);
             }
         };
 
         template <typename EventType>
-        using SubscriptionHandle = std::unique_ptr<std::function<void(const EventType&)>, SubscriptionHandleDeleter<EventType>>;
+        using Handle = std::unique_ptr<std::function<void(const EventType&)>, HandleDeleter<EventType>>;
 
         template <typename EventType>
-        static SubscriptionHandle<EventType> Subscribe(std::function<void(const EventType&)> listener) {
+        static Handle<EventType> Subscribe(std::function<void(const EventType&)> listener) {
             auto& listeners = GetListeners<EventType>();
-            auto handle = std::unique_ptr<std::function<void(const EventType&)>, SubscriptionHandleDeleter<EventType>>(new std::function<void(const EventType&)>(listener));
+            auto handle = std::unique_ptr<std::function<void(const EventType&)>, HandleDeleter<EventType>>(new std::function<void(const EventType&)>(listener));
             listeners.push_back(handle.get());
 
             DOG_INFO("Subscribed to event of type {0}.", typeid(EventType).name());
@@ -68,7 +87,7 @@ namespace Dog {
 
     // Macro for subscribing to events
 #define SUBSCRIBE_EVENT(EVENT_TYPE, LISTENER) \
-    Events::Subscribe<EVENT_TYPE>([this](const auto& event) { this->LISTENER(event); })
+    Events::Subscribe<EVENT_TYPE>([&](const auto& event) { LISTENER(event); })
 
 #define UNSUBSCRIBE_EVENT(EVENT_TYPE, HANDLE) \
     (HANDLE).reset();

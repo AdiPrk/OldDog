@@ -3,7 +3,6 @@
 namespace Dog {
 
 	class IWindow;
-	class Resources;
 	class Renderer2D;
 	class DeferredRenderer;
 	class Scene;
@@ -27,11 +26,9 @@ namespace Dog {
 		Engine(const Engine&) = delete;
 		Engine& operator=(const Engine&) = delete;
 
-
 		int Run(Scene* startScene);
 
 		static std::shared_ptr<IWindow>& GetWindow() { return Get().window; }
-		static std::shared_ptr<Resources>& GetResources() {	return Get().resources;	}
 		static std::shared_ptr<Renderer2D>& GetRenderer2D() { return Get().renderer2D; }
 		static std::shared_ptr<DeferredRenderer>& GetDeferredRenderer() { return Get().deferredRenderer; }
 		static std::shared_ptr<Editor>& GetEditor() { return Get().editor; }
@@ -42,10 +39,16 @@ namespace Dog {
 
 		bool running;
 		std::shared_ptr<IWindow> window;
-		std::shared_ptr<Resources> resources;
 		std::shared_ptr<Renderer2D> renderer2D;
 		std::shared_ptr<DeferredRenderer> deferredRenderer;
 		std::shared_ptr<Editor> editor;
+
+		Events::Handle<Event::ImageFileCreated> imageFileCreatedHandle;
+		Events::Handle<Event::ImageFileDeleted> imageFileDeletedHandle;
+		Events::Handle<Event::ImageFileModified> imageFileModifiedHandle;
+		Events::Handle<Event::ShaderFileCreated> shaderFileCreatedHandle;
+		Events::Handle<Event::ShaderFileDeleted> shaderFileDeletedHandle;
+		Events::Handle<Event::ShaderFileModified> shaderFileModifiedHandle;
 	};
 
 }

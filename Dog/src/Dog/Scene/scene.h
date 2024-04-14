@@ -13,6 +13,7 @@ namespace Dog {
 		Scene(const std::string&);
 		~Scene();
 
+
 		virtual void Init() {}
 		virtual void Update(float dt) {}
 		virtual void Render(float dt) {}
@@ -24,6 +25,12 @@ namespace Dog {
 
 		std::shared_ptr<OrthographicCamera>& GetCamera() { return camera; }
 		std::shared_ptr<OrthographicCameraController>& GetCameraController() { return cameraController; }
+
+		const std::shared_ptr<FrameBuffer>& GetFrameBuffer() const { return frameBuffer; }
+		std::shared_ptr<FrameBuffer>& GetFrameBuffer() { return frameBuffer; }
+
+		void OnPlayButtonPressed(const Event::PlayButtonPressed& event);
+		void OnStopButtonPressed(const Event::StopButtonPressed& event);
 
 	private:
 		// Scene name only used for debug purposes
@@ -39,8 +46,6 @@ namespace Dog {
 		entt::registry registry;
 
 		// Framebuffer for the editor to render the scene
-		friend class Editor;
-		std::shared_ptr<FrameBuffer>& GetFrameBuffer() { return frameBuffer; }
 		std::shared_ptr<FrameBuffer> frameBuffer;
 		
 		// Functions that run before or after the user's scene functions
@@ -55,8 +60,10 @@ namespace Dog {
 		std::shared_ptr<OrthographicCameraController> cameraController;
 
 		// Event handles
-		Events::SubscriptionHandle<Event::SceneResize> sceneFBResizeEventHandle;
-		Events::SubscriptionHandle<Event::SceneResize> sceneCamResizeEventHandle;
+		Events::Handle<Event::SceneResize> eventSceneFBResize;
+		Events::Handle<Event::SceneResize> eventSceneCamResize;
+		Events::Handle<Event::PlayButtonPressed> eventPlayButtonPressed;
+		Events::Handle<Event::StopButtonPressed> eventStopButtonPressed;
 	};
 
 }

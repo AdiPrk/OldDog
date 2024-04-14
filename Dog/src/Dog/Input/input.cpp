@@ -33,6 +33,8 @@ namespace Dog {
 	void Input::Update()
 	{
 		glfwPollEvents();
+
+
 	}
 
 	bool Input::isKeyDown(const Key& key)

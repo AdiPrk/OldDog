@@ -1,6 +1,7 @@
 #pragma once
+#include "Dog/dog.h"
 
-class SandboxScene : public Scene {
+class SandboxScene : public Dog::Scene {
 public:
 	SandboxScene() : Scene("Sandbox") {}
 

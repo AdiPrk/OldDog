@@ -153,6 +153,24 @@
     <ClCompile Include="src\PCH\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\sceneWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\consoleWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\entitiesWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\inspectorWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\toolbarWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Resources\FileWatcher\fileWatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Dog\dog.h">
@@ -315,6 +333,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PCH\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\sceneWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\consoleWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\entitiesWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\inspectorWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\toolbarWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Resources\FileWatcher\fileWatcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

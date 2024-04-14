@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Dog/Resources/resource.h"
-
 namespace Dog {
 
     // Texture2D is able to store and configure a texture in OpenGL.
@@ -10,7 +8,7 @@ namespace Dog {
     {
     public:
         static const std::string GetTypeName() { return "Texture2D"; }
-        void load(const std::string& path) override;
+        bool load(const std::string& path) override;
 
         // holds the ID of the texture object, used for all texture operations to reference to this particular texture
         unsigned int ID;
@@ -19,7 +17,7 @@ namespace Dog {
         unsigned int NumSprites; // number of sprites in spritesheet
         unsigned int SpriteWidth, SpriteHeight; // For spritesheets
         unsigned int Rows, Columns; // For spritesheets
-        unsigned int Index; // Index for spritesheet
+        unsigned int Index; // Index for spri    tesheet
         bool IsSpriteSheet; // is it a spritesheet?
         // texture Format
         unsigned int Internal_Format; // format of texture object

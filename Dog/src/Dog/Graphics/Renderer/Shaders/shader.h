@@ -12,7 +12,7 @@ namespace Dog {
     public:
         static const std::string GetTypeName() { return "Shader"; }
 
-        void load(const std::string& path) override;
+        bool load(const std::string& path) override;
         void save(const std::string& path) override {};
         
         // state
@@ -20,10 +20,11 @@ namespace Dog {
         static int CurrentID;
         // constructor
         Shader() : ID() {}
+        ~Shader();
         // sets the current shader as active
         Shader& Use();
         // compiles the shader from given source code
-        void Compile(const char* vertexSource, const char* fragmentSource); // note: geometry source code is optional 
+        bool Compile(const char* vertexSource, const char* fragmentSource); // note: geometry source code is optional 
         void SetUniformsFromCode();
         // utility functions
         void SetFloat(const std::string& name, float value);
@@ -63,8 +64,8 @@ namespace Dog {
         static Shader& GetActiveShader() { return activeShader; }
     private:
         // checks if compilation or linking failed and if so, print the error logs
-        void checkCompileErrors(unsigned int object, std::string type);
-        void loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile);
+        bool checkCompileErrors(unsigned int object, std::string type);
+        bool loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile);
 
         static Shader activeShader;
     };

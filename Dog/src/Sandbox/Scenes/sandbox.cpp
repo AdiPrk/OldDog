@@ -4,13 +4,13 @@
 void SandboxScene::Init() {
 	printf("Hello, Woof! ~From Sandbox\n");
 
-	Entity box = CreateEntity();
+	Dog::Entity box = CreateEntity();
 }
 
 void SandboxScene::Update(float dt) {
 	// printf("Sandbox Update\n");
 	
-	if (Input::isKeyDown(Key::W)) {
+	if (Dog::Input::isKeyDown(Dog::Key::W)) {
 		// printf("Key 'W'oof is pressed! ~From Sandbox - Update.\n");
 	}
 }

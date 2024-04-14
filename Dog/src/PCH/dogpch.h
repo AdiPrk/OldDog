@@ -33,6 +33,8 @@
 #include <functional>
 #include <math.h>
 #include <typeindex>
+#include <mutex>
+#include <filesystem>
 
 // spdlog
 #include "spdlog/spdlog.h"
@@ -62,3 +64,4 @@
 #include "Dog/Math/rect.h"
 #include "Dog/Logger/logger.h"
 #include "Dog/Events/event.h"
+#include "Dog/Resources/resources.h"

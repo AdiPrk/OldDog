@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "resource.h"
 #include "Dog/Logger/logger.h"
 

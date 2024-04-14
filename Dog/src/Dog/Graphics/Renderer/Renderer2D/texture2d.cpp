@@ -8,14 +8,14 @@ namespace Dog {
 
     GLuint Texture2D::CurrentTextureID = 0;
 
-    void Texture2D::load(const std::string& file)
+    bool Texture2D::load(const std::string& file)
     {
         // check if file exists
         std::ifstream infile(file);
         if (!infile.good())
         {
             std::cerr << "Error: File does not exist: " << file << std::endl;
-            return;
+            return false;
         }
         infile.close();
 
@@ -27,7 +27,7 @@ namespace Dog {
         if (!data)
         {
             std::cerr << "Error: Failed to load image: " << file << std::endl;
-            return; // You might want to return a null or default texture here
+            return false;
         }
 
         // Set the internal and image formats based on the number of channels
@@ -56,6 +56,8 @@ namespace Dog {
 
         // and finally free image data
         stbi_image_free(data);
+
+        return true;
     }
 
     Texture2D::Texture2D()
@@ -72,13 +74,25 @@ namespace Dog {
         , Filter_Min(GL_LINEAR)
         , Filter_Max(GL_LINEAR)
         , textureHandle()
+        , SpriteWidth(0)
+        , SpriteHeight(0)
+        , NumSprites(1)
+        , ID(0)
     {
-        glGenTextures(1, &this->ID);
+        unsigned int id;
+        glGenTextures(1, &id);
+        this->ID = id;
+
+        // log id
+        DOG_INFO("Texture2D constructor called. ID: {0}", this->ID);
+        DOG_INFO("Texture2D constructor called. ID: {0}", id);
     }
 
     Texture2D::~Texture2D()
 	{
 		glDeleteTextures(1, &this->ID);
+
+        DOG_INFO("Texture2D destructor called.");
 	}
 
     void Texture2D::Generate(unsigned int width, unsigned int height, unsigned char* data, unsigned int numSprites)

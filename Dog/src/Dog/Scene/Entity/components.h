@@ -40,7 +40,7 @@ namespace Dog {
 	struct SpriteComponent
 	{
 		glm::vec4 Color = { 1.0f, 1.0f, 1.0f, 1.0f };
-		Texture2D Texture;
+		std::string texturePath;
 
 		SpriteComponent();
 		SpriteComponent(const SpriteComponent&) = default;

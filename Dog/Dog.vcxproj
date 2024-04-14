@@ -236,7 +236,10 @@ goto copy_assets</Command>
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
+      <Command>:copy_assets
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
+if %ERRORLEVEL% leq 3 goto :eof
+goto copy_assets</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -269,7 +272,10 @@ goto copy_assets</Command>
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
+      <Command>:copy_assets
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
+if %ERRORLEVEL% leq 3 goto :eof
+goto copy_assets</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -306,7 +312,10 @@ goto copy_assets</Command>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
+      <Command>:copy_assets
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
+if %ERRORLEVEL% leq 3 goto :eof
+goto copy_assets</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -371,7 +380,10 @@ goto copy_assets</Command>
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
+      <Command>:copy_assets
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
+if %ERRORLEVEL% leq 3 goto :eof
+goto copy_assets</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -404,7 +416,10 @@ goto copy_assets</Command>
       </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
+      <Command>:copy_assets
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
+if %ERRORLEVEL% leq 3 goto :eof
+goto copy_assets</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -441,7 +456,10 @@ goto copy_assets</Command>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /E /Y</Command>
+      <Command>:copy_assets
+robocopy "$(ProjectDir)DogAssets" "$(TargetDir)DogAssets" /MIR
+if %ERRORLEVEL% leq 3 goto :eof
+goto copy_assets</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -652,6 +670,11 @@ goto copy_assets</Command>
     <ClCompile Include="src\Dog\engine.cpp" />
     <ClCompile Include="src\Dog\Events\event.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\editor.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\consoleWindow.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\entitiesWindow.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\inspectorWindow.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\sceneWindow.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\toolbarWindow.cpp" />
     <ClCompile Include="src\Dog\Graphics\Framebuffer\framebuffer.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\camera2d.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.cpp" />
@@ -664,6 +687,7 @@ goto copy_assets</Command>
     <ClCompile Include="src\Dog\Input\input.cpp" />
     <ClCompile Include="src\Dog\Logger\logger.cpp" />
     <ClCompile Include="src\Dog\Math\rect.cpp" />
+    <ClCompile Include="src\Dog\Resources\FileWatcher\fileWatcher.cpp" />
     <ClCompile Include="src\Dog\Resources\resource.cpp" />
     <ClCompile Include="src\Dog\Resources\resourceFactory.cpp" />
     <ClCompile Include="src\Dog\Resources\resources.cpp" />
@@ -694,14 +718,38 @@ goto copy_assets</Command>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\Sandbox\main.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PCH/pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PCH/pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\Sandbox\Scenes\sandbox.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PCH/pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">PCH/pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PCH/pch.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -734,6 +782,11 @@ goto copy_assets</Command>
     <ClInclude Include="src\Dog\engine.h" />
     <ClInclude Include="src\Dog\Events\event.h" />
     <ClInclude Include="src\Dog\Graphics\Editor\editor.h" />
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\consoleWindow.h" />
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\entitiesWindow.h" />
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\inspectorWindow.h" />
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\sceneWindow.h" />
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\toolbarWindow.h" />
     <ClInclude Include="src\Dog\Graphics\Framebuffer\framebuffer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\camera2d.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.h" />
@@ -749,6 +802,7 @@ goto copy_assets</Command>
     <ClInclude Include="src\Dog\Input\inputMap.h" />
     <ClInclude Include="src\Dog\Logger\logger.h" />
     <ClInclude Include="src\Dog\Math\rect.h" />
+    <ClInclude Include="src\Dog\Resources\FileWatcher\fileWatcher.h" />
     <ClInclude Include="src\Dog\Resources\resource.h" />
     <ClInclude Include="src\Dog\Resources\resourceFactory.h" />
     <ClInclude Include="src\Dog\Resources\resources.h" />

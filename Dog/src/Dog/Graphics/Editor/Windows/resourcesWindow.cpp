@@ -1,6 +1,7 @@
 #include <PCH/dogpch.h>
 #include "resourcesWindow.h"
 #include "Dog/Graphics/Texture/texture2d.h"
+#include "textEditorWindow.h"
 
 namespace Dog {
 
@@ -20,7 +21,7 @@ namespace Dog {
 		return d1_ == d2_;
 	}
 
-	void UpdateResourcesWindow(FileBrowser& browser) {
+	void UpdateResourcesWindow(FileBrowser& browser, TextEditorWrapper& textEditor) {
 		ImGui::Begin("Resources");
 
 		if (browser.currentDir != browser.baseDir) {
@@ -46,9 +47,10 @@ namespace Dog {
 		ImGui::Columns(columnCount, 0, false);
 
 		// padding between images:
+		int i = 0;
 		for (const auto& entry : std::filesystem::directory_iterator(browser.currentDir)) {
 			const auto& path = entry.path();
-			
+						
 			// Directories
 			if (entry.is_directory()) {
 				if (SameDir(path.filename().string(), Resources::EditorDir)) continue;
@@ -61,7 +63,6 @@ namespace Dog {
 			else {
 				ImGui::Spacing();
 				ImGui::Spacing();
-
 				
 				// Different behavior depending on the directory.
 				if (SameDir(Resources::AssetsDir, currentDirName)) {
@@ -102,6 +103,7 @@ namespace Dog {
 						ImGui::EndTooltip();
 					}
 					
+					// for multi-line centered text
 					ImVec2 textSize = ImGui::CalcTextSize(fileName.c_str(), NULL, true, imageSize);
 					ImGui::SetCursorPosX(ImGui::GetCursorPosX() + (imageSize - textSize.x) * 0.5f);
 					ImGui::TextWrapped(fileName.c_str());
@@ -129,7 +131,30 @@ namespace Dog {
 						texId = Resources::GetImage<Texture2D>("error.png")->ID;
 					}
 
-					bool clicked = ImGui::ImageButton((void*)(intptr_t)texId, ImVec2(imageSize, imageSize));
+					std::string fullPath = path.string();
+
+					bool clicked = ImGui::ImageButton(fullPath.c_str(), (void*)(intptr_t)texId, ImVec2(imageSize, imageSize));
+
+					bool isImageHovered = ImGui::IsItemHovered();
+					bool doubleClicked = ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left);
+
+					// get if item is double clicked
+					if (isImageHovered && doubleClicked) {
+						std::string vertName = fileName + ".vert";
+						std::string fragName = fileName + ".frag";
+						std::string vertPath = Resources::ShadersPath + vertName;
+						std::string fragPath = Resources::ShadersPath + fragName;
+
+						TextEditorWrapper::MyDocument vertDoc(vertName, true, vertPath);
+						textEditor.CreateNewDocument(vertDoc);
+
+						TextEditorWrapper::MyDocument fragDoc(fragName, true, fragPath);
+						textEditor.CreateNewDocument(fragDoc);
+
+						// printf("Adding shader: %s\n", fileName.c_str());
+						// printf("\tvert path: %s\n", vertPath.c_str());
+						// printf("\tfrag path: %s\n", fragPath.c_str());
+					}
 
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID)) {
 						ImGui::SetDragDropPayload("Shader", fileName.c_str(), fileName.size() + 1);
@@ -144,7 +169,7 @@ namespace Dog {
 						ImGui::EndTooltip();
 					}
 
-					// for multi-line:
+					// for multi-line centered text
 					ImVec2 textSize = ImGui::CalcTextSize(fileName.c_str(), NULL, true, imageSize);
 					ImGui::SetCursorPosX(ImGui::GetCursorPosX() + (imageSize - textSize.x) * 0.5f);
 					ImGui::TextWrapped(fileName.c_str());
@@ -152,6 +177,7 @@ namespace Dog {
 
 				ImGui::NextColumn();
 			}
+
 		}
 
 		ImGui::Columns(1);

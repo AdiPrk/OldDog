@@ -11,6 +11,6 @@ namespace Dog {
 		std::filesystem::path currentDir;
 	};
 
-	void UpdateResourcesWindow(FileBrowser& browser);
+	void UpdateResourcesWindow(FileBrowser& browser, class TextEditorWrapper& textEditor);
 
 }

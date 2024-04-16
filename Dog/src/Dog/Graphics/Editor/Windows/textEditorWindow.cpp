@@ -28,7 +28,7 @@ namespace Dog {
         }
     }
 
-    TextEditorWrapper::MyDocument::MyDocument(const char* name, bool open, const std::string& path)
+    TextEditorWrapper::MyDocument::MyDocument(const std::string& name, bool open, const std::string& path)
         : Name(name), Open(open), OpenPrev(open), Dirty(false), WantClose(false), filePath(path), Editor()
     {
         Editor.SetShowWhitespaces(false);
@@ -39,35 +39,80 @@ namespace Dog {
 		}
     }
 
+    TextEditorWrapper::TextEditorWrapper()
+        : app()
+    {
+    }
+
 	TextEditorWrapper::~TextEditorWrapper()
 	{
 	}
 
-    void TextEditorWrapper::NotifyOfDocumentsClosedElsewhere(ExampleAppDocuments& app)
+    void TextEditorWrapper::NotifyOfDocumentsClosedElsewhere()
     {
         for (int doc_n = 0; doc_n < app.Documents.size(); doc_n++)
         {
             TextEditorWrapper::MyDocument* doc = &app.Documents[doc_n];
             if (!doc->Open && doc->OpenPrev)
-                ImGui::SetTabItemClosed(doc->Name);
+                ImGui::SetTabItemClosed(doc->Name.c_str());
             doc->OpenPrev = doc->Open;
         }
     }
 
-    TextEditorWrapper::ExampleAppDocuments::ExampleAppDocuments()
+    void TextEditorWrapper::CreateNewDocument(MyDocument& doc)
     {
-        Documents.emplace_back("defaultsprite.vert", true, "DogAssets/Shaders/defaultsprite.vert");
-        Documents.emplace_back("defaultsprite.frag", true, "DogAssets/Shaders/defaultsprite.frag");
-        Documents.emplace_back("error.vert", true, "DogAssets/Shaders/error.vert");
-        Documents.emplace_back("error.frag", true, "DogAssets/Shaders/error.frag");
+        for (int doc_n = 0; doc_n < app.Documents.size(); doc_n++)
+        {
+			TextEditorWrapper::MyDocument* existingDoc = &app.Documents[doc_n];
+            if (existingDoc->filePath == doc.filePath)
+            {
+                if (!existingDoc->Open)
+				    existingDoc->DoOpen();
+                else {
+                    // switch to that doc.
+                    ImGui::SetWindowFocus(existingDoc->Name.c_str());
+                }
+				return;
+			}
+		}
+
+        app.Documents.push_back(doc);
     }
 
-    TextEditorWrapper::TextEditorWrapper()
+    TextEditorWrapper::ExampleAppDocuments::ExampleAppDocuments()
     {
+        // Can create documents that always spawn on startup here
+    }
+
+    void ShaderDragDrop(TextEditorWrapper& textEditorWrapper) {
+        if (ImGui::BeginDragDropTarget()) {
+            // Accept data that has the identifier "DRAG_INT"
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Shader")) {
+                // get string from payload data and data size
+                std::string path = std::string((char*)payload->Data, payload->DataSize - 1); // -1 to remove null terminator
+                printf("Path from drag drop: %s\n", path.c_str());
+
+                std::string fullPath = Resources::ShadersPath + path;
+                std::string vertPath = fullPath + ".vert";
+                std::string fragPath = fullPath + ".frag";
+                std::string vertName = path + ".vert";
+                std::string fragName = path + ".frag";
+
+                TextEditorWrapper::MyDocument vertDoc(vertName, true, vertPath);
+                TextEditorWrapper::MyDocument fragDoc(fragName, true, fragPath);
+
+                textEditorWrapper.CreateNewDocument(vertDoc);
+                textEditorWrapper.CreateNewDocument(fragDoc);
+
+                //shaderPath = path;
+            }
+
+            ImGui::EndDragDropTarget();
+        }
     }
 
 	void UpdateTextEditorWindow(TextEditorWrapper& textEditorWrapper) {
-        static TextEditorWrapper::ExampleAppDocuments app;
+        auto& app = textEditorWrapper.app;
 
         // Options
         static bool opt_reorderable = true;
@@ -100,7 +145,7 @@ namespace Dog {
                     {
                         TextEditorWrapper::MyDocument* doc = &app.Documents[doc_n];
                         if (!doc->Open)
-                            if (ImGui::MenuItem(doc->Name))
+                            if (ImGui::MenuItem(doc->Name.c_str()))
                                 doc->DoOpen();
                     }
                     ImGui::EndMenu();
@@ -135,12 +180,21 @@ namespace Dog {
 
         // Tabs
         
-        TextEditorWrapper::NotifyOfDocumentsClosedElsewhere(app);
+        textEditorWrapper.NotifyOfDocumentsClosedElsewhere();
+
+        int numDocumentsOpen = 0;
+        for (int doc_n = 0; doc_n < app.Documents.size(); doc_n++)
+			numDocumentsOpen += app.Documents[doc_n].Open ? 1 : 0;
+
+        if (numDocumentsOpen == 0) {
+            ImGui::Text("No documents open.");
+        }
 
         // Create a DockSpace node where any window can be docked
         ImGuiID dockspace_id = ImGui::GetID("TextEditorDockspace");
         ImGui::DockSpace(dockspace_id);
 
+        ShaderDragDrop(textEditorWrapper);
         // Create Windows
         for (int doc_n = 0; doc_n < app.Documents.size(); doc_n++)
         {
@@ -151,7 +205,7 @@ namespace Dog {
             ImGui::SetNextWindowDockID(dockspace_id, redock_all ? ImGuiCond_Always : ImGuiCond_FirstUseEver);
             ImGuiWindowFlags window_flags = (doc->Dirty ? ImGuiWindowFlags_UnsavedDocument : 0);
             window_flags |= ImGuiWindowFlags_NoScrollbar;
-            bool visible = ImGui::Begin(doc->Name, &doc->Open, window_flags);
+            bool visible = ImGui::Begin(doc->Name.c_str(), &doc->Open, window_flags);
 
             // Cancel attempt to close when unsaved add to save queue so we can display a popup.
             if (!doc->Open && doc->Dirty)
@@ -182,6 +236,8 @@ namespace Dog {
 					wTriggered = false;
 				}
             }
+
+            ShaderDragDrop(textEditorWrapper);
 
             ImGui::End(); // Document
         }
@@ -229,7 +285,7 @@ namespace Dog {
                     {
                         for (int n = 0; n < close_queue.Size; n++)
                             if (close_queue[n]->Dirty)
-                                ImGui::Text("%s", close_queue[n]->Name);
+                                ImGui::Text("%s", close_queue[n]->Name.c_str());
                     }
                     ImGui::EndChildFrame();
 
@@ -288,7 +344,7 @@ namespace Dog {
 
     void TextEditorWrapper::MyDocument::DoSave() {
         Dirty = false;
-        printf("Save %s\n", Name);
+        // printf("Save %s\n", Name.c_str());
 
         writeStringToFile(filePath, Editor.GetText());
     }
@@ -297,7 +353,7 @@ namespace Dog {
 
     void TextEditorWrapper::MyDocument::DisplayContents(MyDocument* doc, TextEditor& editorTemp)
     {
-        editorTemp.Render(doc->Name);
+        editorTemp.Render(doc->Name.c_str());
 
         if (editorTemp.IsTextChanged()) {
             doc->Dirty = true;
@@ -313,7 +369,7 @@ namespace Dog {
 
         char buf[256];
         // use safe version of sprintf; sprintf_s
-        sprintf_s(buf, "Save %s", doc->Name);
+        sprintf_s(buf, "Save %s", doc->Name.c_str());
         if (ImGui::MenuItem(buf, "CTRL+S", false, doc->Open))
             doc->DoSave();
         if (ImGui::MenuItem("Close", "CTRL+W", false, doc->Open))

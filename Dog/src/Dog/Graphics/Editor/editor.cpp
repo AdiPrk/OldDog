@@ -102,7 +102,7 @@ namespace Dog {
 		UpdateEntitiesWindow();
 		UpdateInspectorWindow();
 		UpdateToolbarWindow();
-		UpdateResourcesWindow(*fileBrowser);
+		UpdateResourcesWindow(*fileBrowser, *textEditorWrapper);
 		UpdateTextEditorWindow(*textEditorWrapper);
 	}
 

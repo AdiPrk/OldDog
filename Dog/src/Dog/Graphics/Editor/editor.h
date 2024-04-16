@@ -3,6 +3,7 @@
 namespace Dog {
 
 	class FileBrowser;
+	class TextEditorWrapper;
 
 	class Editor {
 	public:
@@ -23,8 +24,13 @@ namespace Dog {
 		void beginFrame();
 		void endFrame();
 
+		void SetEditorEnabled(bool enabled) { renderEditor = enabled; }
+		bool GetEditorEnabled() const { return renderEditor; }
+
 	private:
-		std::shared_ptr<FileBrowser> fileBrowser;
+		std::unique_ptr<FileBrowser> fileBrowser;
+		std::unique_ptr<TextEditorWrapper> textEditorWrapper;
+		bool renderEditor = true;
 	};
 
 } // namespace Dog

@@ -484,7 +484,8 @@ void main()
     vec3 camPos = vec3(sin(time), .2+sin(iTime)*.2, cos(time))*5.0;
     vec3 camTarget = vec3(0.0, 0.5, 0.0);
     vec2 uv = (TexCoords - 0.5) * 2.;
-    uv.y = -uv.y + 0.3;
+    uv.y += 0.3;
+    //uv.y = -uv.y + 0.3;
     
     vec3 viewDir = CameraViewDir(uv, camPos, camTarget);
     
@@ -496,9 +497,9 @@ void main()
     /* Text */
     
     vec2 fragCoord = (TexCoords) * 110.;
-    fragCoord.y *= -1;
-    fragCoord.y += 200;
-    fragCoord.x += 275.;
+    //fragCoord.y *= -1;
+    fragCoord.y += 100;
+    fragCoord.x += 158.;
     resol = vec2(iResolution.xy) / DOWN_SCALE;
     uv = fragCoord / DOWN_SCALE;
 	vec2 duv = floor(fragCoord / DOWN_SCALE);
@@ -511,3 +512,5 @@ void main()
     col *= mix(vec3(0.2),vec3(0,1,0),pixel);
     fragColor += vec4(vec3(col), 1.0);
 }
+
+

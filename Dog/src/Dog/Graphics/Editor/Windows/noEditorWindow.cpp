@@ -1,6 +1,5 @@
 #include <PCH/dogpch.h>
-#include "sceneWindow.h"
-
+#include "noEditorWindow.h"
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
 #include "Dog/Input/input.h"
 #include "Dog/Graphics/Texture/texture2d.h"
@@ -9,17 +8,18 @@
 #include "Dog/Scene/scene.h"
 
 namespace Dog {
-
-	void UpdateSceneWindow()
-	{
+	
+	void UpdateNoEditorWindow(bool firstFrame) {	
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-		ImGui::Begin("Scene");
+		ImGui::Begin("NoEditor##noEditor", nullptr, ImGuiWindowFlags_NoDecoration);
 
-		// 2d/3d button toggle with checkbox
-		static bool is3D = false;
+		// make window full screen
+		ImGui::SetWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+		ImGui::SetWindowSize(ImGui::GetIO().DisplaySize, ImGuiCond_Always);
 
-		ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() - 30.0f - ImGui::CalcTextSize("3D").x, 25.0f));
-		ImGui::Checkbox("3D", &is3D);
+		// Make sure inputs are not locked
+		Input::SetKeyInputLocked(false);
+		Input::SetMouseInputLocked(false);
 
 		Scene* currentScene = SceneManager::GetCurrentScene();
 		if (currentScene) {
@@ -32,16 +32,10 @@ namespace Dog {
 				unsigned fboID = fbo->GetColorAttachmentID();
 
 				static ImVec2 lastSceneWindowSize = { 0.0f, 0.0f };
-				ImVec2 vpSize = ImGui::GetContentRegionAvail(); // viewport size
-
-				// Lock key input if the viewport is not focused.
-				Input::SetKeyInputLocked(!ImGui::IsWindowFocused());
-
-				// Lock mouse input if the viewport is not hovered.
-				Input::SetMouseInputLocked(!ImGui::IsWindowHovered());
+				ImVec2 vpSize = ImGui::GetContentRegionAvail(); // viewport size		
 
 				// Update things if viewport size changed (eg camera, framebuffer)
-				if (vpSize.x != lastSceneWindowSize.x || vpSize.y != lastSceneWindowSize.y) {
+				if (firstFrame || vpSize.x != lastSceneWindowSize.x || vpSize.y != lastSceneWindowSize.y) {
 
 					PUBLISH_EVENT(Event::SceneResize, (int)vpSize.x, (int)vpSize.y);
 					lastSceneWindowSize = vpSize;

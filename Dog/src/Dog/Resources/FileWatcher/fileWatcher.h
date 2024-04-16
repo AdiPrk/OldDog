@@ -47,7 +47,7 @@ namespace Dog {
 
         void run() {
             while (running) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                std::this_thread::sleep_for(std::chrono::milliseconds(33)); //~30fps
                 
                 auto it = paths.begin();
                 while (it != paths.end()) {

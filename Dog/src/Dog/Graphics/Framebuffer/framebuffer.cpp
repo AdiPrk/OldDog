@@ -30,6 +30,9 @@ namespace Dog {
 
 	void FrameBuffer::OnResize(const Event::SceneResize& event)
 	{
+		if (event.width <= 0 || event.height <= 0)
+			return;
+
 		specification.width = event.width;
 		specification.height = event.height;
 

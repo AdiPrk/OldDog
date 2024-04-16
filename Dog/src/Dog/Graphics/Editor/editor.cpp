@@ -12,11 +12,14 @@
 #include "Windows/inspectorWindow.h"
 #include "Windows/toolbarWindow.h"
 #include "Windows/resourcesWindow.h"
+#include "Windows/textEditorWindow.h"
+#include "Windows/noEditorWindow.h"
 
 namespace Dog {
 	Editor::Editor()
 	{
-		fileBrowser = std::make_shared<FileBrowser>();
+		fileBrowser = std::make_unique<FileBrowser>();
+		textEditorWrapper = std::make_unique<TextEditorWrapper>();
 	}
 	
 	Editor::~Editor()
@@ -48,13 +51,33 @@ namespace Dog {
 
 	void Editor::beginFrame()
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		static bool keyHeld = false;
+		bool firstGameFrame = false;
+		if (io.KeyCtrl && io.KeyShift && io.KeysDown[ImGuiKey_J])
+		{
+			if (!keyHeld) {
+				renderEditor = !renderEditor;
+				keyHeld = true;
+				firstGameFrame = true;
+			}
+		}
+		else {
+			keyHeld = false;
+		}
+
+
 		// (Your code calls glfwPollEvents())
 		// ...
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		
+
+		if (!renderEditor) {
+			UpdateNoEditorWindow(firstGameFrame);
+			return;
+		}
 
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
@@ -80,6 +103,7 @@ namespace Dog {
 		UpdateInspectorWindow();
 		UpdateToolbarWindow();
 		UpdateResourcesWindow(*fileBrowser);
+		UpdateTextEditorWindow(*textEditorWrapper);
 	}
 
 	void Editor::endFrame()

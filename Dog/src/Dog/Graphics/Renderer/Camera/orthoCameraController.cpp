@@ -15,10 +15,10 @@ namespace Dog {
 		float speed = 25.0f * dt;
 
 		if (Input::isKeyDown(Key::W)) {
-			camera->SetPosition(camera->GetPosition() - glm::vec3(0.0f, 0.1f, 0.0f) * zoomLevel * speed);
+			camera->SetPosition(camera->GetPosition() + glm::vec3(0.0f, 0.1f, 0.0f) * zoomLevel * speed);
 		}
 		if (Input::isKeyDown(Key::S)) {
-			camera->SetPosition(camera->GetPosition() + glm::vec3(0.0f, 0.1f, 0.0f) * zoomLevel * speed);
+			camera->SetPosition(camera->GetPosition() - glm::vec3(0.0f, 0.1f, 0.0f) * zoomLevel * speed);
 		}
 		if (Input::isKeyDown(Key::A)) {
 			camera->SetPosition(camera->GetPosition() - glm::vec3(0.1f, 0.0f, 0.0f) * zoomLevel * speed);

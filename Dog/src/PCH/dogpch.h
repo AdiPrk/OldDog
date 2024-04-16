@@ -49,13 +49,16 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_node_editor.h"
 
-// Imgui Gizmos
+// ImGui Gizmos
 #include "GraphEditor.h"
 #include "ImCurveEdit.h"
 #include "ImGradient.h"
 #include "ImGuizmo.h"
 #include "ImSequencer.h"
 #include "ImZoomSlider.h"
+
+// ImGui Text Editor
+#include "ImGuiColorTextEdit/TextEditor.h"
 
 // EnTT
 #include "entt/entt.hpp"

@@ -4,6 +4,10 @@
 #include "Dog/engine.h"
 #include "Dog/Graphics/Window/window.h"
 
+/**
+ * UNUSED CAM CLASS - Use Ortho Camera for 2D.
+ */
+
 namespace Dog {
 
     Camera2D::Camera2D(int width, int height)

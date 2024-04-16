@@ -1,8 +1,5 @@
 #pragma once
 
-
-#include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
-
 namespace Dog {
 
 	struct TagComponent
@@ -45,6 +42,49 @@ namespace Dog {
 		SpriteComponent();
 		SpriteComponent(const SpriteComponent&) = default;
 		SpriteComponent(const glm::vec4& color, const std::string& texturePath);
+	};
+
+	struct ShaderComponent
+	{
+		std::string shaderPath;
+
+		ShaderComponent() = default;
+		ShaderComponent(const ShaderComponent&) = default;
+		ShaderComponent(const std::string& shaderPath) : shaderPath(shaderPath) {}
+	};
+
+	class OrthographicCamera;
+	class PerspectiveCamera;
+
+	struct CameraComponent
+	{
+		void SetAsCurrentCamera();
+
+		enum class CameraType
+		{
+			Orthographic = 0,
+			Perspective
+		};
+
+		bool MainCamera = false;
+
+		CameraType Projection = CameraType::Orthographic;
+
+		float OrthographicSize = 1.0f;
+		float OrthographicNear = -1.0f;
+		float OrthographicFar = 1.0f;
+
+		float PerspectiveFOV = 45.0f;
+		float PerspectiveNear = 0.01f;
+		float PerspectiveFar = 100.0f;
+		
+		std::unique_ptr<OrthographicCamera> orthoCamera;
+		std::unique_ptr<PerspectiveCamera> perspCamera;
+
+		CameraComponent();
+		CameraComponent(const CameraComponent& other);
+		CameraComponent(CameraType type);
+		void UpdateCamera();
 	};
 
 }

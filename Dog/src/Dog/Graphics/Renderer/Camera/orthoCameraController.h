@@ -14,6 +14,9 @@ namespace Dog {
 		void OnResize(const Event::SceneResize& event);
 
 		std::shared_ptr<OrthographicCamera> GetCamera() { return camera; }
+		const std::shared_ptr<OrthographicCamera> GetCamera() const { return camera; }
+
+		void UpdateUniforms() { camera->UpdateUniforms(); }
 
 		float GetZoomLevel() const { return zoomLevel; }
 		void SetZoomLevel(float level) { zoomLevel = level; }

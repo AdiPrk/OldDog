@@ -4,9 +4,21 @@
 #include "resource.h"
 #include "Dog/Logger/logger.h"
 #include "Dog/Graphics/Renderer/Shaders/shader.h"
-#include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
+#include "Dog/Graphics/Texture/texture2d.h"
 
 #define REGISTER_TYPE(type) factory->registerType<type>(type::GetTypeName())
+
+/**
+ * -------------- When Registering a New Resource -------------.
+ * 
+ * Add the following line to the Resources::Init() function:
+ * REGISTER_TYPE(YourResourceType);
+ * 
+ * If this resource is in a new directory:
+ * In resources.h, Add path & directory along with the other paths and directories
+ * Also add a new getter function for that directory.
+ * 
+ */
 
 namespace Dog {
 
@@ -124,12 +136,7 @@ namespace Dog {
 				break;
 			case FileAction::Modify:
 				Unload("Shader", result);
-				if (!Load("Shader", result)) {
-					break;
-				}
-				else {
-					Shader::SetShader(Get<Shader>(result));
-				}
+				Load("Shader", result);
 				break;
 			default:
 				break;

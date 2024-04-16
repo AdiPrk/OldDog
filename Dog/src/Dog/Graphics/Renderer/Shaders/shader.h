@@ -51,12 +51,15 @@ namespace Dog {
         static GLuint uboMatricesBindingPoint;
         static GLuint uboTime;
         static GLuint uboTimeBindingPoint;
+        static GLuint uboResolution;
+        static GLuint uboResolutionBindingPoint;
         static void SetupUBO();
         static void SetProjectionUBO(const glm::mat4& projection);
         static void SetViewUBO(const glm::mat4& view);
         static void SetProjectionViewUBO(const glm::mat4& projectionView);
         static void SetViewAndProjectionView(const glm::mat4& view, const glm::mat4& projectionView);
         static void SetTimeUBO(float time);
+        static void SetResolutionUBO(const glm::vec2& resolution);
         void BindUBO(const std::string& blockName, unsigned int bindingPoint);
 
         static void SetShader(std::shared_ptr<Shader> shader) { activeShader = shader->Use(); }

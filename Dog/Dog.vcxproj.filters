@@ -48,7 +48,7 @@
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Graphics\Renderer\Renderer2D\texture2d.cpp">
+    <ClCompile Include="src\Dog\Graphics\Texture\texture2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Dog\Resources\resource.cpp">
@@ -171,6 +171,15 @@
     <ClCompile Include="src\Dog\Resources\FileWatcher\fileWatcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\resourcesWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Window\frameRate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Dog\dog.h">
@@ -212,7 +221,7 @@
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Graphics\Renderer\Renderer2D\texture2d.h">
+    <ClInclude Include="src\Dog\Graphics\Texture\texture2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dog\Resources\resourceFactory.h">
@@ -353,6 +362,15 @@
     <ClInclude Include="src\Dog\Resources\FileWatcher\fileWatcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\resourcesWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Window\frameRate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="externals\imgui\imgui_bezier_math.inl">
@@ -379,6 +397,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="DogAssets\Images\circleOutline2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="DogAssets\Images\error.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="DogAssets\Images\playButton.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="DogAssets\Images\stopButton.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

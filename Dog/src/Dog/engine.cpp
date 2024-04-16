@@ -3,7 +3,7 @@
 #include "Graphics/Window/window.h"
 #include "Dog/Logger/logger.h"
 #include "Dog/Graphics/Renderer/Renderer2D/renderer2d.h"
-#include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
+#include "Dog/Graphics/Texture/texture2d.h"
 #include "Dog/Graphics/Renderer/Renderer3D/DeferredRenderer.h"
 #include "Dog/Input/input.h"
 
@@ -14,18 +14,21 @@
 
 #include "Dog/Resources/FileWatcher/fileWatcher.h"
 
+#include "Dog/Graphics/Window/frameRate.h"
+
 namespace Dog {
 
-	Engine::Engine(unsigned int width, unsigned int height, const std::string& name)
+	Engine::Engine(const EngineSpec& specs)
 		: running(true)
+		, name(specs.name)
+		, targetFPS(specs.fps)
 	{
 		Logger::Init();
 		Resources::Init();
 
-		window = std::make_shared<Window>(width, height, name);
+		window = std::make_shared<Window>(specs.width, specs.height, name);
 		renderer2D = std::make_shared<Renderer2D>();
 		deferredRenderer = std::make_shared<DeferredRenderer>();
-		//camera->SetPosition(glm::vec3(width * -0.5f, height * -0.5f, 0.0f));
 		editor = std::make_shared<Editor>();
 
 		Shader::SetupUBO();
@@ -34,9 +37,6 @@ namespace Dog {
 
 		renderer2D->initialize();
 		deferredRenderer->initialize();
-
-		std::shared_ptr<Shader> sp = Resources::Load<Shader>("DogAssets/Shaders/defaultsprite");
-		Shader::SetShader(sp);
 
 		// Setup Editor
 		editor->Init(window->GetWindowHandle());
@@ -79,16 +79,8 @@ namespace Dog {
 		Init(startScene);
 
 		// A test for loading a duplicate resource. Should emit a warning in Debug mode.
-		Resources::Load("Texture2D", "DogAssets/Images/square.png");
-		Resources::Load<Texture2D>("DogAssets/Images/square.png");
-		Resources::Load<Texture2D>("DogAssets/Images/playButton.png");
-		Resources::Load<Texture2D>("DogAssets/Images/stopButton.png");
-		Resources::Load("Texture2D", "DogAssets/Images/circle.png");
-		Resources::Load("Texture2D", "DogAssets/Images/error.png");
-		Resources::Load("Shader", "DogAssets/Shaders/error");
-
-		FileWatcher<Event::ImageFileCreated, Event::ImageFileModified, Event::ImageFileDeleted> imageWatcher("DogAssets/Images");
-		FileWatcher<Event::ShaderFileCreated, Event::ShaderFileModified, Event::ShaderFileDeleted> shaderWatcher("DogAssets/Shaders");
+		FileWatcher<Event::ImageFileCreated, Event::ImageFileModified, Event::ImageFileDeleted> imageWatcher(Resources::ImagesPath);
+		FileWatcher<Event::ShaderFileCreated, Event::ShaderFileModified, Event::ShaderFileDeleted> shaderWatcher(Resources::ShadersPath);
 		imageWatcher.start();
 		shaderWatcher.start();
 
@@ -97,9 +89,13 @@ namespace Dog {
 		float deltaTime = 0.0f;
 		float lastTime = 0.0f;
 		float accumulator = 0.0f;
-				
+			
+		FrameRateController frameRateController(targetFPS);
+
 		while (running && !glfwWindowShouldClose(window->GetWindowHandle())) 
 		{
+			float deltaTime = frameRateController.waitForNextFrame();
+
 			Input::Update();
 			if (Input::isKeyDown(Key::ESCAPE)) {
 				running = false;
@@ -109,17 +105,14 @@ namespace Dog {
 			// Update resources
 			Resources::UpdateResources();
 
+			Shader::iTime += deltaTime;
+			Shader::SetTimeUBO(Shader::iTime);
+
 			// Initialize/Swap scenes.
 			SceneManager::SwapScenes();
 
 			// Update Editor.
 			editor->beginFrame();
-
-			// Calculate delta time.
-			float currentTime = (float)glfwGetTime();
-			deltaTime = std::min(currentTime - lastTime, 0.1f); // 10fps min
-			accumulator += deltaTime;
-			lastTime = currentTime;
 
 			// Just a little window fps counter.
 			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM1));

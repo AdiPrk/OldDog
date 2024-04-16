@@ -7,6 +7,11 @@
 
 
 namespace Dog {
+    Entity::Entity()
+        : scene(nullptr)
+        , handle(entt::null)
+    {
+    }
 
     Entity::Entity(Scene* scene_)
     {
@@ -14,15 +19,22 @@ namespace Dog {
         handle = scene->GetRegistry().create();
     }
 
+    Entity::Entity(Scene* scene, entt::entity handle) 
+        : scene(scene)
+        , handle(handle)
+    {
+    }
+
     Entity::Entity(const Entity& other) 
     {
         scene = other.scene;
-        handle = scene->GetRegistry().create();
+        handle = other.handle;
+    }
 
-        // Copy all components
-        /*entt::registry& registry = scene->GetRegistry();
-        entt::registry& otherRegistry = other.scene->GetRegistry();*/
-
+    void Entity::operator=(const Entity& other)
+    {
+		scene = other.scene;
+        handle = other.handle;
     }
 
     Entity::~Entity() {

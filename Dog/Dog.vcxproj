@@ -673,16 +673,19 @@ goto copy_assets</Command>
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\consoleWindow.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\entitiesWindow.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\inspectorWindow.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\resourcesWindow.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\sceneWindow.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\toolbarWindow.cpp" />
     <ClCompile Include="src\Dog\Graphics\Framebuffer\framebuffer.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\camera2d.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCameraController.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.cpp" />
-    <ClCompile Include="src\Dog\Graphics\Renderer\Renderer2D\texture2d.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Texture\texture2d.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Shaders\shader.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Window\frameRate.cpp" />
     <ClCompile Include="src\Dog\Graphics\Window\window.cpp" />
     <ClCompile Include="src\Dog\Input\input.cpp" />
     <ClCompile Include="src\Dog\Logger\logger.cpp" />
@@ -785,17 +788,20 @@ goto copy_assets</Command>
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\consoleWindow.h" />
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\entitiesWindow.h" />
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\inspectorWindow.h" />
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\resourcesWindow.h" />
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\sceneWindow.h" />
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\toolbarWindow.h" />
     <ClInclude Include="src\Dog\Graphics\Framebuffer\framebuffer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\camera2d.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCameraController.h" />
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\IRenderer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.h" />
-    <ClInclude Include="src\Dog\Graphics\Renderer\Renderer2D\texture2d.h" />
+    <ClInclude Include="src\Dog\Graphics\Texture\texture2d.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Shaders\shader.h" />
+    <ClInclude Include="src\Dog\Graphics\Window\frameRate.h" />
     <ClInclude Include="src\Dog\Graphics\Window\Iwindow.h" />
     <ClInclude Include="src\Dog\Graphics\Window\window.h" />
     <ClInclude Include="src\Dog\Input\input.h" />
@@ -824,7 +830,10 @@ goto copy_assets</Command>
   <ItemGroup>
     <Image Include="DogAssets\Images\circle.png" />
     <Image Include="DogAssets\Images\circleOutline2.png" />
+    <Image Include="DogAssets\Images\error.png" />
+    <Image Include="DogAssets\Images\playButton.png" />
     <Image Include="DogAssets\Images\square.png" />
+    <Image Include="DogAssets\Images\stopButton.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

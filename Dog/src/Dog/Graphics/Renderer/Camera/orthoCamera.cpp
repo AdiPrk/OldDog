@@ -14,6 +14,13 @@ namespace Dog {
 		viewProjectionMatrix = projectionMatrix * viewMatrix;
 	}
 
+	OrthographicCamera::OrthographicCamera(float aspect, float zoom)
+	{
+		aspectRatio = aspect;
+		zoomLevel = zoom;
+		SetProjection(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
+	}
+
 	void OrthographicCamera::OnResize(const Event::SceneResize& event)
 	{
 		const int& width = event.width;

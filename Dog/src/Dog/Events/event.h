@@ -2,6 +2,8 @@
 
 namespace Dog {
 
+    class Shader;
+
     namespace Event {
         // Window events
         struct WindowResize{ int width, height; };
@@ -93,6 +95,6 @@ namespace Dog {
     (HANDLE).reset();
 
 #define PUBLISH_EVENT(EVENT_TYPE, ...) \
-    Events::Publish(EVENT_TYPE{__VA_ARGS__});
+    Events::Publish(EVENT_TYPE{__VA_ARGS__})
 
 } // namespace Dog

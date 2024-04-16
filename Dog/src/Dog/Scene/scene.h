@@ -13,7 +13,6 @@ namespace Dog {
 		Scene(const std::string&);
 		~Scene();
 
-
 		virtual void Init() {}
 		virtual void Update(float dt) {}
 		virtual void Render(float dt) {}
@@ -21,10 +20,7 @@ namespace Dog {
 
 		const std::string& GetName() const { return sceneName; }
 
-		class Entity CreateEntity();
-
-		std::shared_ptr<OrthographicCamera>& GetCamera() { return camera; }
-		std::shared_ptr<OrthographicCameraController>& GetCameraController() { return cameraController; }
+		class Entity CreateEntity(const std::string& name = "Unnamed Entity");
 
 		const std::shared_ptr<FrameBuffer>& GetFrameBuffer() const { return frameBuffer; }
 		std::shared_ptr<FrameBuffer>& GetFrameBuffer() { return frameBuffer; }
@@ -32,6 +28,9 @@ namespace Dog {
 		void OnPlayButtonPressed(const Event::PlayButtonPressed& event);
 		void OnStopButtonPressed(const Event::StopButtonPressed& event);
 
+		// Entity related stuff
+		entt::registry& GetRegistry() { return registry; }
+		entt::registry registry;
 	private:
 		// Scene name only used for debug purposes
 		std::string sceneName;
@@ -39,11 +38,6 @@ namespace Dog {
 		// Scene width & height, equal to window width & height
 		unsigned int width;
 		unsigned int height;
-		
-		// Entity related stuff
-		friend Entity;
-		entt::registry& GetRegistry() { return registry; }
-		entt::registry registry;
 
 		// Framebuffer for the editor to render the scene
 		std::shared_ptr<FrameBuffer> frameBuffer;
@@ -56,8 +50,7 @@ namespace Dog {
 		void InternalExit();
 
 		// Scene camera
-		std::shared_ptr<OrthographicCamera> camera;
-		std::shared_ptr<OrthographicCameraController> cameraController;
+		std::shared_ptr<OrthographicCameraController> sceneCameraController;
 
 		// Event handles
 		Events::Handle<Event::SceneResize> eventSceneFBResize;

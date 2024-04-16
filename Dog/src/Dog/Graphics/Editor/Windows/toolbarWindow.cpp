@@ -1,7 +1,7 @@
 #include <PCH/dogpch.h>
 #include "toolbarWindow.h"
 #include "Dog/engine.h"
-#include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
+#include "Dog/Graphics/Texture/texture2d.h"
 
 namespace Dog {
 
@@ -25,13 +25,13 @@ namespace Dog {
 		// get tex id
 		unsigned texId = 0;
 		if (isPlaying) {
-			auto tex = Resources::Get<Texture2D>("DogAssets/Images/stopButton.png");
+			auto tex = Resources::GetImage<Texture2D>("stopButton.png");
 			if (tex) {
 				texId = tex->ID;
 			}
 		}
 		else {
-			auto tex = Resources::Get<Texture2D>("DogAssets/Images/playButton.png");
+			auto tex = Resources::GetImage<Texture2D>("playButton.png");
 			if (tex) {
 				texId = tex->ID;
 			}

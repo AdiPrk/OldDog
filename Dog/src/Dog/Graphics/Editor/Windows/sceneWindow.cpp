@@ -3,7 +3,7 @@
 
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
 #include "Dog/Input/input.h"
-#include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
+#include "Dog/Graphics/Texture/texture2d.h"
 #include "Dog/engine.h"
 #include "Dog/Scene/sceneManager.h"
 #include "Dog/Scene/scene.h"
@@ -14,6 +14,12 @@ namespace Dog {
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Scene");
+
+		// 2d/3d button toggle with checkbox
+		static bool is3D = false;
+
+		ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() - 30.0f - ImGui::CalcTextSize("3D").x, 25.0f));
+		ImGui::Checkbox("3D", &is3D);
 
 		Scene* currentScene = SceneManager::GetCurrentScene();
 		if (currentScene) {

@@ -31,13 +31,13 @@ namespace Dog {
 		width = Engine::Get().GetWindow()->GetWidth();
 		height = Engine::Get().GetWindow()->GetHeight();
 
-		cameraController = std::make_shared<OrthographicCameraController>((float)width / (float)height);
-		camera = cameraController->GetCamera();
+		Shader::SetResolutionUBO(glm::vec2(fbSpec.width, fbSpec.height));
 
-		camera->UpdateUniforms(); // Should be moved to the renderer (?) or somewhere else
+		sceneCameraController = std::make_shared<OrthographicCameraController>((float)width / (float)height);
+		sceneCameraController->GetCamera()->UpdateUniforms(); // Should be moved to the renderer (?) or somewhere else
 
 		eventSceneFBResize = SUBSCRIBE_EVENT(Event::SceneResize, frameBuffer->OnResize);
-		eventSceneCamResize = SUBSCRIBE_EVENT(Event::SceneResize, cameraController->OnResize);
+		eventSceneCamResize = SUBSCRIBE_EVENT(Event::SceneResize, sceneCameraController->OnResize);
 		eventPlayButtonPressed = SUBSCRIBE_EVENT(Event::PlayButtonPressed, OnPlayButtonPressed);
 		eventStopButtonPressed = SUBSCRIBE_EVENT(Event::StopButtonPressed, OnStopButtonPressed);
 	}
@@ -56,14 +56,16 @@ namespace Dog {
 		DOG_INFO("Stop button pressed.");
 	}
 
-	Entity Scene::CreateEntity()
+	Entity Scene::CreateEntity(const std::string& name)
 	{
 		Entity newEnt(this);
 
 		TagComponent& tg = newEnt.AddComponent<TagComponent>();
 		TransformComponent& tr = newEnt.AddComponent<TransformComponent>();
-		tr.Translation -= tr.Scale * 0.5f;
 		SpriteComponent& sc = newEnt.AddComponent<SpriteComponent>();
+		
+		tg.Tag = name;
+		tr.Translation -= tr.Scale * 0.5f;
 
 		return newEnt;
 	}
@@ -81,8 +83,8 @@ namespace Dog {
 		DOG_INFO("Scene {0} Update.", sceneName);
 #endif
 
-		cameraController->OnUpdate(dt);
-		camera->UpdateUniforms();
+		sceneCameraController->OnUpdate(dt);
+		sceneCameraController->UpdateUniforms();
 	}
 
 	void Scene::InternalRender(float dt)
@@ -98,8 +100,15 @@ namespace Dog {
 		renderer2D->beginFrame();
 
 		registry.view<TransformComponent, SpriteComponent>().each
-		([renderer2D](const auto& entity, const TransformComponent& transform, const SpriteComponent& sprite) {
-			renderer2D->DrawSprite(sprite.texturePath, transform.GetTransform(), sprite.Color);
+		([&](const auto& entity, const TransformComponent& transform, const SpriteComponent& sprite) {
+			if (registry.all_of<ShaderComponent>(entity)) {
+				ShaderComponent& shader = registry.get<ShaderComponent>(entity);
+				renderer2D->DrawSprite(sprite.texturePath, transform.GetTransform(), sprite.Color, glm::vec2(0), 0.0f, shader.shaderPath);
+			}
+			else {
+				renderer2D->DrawSprite(sprite.texturePath, transform.GetTransform(), sprite.Color);
+			}
+
 		});
 
 		renderer2D->endFrame();

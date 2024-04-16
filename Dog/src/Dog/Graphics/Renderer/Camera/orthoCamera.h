@@ -6,6 +6,7 @@ namespace Dog {
 	{
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
+		OrthographicCamera(float aspect, float zoom);
 		~OrthographicCamera() = default;
 
 		void OnResize(const Event::SceneResize& event);

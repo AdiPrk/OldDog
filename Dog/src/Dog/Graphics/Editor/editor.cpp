@@ -1,7 +1,7 @@
 #include <PCH/dogpch.h>
 #include "editor.h"
 #include "Dog/engine.h"
-#include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
+#include "Dog/Graphics/Texture/texture2d.h"
 #include "Dog/Resources/resources.h"
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
 #include "Dog/Input/input.h"
@@ -11,10 +11,12 @@
 #include "Windows/entitiesWindow.h"
 #include "Windows/inspectorWindow.h"
 #include "Windows/toolbarWindow.h"
+#include "Windows/resourcesWindow.h"
 
 namespace Dog {
 	Editor::Editor()
 	{
+		fileBrowser = std::make_shared<FileBrowser>();
 	}
 	
 	Editor::~Editor()
@@ -67,7 +69,7 @@ namespace Dog {
 			ImGui::EndMenu();
 		}
 
-		ImGui::EndMainMenuBar();
+		ImGui::EndMainMenuBar(); // File
 
 		ImGui::ShowDemoWindow(); // Show demo window! :)
 
@@ -77,6 +79,7 @@ namespace Dog {
 		UpdateEntitiesWindow();
 		UpdateInspectorWindow();
 		UpdateToolbarWindow();
+		UpdateResourcesWindow(*fileBrowser);
 	}
 
 	void Editor::endFrame()

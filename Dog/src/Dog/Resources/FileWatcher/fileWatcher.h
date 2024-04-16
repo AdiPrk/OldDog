@@ -9,7 +9,11 @@ namespace Dog {
             : directory(normalize_path(path)), running(true) {
             for (const auto& entry : std::filesystem::directory_iterator(directory)) {
                 if (std::filesystem::is_regular_file(entry)) {
-                    paths[normalize_path(entry.path().string())] = std::filesystem::last_write_time(entry);
+                    std::string normalized_path = normalize_path(entry.path().string());
+
+                    paths[normalized_path] = std::filesystem::last_write_time(entry);
+
+                    PUBLISH_EVENT(OnCreate, normalized_path);
                 }
             }
         }
@@ -43,7 +47,8 @@ namespace Dog {
 
         void run() {
             while (running) {
-                std::this_thread::sleep_for(std::chrono::seconds(1));
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                
                 auto it = paths.begin();
                 while (it != paths.end()) {
                     auto normalized_path = normalize_path(it->first);

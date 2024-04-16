@@ -6,8 +6,11 @@ namespace Dog {
 
     class Entity {
     public:
+        Entity(); // an empty entity
         Entity(Scene* scene);
+        Entity(Scene* scene, entt::entity handle);
         Entity(const Entity& other);
+        void operator=(const Entity& other);
         ~Entity();
 
         template<typename T, typename... Args>
@@ -25,9 +28,35 @@ namespace Dog {
             return scene->GetRegistry().all_of<T>(handle);
         }
 
+        bool operator==(const Entity& other) const {
+			return handle == other.handle && scene == other.scene;
+		}
+
+        bool operator!=(const Entity& other) const {
+            return !operator==(other);
+        }
+
+        operator bool() const {
+			return handle != entt::null && scene != nullptr;
+		}
+
+        operator entt::entity() const {
+			return handle;
+		}
+
+        Scene* GetScene() { return scene; }
+
     private:
         Scene* scene;
         entt::entity handle;
+    };
+
+    struct Parent {
+        Entity parent;
+    };
+
+    struct Children {
+        std::vector<Entity> children;
     };
 
 }

@@ -25,6 +25,7 @@ namespace Dog {
 		}
 
 		// Get resource by filePath
+		// Requires full relative path
 		template <typename T>
 		static std::shared_ptr<T> Get(const std::string& filePath) {
 			// static assert if T doesn't derive from resource
@@ -40,9 +41,30 @@ namespace Dog {
 
 			return nullptr;
 		}
+
+		// Convenience functions for getting resources
+		template <typename T>
+		static std::shared_ptr<T> GetImage(const std::string& filePath) {
+			return Get<T>(ImagesPath + filePath);
+		}
+
+		template <typename T>
+		static std::shared_ptr<T> GetShader(const std::string& filePath) {
+			return Get<T>(ShadersPath + filePath);
+		}
 		
 		static void Unload(const std::string& type, const std::string& filePath);
 		static void UnloadAll();
+
+		inline static const std::string AssetsDir = "DogAssets/";
+
+		inline static const std::string EditorDir = "Editor/";
+		inline static const std::string ShadersDir = "Shaders/";
+		inline static const std::string ImagesDir = "Images/";
+
+		inline static const std::string EditorPath = AssetsDir + EditorDir;
+		inline static const std::string ShadersPath = AssetsDir + ShadersDir;
+		inline static const std::string ImagesPath = AssetsDir + ImagesDir;
 
 	private:
 		static std::unordered_map<std::string, std::shared_ptr<Resource>> resources;
@@ -67,6 +89,7 @@ namespace Dog {
 		static void OnShaderFileModify(const Event::ShaderFileModified& event);
 
 		std::mutex fileActionsMutex;
+
 	};
 
 }

@@ -1,6 +1,8 @@
 #pragma once
 
-
+/**
+ * UNUSED CAM CLASS - Use Ortho Camera for 2D.
+ */
 
 namespace Dog {
 

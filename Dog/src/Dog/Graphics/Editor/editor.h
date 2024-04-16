@@ -1,8 +1,8 @@
 #pragma once
 
-
-
 namespace Dog {
+
+	class FileBrowser;
 
 	class Editor {
 	public:
@@ -22,6 +22,9 @@ namespace Dog {
 
 		void beginFrame();
 		void endFrame();
+
+	private:
+		std::shared_ptr<FileBrowser> fileBrowser;
 	};
 
 } // namespace Dog

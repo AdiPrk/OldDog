@@ -3,7 +3,7 @@
 
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
 #include "Dog/Input/input.h"
-#include "Dog/Graphics/Renderer/Renderer2D/texture2d.h"
+#include "Dog/Graphics/Texture/texture2d.h"
 #include "Dog/engine.h"
 #include "Dog/Scene/sceneManager.h"
 #include "Dog/Scene/scene.h"

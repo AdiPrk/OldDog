@@ -9,8 +9,11 @@ namespace Dog {
     float Shader::iTime = 0.0f;
     GLuint Shader::uboMatrices = 0;
     GLuint Shader::uboTime = 0;
+    GLuint Shader::uboResolution = 0;
     GLuint Shader::uboMatricesBindingPoint = 0;
     GLuint Shader::uboTimeBindingPoint = 1;
+    GLuint Shader::uboResolutionBindingPoint = 2;
+
     int Shader::CurrentID = 0;
 
     Shader Shader::activeShader;
@@ -30,6 +33,7 @@ namespace Dog {
             if (!fFile.good()) {
                 DOG_CRITICAL("Shader files not found: {0}", fShaderFile);
             }
+
             return false;
 		}
 
@@ -41,6 +45,7 @@ namespace Dog {
 
         BindUBO("Matricies", Shader::uboMatricesBindingPoint);
         BindUBO("Time", Shader::uboTimeBindingPoint);
+        BindUBO("Resolution", Shader::uboResolutionBindingPoint);
 
         return true;
     }
@@ -83,10 +88,6 @@ namespace Dog {
 
     Shader::~Shader()
     {
-        if (activeShader.ID == ID) {
-            activeShader = *Resources::Get<Shader>("DogAssets/Shaders/error").get();
-		}
-
         glDeleteProgram(ID);
     }
 
@@ -260,6 +261,11 @@ namespace Dog {
         glBindBuffer(GL_UNIFORM_BUFFER, uboTime);
         glBufferData(GL_UNIFORM_BUFFER, 3 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
         glBindBufferRange(GL_UNIFORM_BUFFER, 1, uboTime, 0, sizeof(float));
+
+        glGenBuffers(1, &uboResolution);
+        glBindBuffer(GL_UNIFORM_BUFFER, uboResolution);
+        glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::vec2), NULL, GL_STATIC_DRAW);
+        glBindBufferRange(GL_UNIFORM_BUFFER, 2, uboResolution, 0, sizeof(glm::vec2));
     }
 
     void Shader::SetProjectionUBO(const glm::mat4& projection)
@@ -290,6 +296,12 @@ namespace Dog {
     void Shader::SetTimeUBO(float time) {
         glBindBuffer(GL_UNIFORM_BUFFER, uboTime);
         glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(float), &time);
+    }
+
+    void Shader::SetResolutionUBO(const glm::vec2& resolution)
+    {
+        glBindBuffer(GL_UNIFORM_BUFFER, uboResolution);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec2), glm::value_ptr(resolution));
     }
 
     void Shader::BindUBO(const std::string& blockName, unsigned int bindingPoint) {

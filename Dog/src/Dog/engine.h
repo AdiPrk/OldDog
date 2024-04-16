@@ -8,18 +8,25 @@ namespace Dog {
 	class Scene;
 	class Editor;
 
+	struct EngineSpec {
+		std::string name = "Dog Engine";
+		unsigned width = 1280;
+		unsigned height = 720;
+		unsigned fps = 60;
+	};
+
 	class Engine {
 	public:
 		// Creates the Engine! Note, the width and height set here are used as the aspect ratio for everything rendered.
 		// width: The width of the window.
 		// height: The height of the window.
 		// name: The name of the window.
-		Engine(unsigned int width, unsigned int height, const std::string& name);
+		Engine(const EngineSpec& specs);
 		~Engine();
 
-		static Engine& Get(unsigned int width = 1280, unsigned int height = 720, const std::string& name = "Dog Engine")
+		static Engine& Get(const EngineSpec& specs = {})
 		{
-			static Engine instance(width, height, name);
+			static Engine instance(specs);
 			return instance;
 		}
 
@@ -33,11 +40,18 @@ namespace Dog {
 		static std::shared_ptr<DeferredRenderer>& GetDeferredRenderer() { return Get().deferredRenderer; }
 		static std::shared_ptr<Editor>& GetEditor() { return Get().editor; }
 
+		std::string GetName() const { return name; }
+		unsigned GetTargetFPS() const { return targetFPS; }
+		void SetTargetFPS(unsigned fps) { targetFPS = fps; }
+
 	private:
 		void Init(Scene* startScene);
 		void Shutdown();
 
 		bool running;
+		std::string name;
+		unsigned targetFPS;
+
 		std::shared_ptr<IWindow> window;
 		std::shared_ptr<Renderer2D> renderer2D;
 		std::shared_ptr<DeferredRenderer> deferredRenderer;

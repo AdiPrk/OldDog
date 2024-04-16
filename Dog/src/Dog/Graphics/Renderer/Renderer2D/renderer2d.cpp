@@ -1,6 +1,6 @@
 #include <PCH/dogpch.h>
 #include "renderer2d.h"
-#include "texture2d.h"
+#include "Dog/Graphics/Texture/texture2d.h"
 
 namespace Dog {
 
@@ -61,12 +61,26 @@ namespace Dog {
 
 	}
 
-    void Renderer2D::DrawSprite(const std::string& texturePath, const glm::mat4& transform, glm::vec4 color, glm::vec2 repetition, float depth) const
+    void Renderer2D::DrawSprite(const std::string& texturePath, const glm::mat4& transform, glm::vec4 color, glm::vec2 repetition, float depth, const std::string& shaderPath)
     {
-        const std::shared_ptr<Texture2D> texturePtr = Resources::Get<Texture2D>(texturePath);
+        auto shaderPtr = Resources::GetShader<Shader>(shaderPath);
+
+        if (!shaderPtr) {
+            if (shaderPath == "error") return;
+
+            DrawSprite(texturePath, transform, glm::vec4(1), glm::vec2(0), depth, "error");
+            return;
+        }
+
+        if (shaderPtr->ID != activeShaderID) {
+            activeShaderID = shaderPtr->ID;
+            Shader::SetShader(shaderPtr);
+        }
+
+        const std::shared_ptr<Texture2D> texturePtr = Resources::GetImage<Texture2D>(texturePath);
         if (!texturePtr) {
             DOG_ERROR("Trying to render a sprite with a texture that doesn't exist: {0}", texturePath);
-            DrawSprite("DogAssets/Images/error.png", transform, glm::vec4(1), glm::vec2(0), depth);
+            DrawSprite("error.png", transform, glm::vec4(1), glm::vec2(0), depth, shaderPath);
             return;
         }
         const Texture2D& texture = *texturePtr;
@@ -74,7 +88,6 @@ namespace Dog {
         Shader& shader = Shader::GetActiveShader();
 
         shader.SetMatrix4("model", transform);
-        //Renderer::GetActiveShader().SetFloat("depth", RandomFloat());
 
         // render textured quad
         shader.SetVector4f("spriteColor", color);
@@ -105,7 +118,7 @@ namespace Dog {
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     }
 
-    void Renderer2D::DrawSprite(const std::string& texturePath, glm::vec2 position, glm::vec2 size, float rotation, glm::vec4 color, glm::vec2 repetition, float depth) const
+    void Renderer2D::DrawSprite(const std::string& texturePath, glm::vec2 position, glm::vec2 size, float rotation, glm::vec4 color, glm::vec2 repetition, float depth)
     {
         // prepare transformations
         glm::mat4 model = glm::mat4(1.0f);

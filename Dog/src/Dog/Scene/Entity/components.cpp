@@ -64,4 +64,19 @@ namespace Dog {
 
 	}
 
+	ShaderComponent::ShaderComponent()
+		: shaderPath("defaultsprite")
+	{
+	}
+
+	ShaderComponent::ShaderComponent(const ShaderComponent& other)
+		: shaderPath(other.shaderPath)
+	{
+	}
+
+	ShaderComponent::ShaderComponent(const std::string& shaderPath) 
+		: shaderPath(shaderPath) 
+	{
+	}
+
 } // namespace Dog

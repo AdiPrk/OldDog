@@ -20,21 +20,11 @@ layout (std140) uniform Resolution
 
 void main()
 {
-    vec2 newTexCoords = TexCoords * repetition;
-    fragColor = spriteColor * texture(textureHandle, vec3(newTexCoords, spriteIndex));
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = TexCoords;
 
-    vec2 col;
-    float t = iTime;
-    vec2 uv = (TexCoords - 0.5) * 2.0;
-    float factor = 1.5;
-    vec2 v1;
-    for(int i=0;i<12;i++)
-    {
-        uv *= -factor*factor;
-        //uv.x *= 2.0;
-        v1 = uv.yx/factor;
-        uv += sin(v1+col+t*10.0)/factor;
-        col += vec2(sin(uv.x-uv.y+v1.x-col.y),sin(uv.y-uv.x+v1.y-col.x));
-    }
-    fragColor *= vec4(vec3(col.x+1.0,col.x-col.y/2.0,col.x*2.0)/2.0,1.0);
+    // Output to screen
+    vec3 col = vec3(uv.y);
+    
+    fragColor = vec4(col,1.0);
 }

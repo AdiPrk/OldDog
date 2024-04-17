@@ -52,6 +52,7 @@ namespace Dog {
 	void Editor::beginFrame()
 	{
 		ImGuiIO& io = ImGui::GetIO();
+
 		static bool keyHeld = false;
 		bool firstGameFrame = false;
 		if (io.KeyCtrl && io.KeyShift && io.KeysDown[ImGuiKey_J])

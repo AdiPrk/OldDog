@@ -10,6 +10,8 @@ namespace Dog {
 
     bool Texture2D::load(const std::string& file)
     {
+        stbi_set_flip_vertically_on_load(true);
+
         // check if file exists
         std::ifstream infile(file);
         if (!infile.good())

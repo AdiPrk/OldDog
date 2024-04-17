@@ -44,6 +44,10 @@ namespace Dog {
 			return handle;
 		}
 
+        operator int() const {
+            return (int)handle;
+        }
+
         Scene* GetScene() { return scene; }
 
     private:

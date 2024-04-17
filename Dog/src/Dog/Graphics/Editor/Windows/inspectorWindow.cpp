@@ -18,13 +18,28 @@ namespace Dog {
 	void UpdateInspectorWindow() {
 		ImGui::Begin("Inspector");
 
+		static Entity lastSelectedEntity;
 		Entity selectedEntity = GetSelectedEntity();
+
+		bool entityChanged = lastSelectedEntity != selectedEntity;
+
+		if (entityChanged) {
+			lastSelectedEntity = selectedEntity;
+		}
 
 		if (!selectedEntity) {
 			ImGui::Text("No entity selected.");
 			ImGui::End(); // Inspector
 			return;
 		}
+
+		if (entityChanged) {
+			// ImGui::Text("Switching Entities...");
+			// ImGui::End(); // Inspector
+			// return; // don't display for one frame.
+		}
+
+		ImGui::PushID(selectedEntity);
 
 		// Display components
 		DisplayComponents(selectedEntity);
@@ -44,6 +59,8 @@ namespace Dog {
 			ImGui::EndPopup();
 		}
 
+		ImGui::PopID();
+
 		ImGui::End(); // Inspector
 	}
 
@@ -58,6 +75,14 @@ namespace Dog {
 		auto& tag = tagComponent.Tag;
 
 		ImGui::InputText("Name##TagProp", &tag);
+		
+		/*bool imguiDrawCursor = false;
+		if (ImGui::IsItemHovered()) {
+			ImGui::SetTooltip("The entity's name.");
+			imguiDrawCursor = true;
+		}
+
+		ImGui::GetIO().MouseDrawCursor = imguiDrawCursor;*/
 	}
 
 	void RenderTransformComponent(TransformComponent& transform) {
@@ -74,7 +99,16 @@ namespace Dog {
 		ImGui::SetNextItemOpen(false, ImGuiCond_FirstUseEver);
 
 		if (ImGui::CollapsingHeader("Sprite##header")) {
+			// Don't make the input text hide the cursor.
+			
 			ImGui::InputText("Texture##SpriteProp", &sprite.texturePath);
+			/*bool imguiDrawCursor = false;
+			if (ImGui::IsItemHovered()) {
+				ImGui::SetTooltip("Drag and drop a texture here.");
+				imguiDrawCursor = true;
+			}
+
+			ImGui::GetIO().MouseDrawCursor = ImGui::GetIO().MouseDrawCursor || imguiDrawCursor;*/
 
 			if (ImGui::BeginDragDropTarget()) {
 				// Accept data that has the identifier "DRAG_INT"

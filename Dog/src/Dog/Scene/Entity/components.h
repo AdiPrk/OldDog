@@ -48,9 +48,9 @@ namespace Dog {
 	{
 		std::string shaderPath;
 
-		ShaderComponent() = default;
-		ShaderComponent(const ShaderComponent&) = default;
-		ShaderComponent(const std::string& shaderPath) : shaderPath(shaderPath) {}
+		ShaderComponent();
+		ShaderComponent(const ShaderComponent& other);
+		ShaderComponent(const std::string& shaderPath);
 	};
 
 	class OrthographicCamera;

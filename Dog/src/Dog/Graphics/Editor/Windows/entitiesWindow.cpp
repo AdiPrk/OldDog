@@ -55,7 +55,7 @@ namespace Dog {
 	}
 
 	void UpdateEntitiesWindow() {
-		ImGui::Begin("Entities", nullptr, ImGuiWindowFlags_MenuBar);
+		ImGui::Begin("Entities##window", nullptr, ImGuiWindowFlags_MenuBar);
 
 		Scene* currentScene = SceneManager::GetCurrentScene();
 		if (!currentScene) {

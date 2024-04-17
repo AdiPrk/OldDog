@@ -32,7 +32,7 @@ namespace Dog {
 		float aspectRatio = width / height;
 
 		orthoCamera = std::make_unique<OrthographicCamera>(aspectRatio, OrthographicSize);
-		perspCamera = std::make_unique<PerspectiveCamera>();
+		//perspCamera = std::make_unique<PerspectiveCamera>();
 	}
 
 	CameraComponent::CameraComponent(const CameraComponent& other)
@@ -44,7 +44,7 @@ namespace Dog {
 		, PerspectiveNear(other.PerspectiveNear)
 		, PerspectiveFar(other.PerspectiveFar)
 		, orthoCamera(std::make_unique<OrthographicCamera>(*other.orthoCamera))
-		, perspCamera(std::make_unique<PerspectiveCamera>(*other.perspCamera))
+		//, perspCamera(std::make_unique<PerspectiveCamera>(*other.perspCamera))
 	{
 	}
 
@@ -56,7 +56,7 @@ namespace Dog {
 		float aspectRatio = width / height;
 
 		orthoCamera = std::make_unique<OrthographicCamera>(aspectRatio, OrthographicSize);
-		perspCamera = std::make_unique<PerspectiveCamera>();
+		//perspCamera = std::make_unique<PerspectiveCamera>();
 	}
 
 	void CameraComponent::UpdateCamera()

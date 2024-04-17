@@ -11,6 +11,7 @@ namespace Dog {
 
 		void OnResize(const Event::SceneResize& event);
 
+		void SetZoomLevel(float aspect, float level);
 		void SetProjection(float left, float right, float bottom, float top);
 
 		const glm::vec3& GetPosition() const;

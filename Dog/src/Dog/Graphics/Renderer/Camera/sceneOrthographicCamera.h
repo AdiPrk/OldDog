@@ -4,11 +4,11 @@
 
 namespace Dog {
 
-	class OrthographicCameraController
+	class SceneOrthographicCamera
 	{
 	public:
-		OrthographicCameraController(float aspectRatio);
-		~OrthographicCameraController() = default;
+		SceneOrthographicCamera(float aspectRatio);
+		~SceneOrthographicCamera() = default;
 
 		void OnUpdate(float dt);
 		void OnResize(const Event::SceneResize& event);

@@ -10,7 +10,7 @@
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
 
 #include "Dog/Graphics/Renderer/Camera/orthoCamera.h"
-#include "Dog/Graphics/Renderer/Camera/orthoCameraController.h"
+#include "Dog/Graphics/Renderer/Camera/sceneOrthographicCamera.h"
 
 #include "Dog/Graphics/Window/Iwindow.h"
 
@@ -33,11 +33,11 @@ namespace Dog {
 
 		Shader::SetResolutionUBO(glm::vec2(fbSpec.width, fbSpec.height));
 
-		sceneCameraController = std::make_shared<OrthographicCameraController>((float)width / (float)height);
-		sceneCameraController->GetCamera()->UpdateUniforms(); // Should be moved to the renderer (?) or somewhere else
+		sceneOrthographicCamera = std::make_shared<SceneOrthographicCamera>((float)width / (float)height);
+		sceneOrthographicCamera->UpdateUniforms(); // Should be moved to the renderer (?) or somewhere else
 
 		eventSceneFBResize = SUBSCRIBE_EVENT(Event::SceneResize, frameBuffer->OnResize);
-		eventSceneCamResize = SUBSCRIBE_EVENT(Event::SceneResize, sceneCameraController->OnResize);
+		eventSceneCamResize = SUBSCRIBE_EVENT(Event::SceneResize, sceneOrthographicCamera->OnResize);
 		eventPlayButtonPressed = SUBSCRIBE_EVENT(Event::PlayButtonPressed, OnPlayButtonPressed);
 		eventStopButtonPressed = SUBSCRIBE_EVENT(Event::StopButtonPressed, OnStopButtonPressed);
 	}
@@ -83,8 +83,8 @@ namespace Dog {
 		DOG_INFO("Scene {0} Update.", sceneName);
 #endif
 
-		sceneCameraController->OnUpdate(dt);
-		sceneCameraController->UpdateUniforms();
+		sceneOrthographicCamera->OnUpdate(dt);
+		sceneOrthographicCamera->UpdateUniforms();
 	}
 
 	void Scene::InternalRender(float dt)

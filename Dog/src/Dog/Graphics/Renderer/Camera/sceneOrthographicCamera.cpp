@@ -1,16 +1,16 @@
 #include <PCH/dogpch.h>
-#include "orthoCameraController.h"
+#include "sceneOrthographicCamera.h"
 #include "Dog/Input/input.h"
 
 namespace Dog {
 
-	OrthographicCameraController::OrthographicCameraController(float aspectRatio)
+	SceneOrthographicCamera::SceneOrthographicCamera(float aspectRatio)
 		: aspectRatio(aspectRatio)
 	{
 		camera = std::make_shared<OrthographicCamera>(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
 	}
 
-	void OrthographicCameraController::OnUpdate(float dt)
+	void SceneOrthographicCamera::OnUpdate(float dt)
 	{
 		float speed = 25.0f * dt;
 
@@ -32,17 +32,17 @@ namespace Dog {
 			zoomLevel -= zoomSpeed;
 			if (zoomLevel < 0.1f)
 				zoomLevel = 0.1f;
-			camera->SetProjection(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
+			camera->SetZoomLevel(aspectRatio, zoomLevel);
 		}
 		if (Input::isKeyDown(Key::E)) {
 			zoomLevel += zoomSpeed;
 			if (zoomLevel > 10.0f)
 				zoomLevel = 10.0f;
-			camera->SetProjection(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
+			camera->SetZoomLevel(aspectRatio, zoomLevel);
 		}
 	}
 
-	void OrthographicCameraController::OnResize(const Event::SceneResize& event)
+	void SceneOrthographicCamera::OnResize(const Event::SceneResize& event)
 	{
 		aspectRatio = float(event.width) / float(event.height);
 		camera->SetProjection(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);

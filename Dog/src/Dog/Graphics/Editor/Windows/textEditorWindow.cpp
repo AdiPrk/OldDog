@@ -139,7 +139,7 @@ namespace Dog {
                 for (int doc_n = 0; doc_n < app.Documents.size(); doc_n++)
                     open_count += app.Documents[doc_n].Open ? 1 : 0;
 
-                if (ImGui::BeginMenu("Open", open_count < app.Documents.size()))
+                if (ImGui::BeginMenu("Open Recent", open_count < app.Documents.size()))
                 {
                     for (int doc_n = 0; doc_n < app.Documents.size(); doc_n++)
                     {
@@ -150,7 +150,7 @@ namespace Dog {
                     }
                     ImGui::EndMenu();
                 }
-                if (ImGui::MenuItem("Redock All Documents"))
+                if (ImGui::MenuItem("Redock All Documents", NULL, false, open_count > 0))
                     redock_all = true;
                 if (ImGui::MenuItem("Close All Documents", NULL, false, open_count > 0)) 
                 {
@@ -187,7 +187,8 @@ namespace Dog {
 			numDocumentsOpen += app.Documents[doc_n].Open ? 1 : 0;
 
         if (numDocumentsOpen == 0) {
-            ImGui::Text("No documents open.");
+            ImGui::TextWrapped("No documents open.");
+            ImGui::TextWrapped("Drag and drop a shader file from the 'Resources' tab to open it!");
         }
 
         // Create a DockSpace node where any window can be docked
@@ -204,7 +205,7 @@ namespace Dog {
 
             ImGui::SetNextWindowDockID(dockspace_id, redock_all ? ImGuiCond_Always : ImGuiCond_FirstUseEver);
             ImGuiWindowFlags window_flags = (doc->Dirty ? ImGuiWindowFlags_UnsavedDocument : 0);
-            window_flags |= ImGuiWindowFlags_NoScrollbar;
+            window_flags |= ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings;
             bool visible = ImGui::Begin(doc->Name.c_str(), &doc->Open, window_flags);
 
             // Cancel attempt to close when unsaved add to save queue so we can display a popup.

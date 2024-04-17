@@ -141,7 +141,7 @@
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCameraController.cpp">
+    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\sceneOrthographicCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Dog\Events\event.cpp">
@@ -187,6 +187,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\noEditorWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\scenePerspectiveCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -341,7 +344,7 @@
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCameraController.h">
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\sceneOrthographicCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dog\Events\event.h">
@@ -387,6 +390,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\noEditorWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\scenePerspectiveCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

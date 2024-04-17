@@ -691,8 +691,9 @@ goto copy_assets</Command>
     <ClCompile Include="src\Dog\Graphics\Framebuffer\framebuffer.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\camera2d.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.cpp" />
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCameraController.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\sceneOrthographicCamera.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\scenePerspectiveCamera.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.cpp" />
     <ClCompile Include="src\Dog\Graphics\Texture\texture2d.cpp" />
@@ -809,8 +810,9 @@ goto copy_assets</Command>
     <ClInclude Include="src\Dog\Graphics\Framebuffer\framebuffer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\camera2d.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.h" />
-    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCameraController.h" />
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\sceneOrthographicCamera.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.h" />
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\scenePerspectiveCamera.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\IRenderer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.h" />

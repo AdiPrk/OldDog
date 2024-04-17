@@ -54,7 +54,7 @@ namespace Dog {
 	};
 
 	class OrthographicCamera;
-	class PerspectiveCamera;
+	//class PerspectiveCamera;
 
 	struct CameraComponent
 	{
@@ -79,7 +79,7 @@ namespace Dog {
 		float PerspectiveFar = 100.0f;
 		
 		std::unique_ptr<OrthographicCamera> orthoCamera;
-		std::unique_ptr<PerspectiveCamera> perspCamera;
+		//std::unique_ptr<PerspectiveCamera> perspCamera;
 
 		CameraComponent();
 		CameraComponent(const CameraComponent& other);

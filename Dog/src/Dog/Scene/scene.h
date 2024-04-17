@@ -6,7 +6,8 @@ namespace Dog {
 
 	class FrameBuffer;
 	class OrthographicCamera;
-	class OrthographicCameraController;
+	class SceneOrthographicCamera;
+	class ScenePerspectiveCamera;
 
 	class Scene {
 	public:
@@ -50,7 +51,8 @@ namespace Dog {
 		void InternalExit();
 
 		// Scene camera
-		std::shared_ptr<OrthographicCameraController> sceneCameraController;
+		std::shared_ptr<SceneOrthographicCamera> sceneOrthographicCamera;
+		//std::shared_ptr<ScenePerspectiveCamera> scenePerspectiveCamera;
 
 		// Event handles
 		Events::Handle<Event::SceneResize> eventSceneFBResize;

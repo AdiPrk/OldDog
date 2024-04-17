@@ -32,6 +32,12 @@ namespace Dog {
 		SetProjection(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
 	}
 
+	void OrthographicCamera::SetZoomLevel(float aspect, float level)
+	{
+		zoomLevel = level;
+		SetProjection(-aspect * zoomLevel, aspect * zoomLevel, -zoomLevel, zoomLevel);
+	}
+
 	void OrthographicCamera::SetProjection(float left, float right, float bottom, float top)
 	{
 		projectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);

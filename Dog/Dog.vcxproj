@@ -212,7 +212,7 @@ goto copy_assets</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -221,7 +221,8 @@ goto copy_assets</Command>
       <AdditionalIncludeDirectories>$(ProjectDir)externals\glfw\include;$(ProjectDir)externals\glew\include;$(ProjectDir)externals\spdlog\include;$(ProjectDir)externals\stb_image;$(ProjectDir)externals\entt\include;$(ProjectDir)externals\imgui;$(ProjectDir)externals\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -679,6 +680,11 @@ goto copy_assets</Command>
     </ClCompile>
     <ClCompile Include="src\Dog\engine.cpp" />
     <ClCompile Include="src\Dog\Events\event.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Camera\camera2d.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Camera\orthoCamera.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Camera\perspectiveCamera.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Camera\SceneCamera\sceneOrthographicCamera.cpp" />
+    <ClCompile Include="src\Dog\Graphics\Camera\SceneCamera\scenePerspectiveCamera.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\editor.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\consoleWindow.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\entitiesWindow.cpp" />
@@ -689,11 +695,6 @@ goto copy_assets</Command>
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\textEditorWindow.cpp" />
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\toolbarWindow.cpp" />
     <ClCompile Include="src\Dog\Graphics\Framebuffer\framebuffer.cpp" />
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\camera2d.cpp" />
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.cpp" />
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\sceneOrthographicCamera.cpp" />
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.cpp" />
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\scenePerspectiveCamera.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.cpp" />
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.cpp" />
     <ClCompile Include="src\Dog\Graphics\Texture\texture2d.cpp" />
@@ -798,6 +799,11 @@ goto copy_assets</Command>
     <ClInclude Include="src\Dog\dog.h" />
     <ClInclude Include="src\Dog\engine.h" />
     <ClInclude Include="src\Dog\Events\event.h" />
+    <ClInclude Include="src\Dog\Graphics\Camera\camera2d.h" />
+    <ClInclude Include="src\Dog\Graphics\Camera\orthoCamera.h" />
+    <ClInclude Include="src\Dog\Graphics\Camera\perspectiveCamera.h" />
+    <ClInclude Include="src\Dog\Graphics\Camera\SceneCamera\sceneOrthographicCamera.h" />
+    <ClInclude Include="src\Dog\Graphics\Camera\SceneCamera\scenePerspectiveCamera.h" />
     <ClInclude Include="src\Dog\Graphics\Editor\editor.h" />
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\consoleWindow.h" />
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\entitiesWindow.h" />
@@ -810,9 +816,9 @@ goto copy_assets</Command>
     <ClInclude Include="src\Dog\Graphics\Framebuffer\framebuffer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\camera2d.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.h" />
-    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\sceneOrthographicCamera.h" />
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\SceneCamera\sceneOrthographicCamera.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.h" />
-    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\scenePerspectiveCamera.h" />
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\SceneCamera\scenePerspectiveCamera.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\IRenderer.h" />
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer2D\renderer2d.h" />

@@ -9,8 +9,9 @@
 
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
 
-#include "Dog/Graphics/Renderer/Camera/orthoCamera.h"
-#include "Dog/Graphics/Renderer/Camera/sceneOrthographicCamera.h"
+#include "Dog/Graphics/Camera/orthoCamera.h"
+#include "Dog/Graphics/Camera/SceneCamera/sceneOrthographicCamera.h"
+#include "Dog/Graphics/Camera/SceneCamera/scenePerspectiveCamera.h"
 
 #include "Dog/Graphics/Window/Iwindow.h"
 
@@ -26,6 +27,7 @@ namespace Dog {
 		fbSpec.width = 1280;
 		fbSpec.height = 720;
 		fbSpec.samples = 1;
+		fbSpec.attachments = { FBAttachment::RGBA8, FBAttachment::Depth24Stencil8 };
 		frameBuffer = std::make_shared<FrameBuffer>(fbSpec);
 
 		width = Engine::Get().GetWindow()->GetWidth();
@@ -36,8 +38,12 @@ namespace Dog {
 		sceneOrthographicCamera = std::make_shared<SceneOrthographicCamera>((float)width / (float)height);
 		sceneOrthographicCamera->UpdateUniforms(); // Should be moved to the renderer (?) or somewhere else
 
-		eventSceneFBResize = SUBSCRIBE_EVENT(Event::SceneResize, frameBuffer->OnResize);
-		eventSceneCamResize = SUBSCRIBE_EVENT(Event::SceneResize, sceneOrthographicCamera->OnResize);
+		scenePerspectiveCamera = std::make_shared<ScenePerspectiveCamera>();
+		scenePerspectiveCamera->UpdateUniforms(); // Should be moved to the renderer (?) or somewhere else
+
+		eventSceneFBResize = SUBSCRIBE_EVENT(Event::SceneResize, frameBuffer->OnSceneResize);
+		eventSceneOrthoCamResize = SUBSCRIBE_EVENT(Event::SceneResize, sceneOrthographicCamera->OnSceneResize);
+		eventScenePerspCamResize = SUBSCRIBE_EVENT(Event::SceneResize, scenePerspectiveCamera->OnSceneResize);
 		eventPlayButtonPressed = SUBSCRIBE_EVENT(Event::PlayButtonPressed, OnPlayButtonPressed);
 		eventStopButtonPressed = SUBSCRIBE_EVENT(Event::StopButtonPressed, OnStopButtonPressed);
 	}
@@ -83,11 +89,17 @@ namespace Dog {
 		DOG_INFO("Scene {0} Update.", sceneName);
 #endif
 
-		sceneOrthographicCamera->OnUpdate(dt);
-		sceneOrthographicCamera->UpdateUniforms();
+		if (isOrthographic) {
+			sceneOrthographicCamera->OnUpdate(dt);
+			sceneOrthographicCamera->UpdateUniforms();
+		}
+		else {
+			scenePerspectiveCamera->OnUpdate(dt);
+			scenePerspectiveCamera->UpdateUniforms();
+		}
 	}
 
-	void Scene::InternalRender(float dt)
+	void Scene::InternalRender(float dt, bool renderEditor)
 	{
 #if DOG_SCENE_LOGGING
 		DOG_INFO("Scene {0} Render.", sceneName);
@@ -95,7 +107,9 @@ namespace Dog {
 
 		std::shared_ptr<Renderer2D>& renderer2D = Engine::Get().GetRenderer2D();
 
-		frameBuffer->Bind();
+		if (renderEditor) {
+			frameBuffer->Bind();
+		}
 
 		renderer2D->beginFrame();
 
@@ -113,7 +127,15 @@ namespace Dog {
 
 		renderer2D->endFrame();
 
-		frameBuffer->Unbind();
+		// log currently bound fbo from opengl
+		// int fbo;
+		// glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
+		// DOG_INFO("Currently bound FBO: {0}", fbo);
+
+		if (renderEditor) {
+			frameBuffer->Unbind();
+		}
+
 	}
 
 	void Scene::InternalExit()
@@ -121,6 +143,26 @@ namespace Dog {
 #if DOG_SCENE_LOGGING
 		DOG_INFO("Scene {0} exit.", sceneName);
 #endif
+	}
+
+	glm::mat4 Scene::GetProjectionMatrix()
+	{
+		if (isOrthographic) {
+			return sceneOrthographicCamera->GetProjectionMatrix();
+		}
+		else {
+			return scenePerspectiveCamera->GetProjectionMatrix();
+		}
+	}
+
+	glm::mat4 Scene::GetViewMatrix()
+	{
+		if (isOrthographic) {
+			return sceneOrthographicCamera->GetViewMatrix();
+		}
+		else {
+			return scenePerspectiveCamera->GetViewMatrix();
+		}
 	}
 
 }

@@ -35,6 +35,7 @@ namespace Dog {
 
 		int Run(Scene* startScene);
 
+		static glm::vec2 GetSceneSize() { return sceneSize; }
 		static std::shared_ptr<IWindow>& GetWindow() { return Get().window; }
 		static std::shared_ptr<Renderer2D>& GetRenderer2D() { return Get().renderer2D; }
 		static std::shared_ptr<DeferredRenderer>& GetDeferredRenderer() { return Get().deferredRenderer; }
@@ -51,6 +52,8 @@ namespace Dog {
 		bool running;
 		std::string name;
 		unsigned targetFPS;
+
+		static glm::vec2 sceneSize;
 
 		std::shared_ptr<IWindow> window;
 		std::shared_ptr<Renderer2D> renderer2D;

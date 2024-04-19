@@ -21,7 +21,7 @@ namespace Dog {
 		void Init(GLFWwindow* window);
 		void Exit();
 
-		void beginFrame();
+		void beginFrame(bool renderEditor);
 		void endFrame();
 
 		void SetEditorEnabled(bool enabled) { renderEditor = enabled; }
@@ -31,6 +31,7 @@ namespace Dog {
 		std::unique_ptr<FileBrowser> fileBrowser;
 		std::unique_ptr<TextEditorWrapper> textEditorWrapper;
 		bool renderEditor = true;
+		bool startedRenderingFrame = false;
 	};
 
 } // namespace Dog

@@ -341,7 +341,6 @@ vec4 ch_rpa = vec4(0x00E030,0x30180C,0x183030,0xE00000);
 vec4 ch_tid = vec4(0x0073DA,0xCE0000,0x000000,0x000000);
 vec4 ch_lar = vec4(0x000000,0x10386C,0xC6C6FE,0x000000);
 
-vec2 resol = vec2(0);
 vec2 print_pos = vec2(0);
 
 //Extracts bit b from the given number.
@@ -450,7 +449,7 @@ float print_integer(float number, int zeros, vec2 uv)
     return result;
 }
 
-float text(vec2 uv)
+float text(vec2 uv, vec2 resol)
 {
     float col = 0.0;
     
@@ -484,8 +483,8 @@ void main()
     vec3 camPos = vec3(sin(time), .2+sin(iTime)*.2, cos(time))*5.0;
     vec3 camTarget = vec3(0.0, 0.5, 0.0);
     vec2 uv = (TexCoords - 0.5) * 2.;
-    //uv.y += 0.3;
-    uv.y = -uv.y + 0.3;
+    uv.y += 0.3;
+    //uv.y = -uv.y + 0.3;
     
     vec3 viewDir = CameraViewDir(uv, camPos, camTarget);
     
@@ -496,22 +495,26 @@ void main()
 
     /* Text */
     
-    vec2 fragCoord = (TexCoords) * 110.;
+    vec2 fragCoord = (TexCoords) * 250.;
     fragCoord.y *= 1;
-    fragCoord.y += 100;
-    fragCoord.x += 158.;
-    resol = vec2(iResolution.xy) / DOWN_SCALE;
+    fragCoord.x -= 160.;
+    fragCoord.y -= 220;
+    //fragCoord.y += 100;
+    //fragCoord.x += 158.;
+    vec2 resol = vec2(iResolution.xy) / DOWN_SCALE;
     uv = fragCoord / DOWN_SCALE;
 	vec2 duv = floor(fragCoord / DOWN_SCALE);
     
-	float pixel = text(duv);
+	float pixel = text(duv, fragCoord);
     
     //Shading stuff
     col = vec3(1);
-    col *= (1.-distance(mod(uv,vec2(1.0)),vec2(0.65)))*1.2;
-    col *= mix(vec3(0.2),vec3(0,1,0),pixel);
+    //col *= (1.-distance(mod(uv,vec2(1.0)),vec2(0.65)))*1.2;
+    col *= mix(vec3(0.),vec3(0,1,0),pixel);
     fragColor += vec4(vec3(col), 1.0);
 }
+
+
 
 
 

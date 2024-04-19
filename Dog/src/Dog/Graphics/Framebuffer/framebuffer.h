@@ -2,11 +2,19 @@
 
 namespace Dog {
 
+	enum class FBAttachment {
+		None = 0,
+		RGBA = GL_RGBA,
+		RGBA8 = GL_RGBA8,
+		RGBA16F = GL_RGBA16F,
+		RGBA32F = GL_RGBA32F,
+		Depth24Stencil8 = GL_DEPTH24_STENCIL8
+	};
+
 	struct FrameBufferSpecification {
 		int width, height;
 		unsigned samples = 1;
-
-		bool SwapChainTarget = false;
+		std::vector<FBAttachment> attachments;
 	};
 
 	class FrameBuffer {
@@ -17,19 +25,34 @@ namespace Dog {
 		void Bind();
 		void Unbind();
 
-		void OnResize(const Event::SceneResize& event);
-
-		unsigned GetColorAttachmentID() const { return colorAttachment; }
+		unsigned GetColorAttachmentID(unsigned index) const {
+			if (index >= colorAttachments.size()) {
+				DOG_ASSERT(false, "Index out of bounds.");
+				return 0;
+			}
+			return colorAttachments[index]; 
+		}
 		unsigned GetDepthAttachmentID() const { return depthAttachment; }
+
 
 		const FrameBufferSpecification& GetSpecification() const { return specification; }
 
+
 	private:
 		void Create();
+		void Clear();
+		void AddColorAttachment(const FBAttachment& format);
+		void AddDepthAttachment(const FBAttachment& format);
+
+		// Only meant for the scene's FBO!
+		friend class Scene;
+		void OnSceneResize(const Event::SceneResize& event);
 
 		unsigned fbo = 0;
-		unsigned colorAttachment = 0;
+
+		std::vector<unsigned> colorAttachments;
 		unsigned depthAttachment = 0;
+
 		FrameBufferSpecification specification;
 	};
 

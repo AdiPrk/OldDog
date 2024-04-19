@@ -2,8 +2,8 @@
 #include "components.h"
 #include "Dog/engine.h"
 #include "Dog/Graphics/Texture/texture2d.h"
-#include "Dog/Graphics/Renderer/Camera/orthoCamera.h"
-#include "Dog/Graphics/Renderer/Camera/perspectiveCamera.h"
+#include "Dog/Graphics/Camera/orthoCamera.h"
+#include "Dog/Graphics/Camera/perspectiveCamera.h"
 #include "Dog/Graphics/Window/Iwindow.h"
 
 namespace Dog {

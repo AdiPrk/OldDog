@@ -2,6 +2,11 @@
 #include "input.h"
 #include "inputMap.h"
 #include "Dog/Logger/logger.h"
+#include "Dog/engine.h"
+#include "Dog/Graphics/Window/window.h"
+#include "Dog/Graphics/Editor/Windows/sceneWindow.h"
+#include "Dog/Scene/sceneManager.h"
+#include "Dog/Scene/scene.h"
 
 #define DO_INPUT_LOGGING 0
 
@@ -15,26 +20,45 @@ namespace Dog {
 	bool Input::keyInputLocked = false;
 	bool Input::mouseInputLocked = false;
 
-	float Input::degree = 0;
-	float Input::mouseX = 0;
-	float Input::mouseY = 0;
+	float Input::scrollX = 0;
+	float Input::scrollY = 0;
+	float Input::lastScrollX = 0;
+	float Input::lastScrollY = 0;
+	float Input::mouseScreenX = 0;
+	float Input::mouseScreenY = 0;
+	float Input::lastMouseScreenX = 0;
+	float Input::lastMouseScreenY = 0;
+	float Input::mouseWorldX = 0;
+	float Input::mouseWorldY = 0;
+	float Input::lastMouseWorldX = 0;
+	float Input::lastMouseWorldY = 0;
 	GLFWcursor* Input::standardCursor = nullptr;
+	GLFWwindow* Input::pwindow = nullptr;
 
 	void Input::Init(GLFWwindow* window)
 	{
-		glfwSetKeyCallback(window, keyPressCallback);
-		glfwSetMouseButtonCallback(window, mousePressCallback);
-		glfwSetScrollCallback(window, mouseScrollCallback);
+		pwindow = window;
+		glfwSetKeyCallback(pwindow, keyPressCallback);
+		glfwSetMouseButtonCallback(pwindow, mousePressCallback);
+		glfwSetScrollCallback(pwindow, mouseScrollCallback);
 
 		standardCursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
-		glfwSetCursor(window, standardCursor);
+		glfwSetCursor(pwindow, standardCursor);
 	}
+
+	struct ViewportInfo {
+		GLint x, y, width, height;
+
+		ViewportInfo() : x(), y(), width(), height() {};
+		ViewportInfo(GLint info[4]) : x(info[0]), y(info[1]), width(info[2]), height(info[3]) {};
+	};
 
 	void Input::Update()
 	{
+		lastScrollX = scrollX;
+		lastScrollY = scrollY;
 		glfwPollEvents();
-
-
+		UpdateMousePosition();
 	}
 
 	bool Input::isKeyDown(const Key& key)
@@ -45,6 +69,71 @@ namespace Dog {
 	bool Input::isMouseDown(const Mouse& button)
 	{
 		return mouseStates[IND(button)].mouseDown;
+	}
+
+	void Input::UpdateMousePosition()
+	{
+		lastMouseScreenX = mouseScreenX;
+		lastMouseScreenY = mouseScreenY;
+		lastMouseWorldX = mouseWorldX;
+		lastMouseWorldY = mouseWorldY;
+
+		int windowWidth = 0, windowHeight = 0;
+		glfwGetWindowSize(pwindow, &windowWidth, &windowHeight);
+		if (windowWidth <= 0 || windowHeight <= 0)
+			return;
+
+		glm::vec2 windowSize(windowWidth, windowHeight);
+
+		auto imguiWin = ImGui::FindWindowByName("Scene");
+		glm::vec2 imguiTranslation;
+		glm::vec2 imguiScale;
+
+		// check if imgui window was rendered
+		if (imguiWin) {
+			ImVec2 relPos = GetRelativeSceneImagePosition();
+			imguiTranslation = imguiWin->Pos + relPos;
+			ImVec2 winSize = imguiWin->Size;
+			winSize.y -= relPos.y;
+
+			imguiScale = glm::vec2(winSize) / windowSize;
+		}
+		else {
+			imguiTranslation = glm::vec2(0.0f, 0.0f);
+			imguiScale = glm::vec2(1.0f, 1.0f);
+		}
+
+		// Get mouse coordinates in screen space
+		double cursorX, cursorY;
+		glfwGetCursorPos(pwindow, &cursorX, &cursorY);
+		glm::vec2 screenMousePos(cursorX, cursorY);
+		mouseScreenX = static_cast<float>(cursorX);
+		mouseScreenY = static_cast<float>(cursorY);
+
+		// Convert mouse screen coords to FBO's coordinates inside ImGui's window
+		glm::vec2 framebufferMousePos = (screenMousePos - imguiTranslation) / imguiScale;
+
+		// Convert fbo coords to NDC
+		glm::vec2 ndc;
+		ndc.x = (2.0f * framebufferMousePos.x) / windowSize.x - 1.0f;
+		ndc.y = (2.0f * framebufferMousePos.y) / windowSize.y - 1.0f;
+		ndc.y = -ndc.y;
+
+		// Take NDC to world
+		Scene* activeScene = SceneManager::GetCurrentScene();
+		if (!activeScene) {
+			DOG_WARN("No active scene found.");
+			return;
+		}
+		glm::mat4 proj = activeScene->GetProjectionMatrix();
+		glm::mat4 view = activeScene->GetViewMatrix();
+		glm::mat4 invProjView = glm::inverse(proj * view);
+
+		glm::vec4 worldPos = invProjView * glm::vec4(ndc.x, ndc.y, 0.0f, 1.0f);
+		worldPos /= worldPos.w;
+
+		mouseWorldX = worldPos.x;
+		mouseWorldY = worldPos.y;
 	}
 
 	void Input::SetKeyInputLocked(bool locked)
@@ -89,17 +178,10 @@ namespace Dog {
 	void Input::mousePressCallback(GLFWwindow* windowPointer, int mouseButton, int action, int mod)
 	{
 		// check if imgui is capturing the mouse
-		if (mouseInputLocked) {
-#if DO_INPUT_LOGGING
-			DOG_INFO("Mouse Press {0} Ignored - ImGui is capturing it.", mouseButton);
-#endif
-			return;
-		}
-
 		if (mouseButton < 0 || mouseButton > static_cast<int>(Mouse::LAST))
 			return;
 
-		if (action == GLFW_PRESS)
+		if (action == GLFW_PRESS && !mouseInputLocked)
 		{
 			mouseStates[mouseButton].mouseDown = true;
 #if DO_INPUT_LOGGING
@@ -124,7 +206,8 @@ namespace Dog {
 			return;
 		}
 
-		degree += float(yoffset);
+		scrollX += float(xoffset);
+		scrollY += float(yoffset);
 #if DO_INPUT_LOGGING
 		DOG_INFO("Mouse Scrolled: {0}", degree);
 #endif

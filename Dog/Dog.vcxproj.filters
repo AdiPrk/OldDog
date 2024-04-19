@@ -39,9 +39,6 @@
     <ClCompile Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\camera2d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Dog\Math\rect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -138,12 +135,6 @@
     <ClCompile Include="src\Dog\Graphics\Framebuffer\framebuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\sceneOrthographicCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Dog\Events\event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -174,9 +165,6 @@
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\resourcesWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Dog\Graphics\Window\frameRate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -189,7 +177,19 @@
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\noEditorWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Graphics\Renderer\Camera\scenePerspectiveCamera.cpp">
+    <ClCompile Include="src\Dog\Graphics\Camera\camera2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Camera\orthoCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Camera\perspectiveCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Camera\SceneCamera\sceneOrthographicCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Graphics\Camera\SceneCamera\scenePerspectiveCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -222,9 +222,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dog\Graphics\Renderer\Renderer3D\DeferredRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\camera2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dog\Math\rect.h">
@@ -341,12 +338,6 @@
     <ClInclude Include="src\Dog\Graphics\Framebuffer\framebuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\sceneOrthographicCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Dog\Events\event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -377,9 +368,6 @@
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\resourcesWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Dog\Graphics\Window\frameRate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -392,7 +380,34 @@
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\noEditorWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\scenePerspectiveCamera.h">
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\camera2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\orthoCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\SceneCamera\sceneOrthographicCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\perspectiveCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Renderer\Camera\SceneCamera\scenePerspectiveCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Camera\camera2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Camera\orthoCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Camera\perspectiveCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Camera\SceneCamera\sceneOrthographicCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Graphics\Camera\SceneCamera\scenePerspectiveCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

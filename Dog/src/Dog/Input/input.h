@@ -15,15 +15,34 @@ namespace Dog {
 
 		static bool isKeyDown(const Key& key);
 		static bool isMouseDown(const Mouse& button);
+		static void UpdateMousePosition();
 
-		static glm::vec2 getMousePosition() { return { mouseX, mouseY }; }
-		static float getMouseX() { return mouseX; }
-		static float getMouseY() { return mouseY; }
+		// screen mouse positions
+		static glm::vec2 getMouseScreenPosition() { return { mouseScreenX, mouseScreenY }; }
+		static float getMouseScreenX() { return mouseScreenX; }
+		static float getMouseScreenY() { return mouseScreenY; }
+		static float getMouseScreenXDelta() { return mouseScreenX - lastMouseScreenX; }
+		static float getMouseScreenYDelta() { return mouseScreenY - lastMouseScreenY; }
+
+		// world mouse positions
+		static glm::vec2 getMouseWorldPosition() { return { mouseWorldX, mouseWorldY }; }
+		static float getMouseWorldX() { return mouseWorldX; }
+		static float getMouseWorldY() { return mouseWorldY; }
+		static float getMouseWorldXDelta() { return mouseWorldX - lastMouseWorldX; }
+		static float getMouseWorldYDelta() { return mouseWorldY - lastMouseWorldY; }
+
+		// mouse scroll
+		static float getMouseScrollX() { return scrollX; }
+		static float getMouseScrollY() { return scrollY; }
+		static float getMouseScrollDeltaX() { return scrollX - lastScrollX; }
+		static float getMouseScrollDeltaY() { return scrollY - lastScrollY; }
 
 		static void SetKeyInputLocked(bool locked);
 		static void SetMouseInputLocked(bool locked);
 
 	private:
+		static GLFWwindow* pwindow;
+
 		struct KeyStates
 		{
 			bool keyDown = false;
@@ -46,9 +65,18 @@ namespace Dog {
 		static MouseStates mouseStates[static_cast<int>(Mouse::LAST)];
 		static GLFWcursor* standardCursor;
 
-		static float degree;
-		static float mouseX;
-		static float mouseY;
+		static float scrollX;
+		static float scrollY;
+		static float lastScrollX;
+		static float lastScrollY;
+		static float lastMouseScreenX;
+		static float lastMouseScreenY;
+		static float mouseScreenX;
+		static float mouseScreenY;
+		static float lastMouseWorldX;
+		static float lastMouseWorldY;
+		static float mouseWorldX;
+		static float mouseWorldY;
 
 		static bool keyInputLocked;
 		static bool mouseInputLocked;

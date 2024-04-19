@@ -1,3 +1,4 @@
+#include <glm/glm.hpp>
 // dear imgui, v1.89.9 WIP
 // (headers)
 
@@ -271,6 +272,10 @@ struct ImVec2
     constexpr ImVec2(float _x, float _y)    : x(_x), y(_y) { }
     float& operator[] (size_t idx)          { IM_ASSERT(idx == 0 || idx == 1); return ((float*)(void*)(char*)this)[idx]; } // We very rarely use this [] operator, so the assert overhead is fine.
     float  operator[] (size_t idx) const    { IM_ASSERT(idx == 0 || idx == 1); return ((const float*)(const void*)(const char*)this)[idx]; }
+    
+    // cast to glm::vec2
+    operator glm::vec2() const { return glm::vec2(x, y); }
+
 #ifdef IM_VEC2_CLASS_EXTRA
     IM_VEC2_CLASS_EXTRA     // Define additional constructors and implicit cast operators in imconfig.h to convert back and forth between your math types and ImVec2.
 #endif

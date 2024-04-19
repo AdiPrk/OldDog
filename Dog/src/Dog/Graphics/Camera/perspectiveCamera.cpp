@@ -1,14 +1,11 @@
 #include <PCH/dogpch.h>
 #include "perspectiveCamera.h"
+#include "Dog/Graphics/Renderer/Shaders/shader.h"
 
 namespace Dog {
 
-
-
-
     // constructor with vectors
-
-    inline PerspectiveCamera::PerspectiveCamera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    PerspectiveCamera::PerspectiveCamera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
         Position = position;
         WorldUp = up;
@@ -18,8 +15,7 @@ namespace Dog {
     }
 
     // constructor with scalar values
-
-    inline PerspectiveCamera::PerspectiveCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    PerspectiveCamera::PerspectiveCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
         Position = glm::vec3(posX, posY, posZ);
         WorldUp = glm::vec3(upX, upY, upZ);
@@ -29,17 +25,21 @@ namespace Dog {
     }
 
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
-
-    inline glm::mat4 PerspectiveCamera::GetViewMatrix()
+    glm::mat4 PerspectiveCamera::GetViewMatrix()
     {
         return glm::lookAt(Position, Position + Front, Up);
     }
 
-    // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
+    glm::mat4 PerspectiveCamera::GetProjectionMatrix()
+    {
+        return glm::perspective(glm::radians(Zoom), aspectRatio, 0.1f, 100.0f);
+    }
 
-    inline void PerspectiveCamera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
+    // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
+    void PerspectiveCamera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {
         float velocity = MovementSpeed * deltaTime;
+
         if (direction == FORWARD)
             Position += Front * velocity;
         if (direction == BACKWARD)
@@ -51,8 +51,7 @@ namespace Dog {
     }
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
-
-    inline void PerspectiveCamera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)
+    void PerspectiveCamera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)
     {
         xoffset *= MouseSensitivity;
         yoffset *= MouseSensitivity;
@@ -74,8 +73,7 @@ namespace Dog {
     }
 
     // processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
-
-    inline void PerspectiveCamera::ProcessMouseScroll(float yoffset)
+    void PerspectiveCamera::ProcessMouseScroll(float yoffset)
     {
         Zoom -= (float)yoffset;
         if (Zoom < 1.0f)
@@ -84,9 +82,22 @@ namespace Dog {
             Zoom = 45.0f;
     }
 
+    void PerspectiveCamera::UpdateUniforms()
+    {
+        glm::mat4 view = GetViewMatrix();
+        glm::mat4 proj = GetProjectionMatrix();
+        glm::mat4 projView = proj * view;
+        Shader::SetViewAndProjectionView(view, projView);
+    }
+
+    void PerspectiveCamera::SetPosition(const glm::vec3& pos)
+    {
+        Position = pos;
+    }
+
     // calculates the front vector from the Camera's (updated) Euler Angles
 
-    inline void PerspectiveCamera::updateCameraVectors()
+    void PerspectiveCamera::updateCameraVectors()
     {
         // calculate the new Front vector
         glm::vec3 front;

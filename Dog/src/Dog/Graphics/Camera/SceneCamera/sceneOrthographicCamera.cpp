@@ -1,6 +1,7 @@
 #include <PCH/dogpch.h>
 #include "sceneOrthographicCamera.h"
 #include "Dog/Input/input.h"
+#include "Dog/Graphics/Renderer/Shaders/shader.h"
 
 namespace Dog {
 
@@ -42,7 +43,7 @@ namespace Dog {
 		}
 	}
 
-	void SceneOrthographicCamera::OnResize(const Event::SceneResize& event)
+	void SceneOrthographicCamera::OnSceneResize(const Event::SceneResize& event)
 	{
 		aspectRatio = float(event.width) / float(event.height);
 		camera->SetProjection(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);

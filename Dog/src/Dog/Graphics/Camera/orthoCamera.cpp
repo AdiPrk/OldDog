@@ -40,6 +40,9 @@ namespace Dog {
 
 	void OrthographicCamera::SetProjection(float left, float right, float bottom, float top)
 	{
+		// log left, right, bottom, top
+		// DOG_INFO("left: {0}, right: {1}, top: {2}, bottom: {3}", left, right, top, bottom);
+
 		projectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 		viewProjectionMatrix = projectionMatrix * viewMatrix;
 	}

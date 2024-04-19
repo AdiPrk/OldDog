@@ -5,8 +5,8 @@
 #include "Dog/Scene/scene.h"
 #include "Dog/Scene/Entity/entity.h"
 #include "Dog/Scene/Entity/components.h"
-#include "Dog/Graphics/Renderer/Camera/orthoCamera.h"
-#include "Dog/Graphics/Renderer/Camera/perspectiveCamera.h"
+#include "Dog/Graphics/Camera/orthoCamera.h"
+#include "Dog/Graphics/Camera/perspectiveCamera.h"
 
 namespace Dog {
 

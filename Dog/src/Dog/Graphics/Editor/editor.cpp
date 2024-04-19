@@ -49,24 +49,8 @@ namespace Dog {
 		ImGui::DestroyContext();
 	}
 
-	void Editor::beginFrame()
+	void Editor::beginFrame(bool renderEditor)
 	{
-		ImGuiIO& io = ImGui::GetIO();
-
-		static bool keyHeld = false;
-		bool firstGameFrame = false;
-		if (io.KeyCtrl && io.KeyShift && io.KeysDown[ImGuiKey_J])
-		{
-			if (!keyHeld) {
-				renderEditor = !renderEditor;
-				keyHeld = true;
-				firstGameFrame = true;
-			}
-		}
-		else {
-			keyHeld = false;
-		}
-
 
 		// (Your code calls glfwPollEvents())
 		// ...
@@ -74,9 +58,8 @@ namespace Dog {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-
+		
 		if (!renderEditor) {
-			UpdateNoEditorWindow(firstGameFrame);
 			return;
 		}
 

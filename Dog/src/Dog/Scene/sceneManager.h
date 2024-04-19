@@ -17,7 +17,7 @@ namespace Dog {
 		static void Init(Scene* startScene);
 		static void SwapScenes();
 		static void Update(float dt);
-		static void Render(float dt);
+		static void Render(float dt, bool renderEditor);
 		static void Exit();
 
 	private:

@@ -82,26 +82,20 @@ namespace Dog {
 
         m_LastFrameTime = std::chrono::high_resolution_clock::now();
 
-        glfwWindowHint(GL_MAJOR_VERSION, 4);
-        glfwWindowHint(GL_MINOR_VERSION, 6);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        glfwWindowHint(GLFW_SAMPLES, 4);
-        glEnable(GL_MULTISAMPLE);
-        glEnable(GL_DEPTH_TEST);
-        //glDepthMask(GL_TRUE);
-        //glDepthFunc(GL_LEQUAL);
-        //glEnable(GL_STENCIL_TEST);
-
         if (!glfwInit()) {
             std::cout << "Oh Noes, no glfw init!";
+            return;
         }
-
+        
         glfwSetErrorCallback(glfw_error_callback);
 
-        window = glfwCreateWindow((int)screenWidth, (int)screenHeight, name.c_str(), NULL, NULL);
-        glViewport(0, 0, (int)screenWidth, (int)screenHeight);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_SAMPLES, 4);
 
+        window = glfwCreateWindow((int)screenWidth, (int)screenHeight, name.c_str(), NULL, NULL);
+        
         if (!window)
         {
             const char* description;
@@ -117,19 +111,23 @@ namespace Dog {
 
         /* Make the window's context current */
         glfwMakeContextCurrent(window);
+        SetFramebufferSizeCallback(framebuffer_size_callback);
 
-        if (glewInit() != GLEW_OK)
+        if (glewInit() != GLEW_OK) {
             std::cout << "oh noes, glew didn't init properly!" << std::endl;
+            return;
+        }
 
         std::cout << glGetString(GL_VERSION) << std::endl;
 
-        //glEnable(GL_DEPTH_TEST);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+        glEnable(GL_MULTISAMPLE);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+        //glEnable(GL_CULL_FACE);
+        //glCullFace(GL_BACK);
         glfwSwapInterval(0);
-
-        SetFramebufferSizeCallback(framebuffer_size_callback);
 
 #if DEBUG_OPENGL_OUTPUT
         glEnable(GL_DEBUG_OUTPUT);
@@ -137,6 +135,7 @@ namespace Dog {
         glDebugMessageCallback(OpenGLDebugCallback, nullptr);
         //glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 #endif
+
     }
 
     Window::~Window()
@@ -178,28 +177,6 @@ namespace Dog {
     void Window::SwapBuffers()
     {
         glfwSwapBuffers(window);
-    }
-
-    void Window::LimitFPS()
-    {
-        // Get current time using high-resolution clock
-        auto current_time = std::chrono::high_resolution_clock::now();
-
-        // Calculate the frame duration in seconds
-        double frameLength = std::chrono::duration<double>(current_time - m_LastFrameTime).count();
-
-        if (frameLength < targetFrameLength/* - 0.001*/) // 0.001 threshold to avoid micro sleeps
-        {
-            // Calculate how long to sleep in order to maintain the target frame rate.
-            auto sleep_duration = std::chrono::duration<double>(targetFrameLength - frameLength);
-            std::this_thread::sleep_for(sleep_duration);
-
-            // After sleeping, adjust the frame length.
-            frameLength = targetFrameLength;
-        }
-
-        // Update lastFrameTime
-        m_LastFrameTime = current_time;
     }
 
     int windowedWidth = 1600, windowedHeight = 900;

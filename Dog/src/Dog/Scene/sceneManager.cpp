@@ -54,9 +54,9 @@ namespace Dog {
 		m_ActiveScene->Update(dt);
 	}
 
-	void SceneManager::Render(float dt)
+	void SceneManager::Render(float dt, bool renderEditor)
 	{
-		m_ActiveScene->InternalRender(dt);
+		m_ActiveScene->InternalRender(dt, renderEditor);
 		m_ActiveScene->Render(dt);
 	}
 

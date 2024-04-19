@@ -47,16 +47,21 @@ namespace Dog {
 		friend SceneManager;
 		void InternalInit();
 		void InternalUpdate(float dt);
-		void InternalRender(float dt);
+		void InternalRender(float dt, bool renderEditor);
 		void InternalExit();
 
 		// Scene camera
+		friend class Input;
 		std::shared_ptr<SceneOrthographicCamera> sceneOrthographicCamera;
-		//std::shared_ptr<ScenePerspectiveCamera> scenePerspectiveCamera;
+		std::shared_ptr<ScenePerspectiveCamera> scenePerspectiveCamera;
+		glm::mat4 GetProjectionMatrix();
+		glm::mat4 GetViewMatrix();
+		bool isOrthographic = false;
 
 		// Event handles
 		Events::Handle<Event::SceneResize> eventSceneFBResize;
-		Events::Handle<Event::SceneResize> eventSceneCamResize;
+		Events::Handle<Event::SceneResize> eventSceneOrthoCamResize;
+		Events::Handle<Event::SceneResize> eventScenePerspCamResize;
 		Events::Handle<Event::PlayButtonPressed> eventPlayButtonPressed;
 		Events::Handle<Event::StopButtonPressed> eventStopButtonPressed;
 	};

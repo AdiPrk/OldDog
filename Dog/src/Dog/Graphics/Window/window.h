@@ -19,7 +19,6 @@ namespace Dog {
 		void SetVSync(bool enabled = true);
 
 		void SwapBuffers();
-		void LimitFPS();
 		void SetFullscreen(bool fullScreen = true);
 
 		GLFWwindow* GetWindowHandle() { return window; };

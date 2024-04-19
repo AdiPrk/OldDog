@@ -10,6 +10,12 @@
 
 namespace Dog {
 
+	ImVec2 sceneImagePosition = { 0.0f, 0.0f };
+
+	ImVec2 GetRelativeSceneImagePosition() {
+		return sceneImagePosition;
+	}
+
 	void UpdateSceneWindow()
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
@@ -29,7 +35,7 @@ namespace Dog {
 				DOG_WARN("No FrameBuffer found in the current scene.");
 			}
 			else {
-				unsigned fboID = fbo->GetColorAttachmentID();
+				unsigned fboID = fbo->GetColorAttachmentID(0);
 
 				static ImVec2 lastSceneWindowSize = { 0.0f, 0.0f };
 				ImVec2 vpSize = ImGui::GetContentRegionAvail(); // viewport size
@@ -46,6 +52,11 @@ namespace Dog {
 					PUBLISH_EVENT(Event::SceneResize, (int)vpSize.x, (int)vpSize.y);
 					lastSceneWindowSize = vpSize;
 				}
+
+				// ImVec2 content_region_origin = ImGui::GetWindowContentRegionMin();
+				float image_x = ImGui::GetCursorPosX();
+				float image_y = ImGui::GetCursorPosY();
+				sceneImagePosition = { image_x, image_y };
 
 				ImGui::Image((void*)(uintptr_t)fboID, vpSize, { 0, 1 }, { 1, 0 });
 			}

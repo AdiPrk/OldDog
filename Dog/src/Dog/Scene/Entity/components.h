@@ -30,7 +30,9 @@ namespace Dog {
 		glm::mat4 GetTransform() const
 		{
 			// SRT - Translate * Rotate * Scale
-			return glm::translate(glm::mat4(1.0f), Translation) * glm::toMat4(glm::quat(Rotation)) * glm::scale(glm::mat4(1.0f), Scale);
+			return glm::translate(glm::mat4(1.0f), Translation) *
+				   glm::toMat4(glm::quat(Rotation)) * 
+				   glm::scale(glm::mat4(1.0f), Scale);
 		}
 	};
 

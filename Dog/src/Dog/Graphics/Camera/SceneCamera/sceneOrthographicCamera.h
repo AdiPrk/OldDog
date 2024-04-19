@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Dog/Graphics/Renderer/Camera/orthoCamera.h"
+#include "../orthoCamera.h"
 
 namespace Dog {
 
@@ -11,15 +11,12 @@ namespace Dog {
 		~SceneOrthographicCamera() = default;
 
 		void OnUpdate(float dt);
-		void OnResize(const Event::SceneResize& event);
-
-		std::shared_ptr<OrthographicCamera> GetCamera() { return camera; }
-		const std::shared_ptr<OrthographicCamera> GetCamera() const { return camera; }
+		void OnSceneResize(const Event::SceneResize& event);
 
 		void UpdateUniforms() { camera->UpdateUniforms(); }
 
-		float GetZoomLevel() const { return zoomLevel; }
-		void SetZoomLevel(float level) { zoomLevel = level; }
+		glm::mat4 GetProjectionMatrix() const { return camera->GetProjectionMatrix(); }
+		glm::mat4 GetViewMatrix() { return camera->GetViewMatrix(); }
 
 	private:
 		std::shared_ptr<OrthographicCamera> camera;

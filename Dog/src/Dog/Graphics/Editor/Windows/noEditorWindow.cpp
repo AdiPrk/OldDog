@@ -11,7 +11,7 @@ namespace Dog {
 	
 	void UpdateNoEditorWindow(bool firstFrame) {	
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-		ImGui::Begin("NoEditor##noEditor", nullptr, ImGuiWindowFlags_NoDecoration);
+		ImGui::Begin("NoEditor##noEditor", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
 
 		// make window full screen
 		ImGui::SetWindowPos(ImVec2(0, 0), ImGuiCond_Always);
@@ -29,15 +29,20 @@ namespace Dog {
 				DOG_WARN("No FrameBuffer found in the current scene.");
 			}
 			else {
-				unsigned fboID = fbo->GetColorAttachmentID();
+				unsigned fboID = fbo->GetColorAttachmentID(0);
 
 				static ImVec2 lastSceneWindowSize = { 0.0f, 0.0f };
 				ImVec2 vpSize = ImGui::GetContentRegionAvail(); // viewport size		
 
 				// Update things if viewport size changed (eg camera, framebuffer)
 				if (firstFrame || vpSize.x != lastSceneWindowSize.x || vpSize.y != lastSceneWindowSize.y) {
-
+					firstFrame = false;
 					PUBLISH_EVENT(Event::SceneResize, (int)vpSize.x, (int)vpSize.y);
+
+					// log vp size and last window size
+					DOG_INFO("Viewport Size: {0}, {1}", vpSize.x, vpSize.y);
+					DOG_INFO("Last Window Size: {0}, {1}", lastSceneWindowSize.x, lastSceneWindowSize.y);
+
 					lastSceneWindowSize = vpSize;
 				}
 

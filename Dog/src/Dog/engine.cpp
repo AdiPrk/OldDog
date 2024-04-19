@@ -18,6 +18,8 @@
 
 namespace Dog {
 
+	glm::vec2 Engine::sceneSize = glm::vec2(1280, 720);
+
 	Engine::Engine(const EngineSpec& specs)
 		: running(true)
 		, name(specs.name)
@@ -25,6 +27,8 @@ namespace Dog {
 	{
 		Logger::Init();
 		Resources::Init();
+
+		sceneSize = glm::vec2(specs.width, specs.height);
 
 		window = std::make_shared<Window>(specs.width, specs.height, name);
 		renderer2D = std::make_shared<Renderer2D>();
@@ -111,8 +115,33 @@ namespace Dog {
 			// Initialize/Swap scenes.
 			SceneManager::SwapScenes();
 
+			ImGuiIO& io = ImGui::GetIO();
+
+			static bool renderEditor = false;
+			static bool keyHeld = false;
+			bool firstGameFrame = false;
+			if (io.KeyCtrl && io.KeyShift && io.KeysDown[ImGuiKey_J])
+			{
+				if (!keyHeld) {
+					renderEditor = !renderEditor;
+					keyHeld = true;
+					firstGameFrame = true;
+
+					if (!renderEditor) {
+						// trigger glfw window resize callback manually
+						PUBLISH_EVENT(Event::SceneResize, (int)window->GetWidth(), (int)window->GetHeight());
+						glViewport(0, 0, window->GetWidth(), window->GetHeight());
+						Input::SetKeyInputLocked(false);
+						Input::SetMouseInputLocked(false);
+					}
+				}
+			}
+			else {
+				keyHeld = false;
+			}
+
 			// Update Editor.
-			editor->beginFrame();
+			editor->beginFrame(renderEditor);
 
 			// Just a little window fps counter.
 			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM1));
@@ -122,13 +151,22 @@ namespace Dog {
 			SceneManager::Update(deltaTime);
 
 			// Render scenes.
-			SceneManager::Render(deltaTime);
+			SceneManager::Render(deltaTime, renderEditor);
 
 			// Render Editor.
 			editor->endFrame();
 			
 			// Swap buffers
 			glfwSwapBuffers(window->GetWindowHandle());
+
+			// log window opengl samples
+			// GLint buffers, samples;
+			// glGetIntegerv(GL_SAMPLE_BUFFERS, &buffers);
+			// glGetIntegerv(GL_SAMPLES, &samples);
+			// std::cout << "Sample buffers: " << buffers << ", Samples: " << samples << std::endl;
+
+			// set samples to 4
+
 		}
 
 		imageWatcher.stop();

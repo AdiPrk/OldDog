@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "inputMap.h"
 
 struct GLFWwindow;
@@ -8,6 +7,11 @@ struct GLFWcursor;
 
 namespace Dog {
 
+	/**
+	 * The Input class is meant for use in anything that's inside the Scene.
+	 * If the scene is not focused, then the Input class will get locked and not update.
+	 * When the Editor is not active, the Input class will always update.
+	 */
 	class Input {
 	public:
 		static void Init(GLFWwindow* window);

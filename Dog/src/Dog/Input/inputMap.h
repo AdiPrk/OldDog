@@ -2,11 +2,8 @@
 * The numbers used in the mapping are from GLFW, since glfw is used for the input system 
 ****************************************************************************************/
 
-// Had to do it this way when I had the game engine as a seperate project
-// and it made a DLL that was linked to the game project
-// The biggest reason being I didn't want any libraries from 
-// the game engine to be included in the game project
-// now it's just x.x
+// there were many reasons why it's all hard coded numbers
+// those reasons don't exist anymore but the hard coded numbers do '.'
 
 #pragma once
 

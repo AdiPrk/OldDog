@@ -94,7 +94,10 @@ namespace Dog {
 		resources.clear();
 	}
 
-	void Resources::UpdateResources() {
+	void Resources::UpdateResources(const float& deltaTime) {
+		Shader::iTime += deltaTime;
+		Shader::SetTimeUBO(Shader::iTime);
+
 		for (const auto& imageFileChange : imageFileActions) {
 			switch (imageFileChange.first) {
 			case FileAction::Create:

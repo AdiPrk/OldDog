@@ -9,25 +9,27 @@ namespace Dog {
 	class Editor;
 
 	struct EngineSpec {
-		std::string name = "Dog Engine";
-		unsigned width = 1280;
-		unsigned height = 720;
-		unsigned fps = 60;
+		std::string name = "Dog Engine"; // The name of the window.
+		unsigned width = 1280;           // The width of the window.
+		unsigned height = 720;           // The height of the window.
+		unsigned fps = 60;			     // The target frames per second.
 	};
 
 	class Engine {
 	public:
-		// Creates the Engine! Note, the width and height set here are used as the aspect ratio for everything rendered.
-		// width: The width of the window.
-		// height: The height of the window.
-		// name: The name of the window.
 		Engine(const EngineSpec& specs);
 		~Engine();
 
-		static Engine& Get(const EngineSpec& specs = {})
+		// Called by client to create the engine.
+		static Engine& Create(const EngineSpec& specs = {})
 		{
 			static Engine instance(specs);
 			return instance;
+		}
+
+		static Engine& Get()
+		{
+			return Create();
 		}
 
 		Engine(const Engine&) = delete;

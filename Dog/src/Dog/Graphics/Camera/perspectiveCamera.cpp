@@ -32,7 +32,7 @@ namespace Dog {
 
     glm::mat4 PerspectiveCamera::GetProjectionMatrix()
     {
-        return glm::perspective(glm::radians(Zoom), aspectRatio, 0.1f, 100.0f);
+        return glm::perspective(glm::radians(60.f), aspectRatio, 0.01f, 100.0f);
     }
 
     // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)

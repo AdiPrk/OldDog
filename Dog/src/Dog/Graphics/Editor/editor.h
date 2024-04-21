@@ -21,13 +21,18 @@ namespace Dog {
 		void Init(GLFWwindow* window);
 		void Exit();
 
-		void beginFrame(bool renderEditor);
+		void beginFrame();
 		void endFrame();
 
 		void SetEditorEnabled(bool enabled) { renderEditor = enabled; }
 		bool GetEditorEnabled() const { return renderEditor; }
 
+		void UpdateVisibility(unsigned windowWidth, unsigned windowHeight);
+		bool IsActive() const { return isActive; }
+
 	private:
+		bool isActive = true;
+
 		std::unique_ptr<FileBrowser> fileBrowser;
 		std::unique_ptr<TextEditorWrapper> textEditorWrapper;
 		bool renderEditor = true;

@@ -49,7 +49,7 @@ namespace Dog {
 		ImGui::DestroyContext();
 	}
 
-	void Editor::beginFrame(bool renderEditor)
+	void Editor::beginFrame()
 	{
 
 		// (Your code calls glfwPollEvents())
@@ -59,7 +59,7 @@ namespace Dog {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 		
-		if (!renderEditor) {
+		if (!isActive) {
 			return;
 		}
 
@@ -94,6 +94,34 @@ namespace Dog {
 	{
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+
+	void Editor::UpdateVisibility(unsigned windowWidth, unsigned windowHeight)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		static bool renderEditor = isActive;
+		static bool keyHeld = false;
+		bool firstGameFrame = false;
+		if (io.KeyCtrl && io.KeyShift && io.KeysDown[ImGuiKey_J])
+		{
+			if (!keyHeld) {
+				renderEditor = !renderEditor;
+				keyHeld = true;
+				firstGameFrame = true;
+
+				if (!renderEditor) {
+					// trigger glfw window resize callback manually
+					PUBLISH_EVENT(Event::SceneResize, (int)windowWidth, (int)windowHeight);
+					glViewport(0, 0, windowWidth, windowHeight);
+					Input::SetKeyInputLocked(false);
+					Input::SetMouseInputLocked(false);
+				}
+			}
+		}
+		else {
+			keyHeld = false;
+		}
 	}
 
 } // namespace Dog

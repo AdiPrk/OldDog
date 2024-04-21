@@ -80,7 +80,7 @@ namespace Dog {
 		static std::vector<std::pair<FileAction, std::string>> imageFileActions;
 		static std::vector<std::pair<FileAction, std::string>> shaderFileActions;
 
-		static void UpdateResources();
+		static void UpdateResources(const float& deltaTime);
 		static void OnImageFileCreate(const Event::ImageFileCreated& event);
 		static void OnImageFileDelete(const Event::ImageFileDeleted& event);
 		static void OnImageFileModify(const Event::ImageFileModified& event);

@@ -2,6 +2,15 @@
 
 namespace Dog {
 
+#define WATCH_DIRECTORY(path) \
+	FileWatcher<Event::path##FileCreated, Event::path##FileModified, Event::path##FileDeleted> path##Watcher(Resources::path##sPath);
+
+#define STOP_WATCHING(path) \
+	path##Watcher.stop();
+
+    // File Watchers look at their respective directories for changes
+    // And publish events when they occur.
+    // They work on a seperate thread to avoid blocking the main thread.
     template <typename OnCreate, typename OnModify, typename OnDelete>
     class FileWatcher {
     public:
@@ -16,6 +25,8 @@ namespace Dog {
                     PUBLISH_EVENT(OnCreate, normalized_path);
                 }
             }
+
+            start();
         }
 
         ~FileWatcher() {

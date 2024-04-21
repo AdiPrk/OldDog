@@ -9,7 +9,7 @@ int main() {
 	specs.height = 720; 
 	specs.fps = 60;
 
-	Dog::Engine& Engine = Dog::Engine::Get(specs);
+	Dog::Engine& Engine = Dog::Engine::Create(specs);
 
 	SandboxScene sandbox;
 	return Engine.Run(&sandbox);

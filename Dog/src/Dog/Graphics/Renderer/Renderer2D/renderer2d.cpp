@@ -4,20 +4,20 @@
 
 namespace Dog {
 
-	Renderer2D::~Renderer2D()
-	{
-	}
+    Renderer2D::~Renderer2D()
+    {
+    }
 
-	void Renderer2D::initialize()
-	{
+    void Renderer2D::initialize()
+    {
         // configure VAO/VBO/EBO
         unsigned int VBO, EBO;
         float vertices[] = {
             // pos
-            0.0f, 1.0f, 0.0f, 1.0f, // Top-left vertex
-            0.0f, 0.0f, 0.0f, 0.0f, // Bottom-left vertex
-            1.0f, 1.0f, 1.0f, 1.0f, // Top-right vertex
-            1.0f, 0.0f, 1.0f, 0.0f  // Bottom-right vertex
+            -0.5f, 0.5f, 0.0f, 1.0f, // Top-left vertex
+            -0.5f, -0.5f, 0.0f, 0.0f, // Bottom-left vertex
+            0.5f, 0.5f, 1.0f, 1.0f, // Top-right vertex
+            0.5f, -0.5f, 1.0f, 0.0f  // Bottom-right vertex
         };
 
         unsigned int indices[] = {
@@ -39,11 +39,11 @@ namespace Dog {
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-	}
+    }
 
-	void Renderer2D::shutdown()
-	{
-	}
+    void Renderer2D::shutdown()
+    {
+    }
 
     void Renderer2D::clearFrame()
     {
@@ -52,14 +52,14 @@ namespace Dog {
     }
 
     void Renderer2D::beginFrame()
-	{
+    {
         clearFrame();
-	}
+    }
 
-	void Renderer2D::endFrame()
-	{
+    void Renderer2D::endFrame()
+    {
 
-	}
+    }
 
     void Renderer2D::DrawSprite(const std::string& texturePath, const glm::mat4& transform, glm::vec4 color, glm::vec2 repetition, float depth, const std::string& shaderPath)
     {

@@ -82,24 +82,22 @@ namespace Dog {
 	{
 		Init(startScene);
 
-		// A test for loading a duplicate resource. Should emit a warning in Debug mode.
-		FileWatcher<Event::ImageFileCreated, Event::ImageFileModified, Event::ImageFileDeleted> imageWatcher(Resources::ImagesPath);
-		FileWatcher<Event::ShaderFileCreated, Event::ShaderFileModified, Event::ShaderFileDeleted> shaderWatcher(Resources::ShadersPath);
-		imageWatcher.start();
-		shaderWatcher.start();
-
+		// Watch directories for resources.
+		WATCH_DIRECTORY(Image);
+		WATCH_DIRECTORY(Shader);
+		
 		/* Loop until the user closes the window */
 		const float fixedTimeStep = 1.0f / 60.0f;
-		float deltaTime = 0.0f;
-		float lastTime = 0.0f;
 		float accumulator = 0.0f;
 			
 		FrameRateController frameRateController(targetFPS);
 
 		while (running && !glfwWindowShouldClose(window->GetWindowHandle())) 
 		{
+			// Control FPS
 			float deltaTime = frameRateController.waitForNextFrame();
 
+			// Update input
 			Input::Update();
 			if (Input::isKeyDown(Key::ESCAPE)) {
 				running = false;
@@ -107,41 +105,14 @@ namespace Dog {
 			}
 
 			// Update resources
-			Resources::UpdateResources();
+			Resources::UpdateResources(deltaTime);
 
-			Shader::iTime += deltaTime;
-			Shader::SetTimeUBO(Shader::iTime);
-
-			// Initialize/Swap scenes.
+			// Swap scenes if necessary (Init/Exit)
 			SceneManager::SwapScenes();
 
-			ImGuiIO& io = ImGui::GetIO();
-
-			static bool renderEditor = false;
-			static bool keyHeld = false;
-			bool firstGameFrame = false;
-			if (io.KeyCtrl && io.KeyShift && io.KeysDown[ImGuiKey_J])
-			{
-				if (!keyHeld) {
-					renderEditor = !renderEditor;
-					keyHeld = true;
-					firstGameFrame = true;
-
-					if (!renderEditor) {
-						// trigger glfw window resize callback manually
-						PUBLISH_EVENT(Event::SceneResize, (int)window->GetWidth(), (int)window->GetHeight());
-						glViewport(0, 0, window->GetWidth(), window->GetHeight());
-						Input::SetKeyInputLocked(false);
-						Input::SetMouseInputLocked(false);
-					}
-				}
-			}
-			else {
-				keyHeld = false;
-			}
-
 			// Update Editor.
-			editor->beginFrame(renderEditor);
+			editor->UpdateVisibility(window->GetWidth(), window->GetHeight());
+			editor->beginFrame();
 
 			// Just a little window fps counter.
 			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM1));
@@ -151,26 +122,18 @@ namespace Dog {
 			SceneManager::Update(deltaTime);
 
 			// Render scenes.
-			SceneManager::Render(deltaTime, renderEditor);
+			SceneManager::Render(deltaTime, editor->IsActive());
 
-			// Render Editor.
+			// Render Editor (if active)
 			editor->endFrame();
 			
 			// Swap buffers
 			glfwSwapBuffers(window->GetWindowHandle());
-
-			// log window opengl samples
-			// GLint buffers, samples;
-			// glGetIntegerv(GL_SAMPLE_BUFFERS, &buffers);
-			// glGetIntegerv(GL_SAMPLES, &samples);
-			// std::cout << "Sample buffers: " << buffers << ", Samples: " << samples << std::endl;
-
-			// set samples to 4
-
 		}
 
-		imageWatcher.stop();
-		shaderWatcher.stop();
+		// Clean up resources.
+		STOP_WATCHING(Image);
+		STOP_WATCHING(Shader);
 		Shutdown();
 
 		return 0;

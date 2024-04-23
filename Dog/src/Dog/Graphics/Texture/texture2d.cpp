@@ -62,6 +62,49 @@ namespace Dog {
         return true;
     }
 
+    bool Texture2D::loadFromData(const std::vector<char>& data)
+    {
+        // load image
+		int width, height, nrChannels;
+		unsigned char* imageData = stbi_load_from_memory(reinterpret_cast<const stbi_uc*>(data.data()), (int)data.size(), &width, &height, &nrChannels, 0);
+
+		// check if data is loaded successfully
+        if (!imageData)
+        {
+			std::cerr << "Error: Failed to load image from data." << std::endl;
+			return false;
+		}
+
+		// Set the internal and image formats based on the number of channels
+        if (nrChannels == 4)
+        {
+			Internal_Format = GL_RGBA;
+			Image_Format = GL_RGBA;
+		}
+        else if (nrChannels == 3)
+        {
+			Internal_Format = GL_RGB;
+			Image_Format = GL_RGB;
+		}
+
+		// Calculate the width and height of a single sprite
+		unsigned columns = 1, rows = 1;
+
+		SpriteWidth = width / columns;
+		SpriteHeight = height / rows;
+		Rows = rows;
+		Columns = columns;
+		Index = 0;
+		IsSpriteSheet = columns != 1 || rows != 1;
+
+		Generate(width, height, imageData, rows * columns);
+
+		// and finally free image data
+		stbi_image_free(imageData);
+
+		return true;
+    }
+
     Texture2D::Texture2D()
         : Width(0)
         , Height(0)

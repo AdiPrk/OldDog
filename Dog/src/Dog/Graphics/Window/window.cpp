@@ -94,10 +94,7 @@ namespace Dog {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_SAMPLES, 4);
 
-        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-
-        window = glfwCreateWindow(mode->width, mode->height, name.c_str(), NULL, NULL);
+        window = glfwCreateWindow(m_Width, m_Height, name.c_str(), NULL, NULL);
         
         if (!window)
         {

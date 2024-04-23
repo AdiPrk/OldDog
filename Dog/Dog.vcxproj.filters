@@ -21,7 +21,7 @@
     <ClCompile Include="src\PCH\dogpch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Resources\resources.cpp">
+    <ClCompile Include="src\Dog\Assets\assets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Dog\Graphics\Window\window.cpp">
@@ -48,10 +48,10 @@
     <ClCompile Include="src\Dog\Graphics\Texture\texture2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Resources\resource.cpp">
+    <ClCompile Include="src\Dog\Assets\asset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Resources\resourceFactory.cpp">
+    <ClCompile Include="src\Dog\Assets\assetFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Dog\Input\input.cpp">
@@ -159,10 +159,10 @@
     <ClCompile Include="src\Dog\Graphics\Editor\Windows\toolbarWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Resources\FileWatcher\fileWatcher.cpp">
+    <ClCompile Include="src\Dog\Assets\FileWatcher\fileWatcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dog\Graphics\Editor\Windows\resourcesWindow.cpp">
+    <ClCompile Include="src\Dog\Graphics\Editor\Windows\assetsWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Dog\Graphics\Window\frameRate.cpp">
@@ -192,6 +192,18 @@
     <ClCompile Include="src\Dog\Graphics\Camera\SceneCamera\scenePerspectiveCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Dog\Assets\UUID\uuid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Assets\Packer\assetPacker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Scene\Serializer\sceneSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dog\Scene\Serializer\conversions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Dog\dog.h">
@@ -200,7 +212,7 @@
     <ClInclude Include="src\PCH\dogpch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Resources\resources.h">
+    <ClInclude Include="src\Dog\Assets\assets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dog\Graphics\Window\window.h">
@@ -233,10 +245,10 @@
     <ClInclude Include="src\Dog\Graphics\Texture\texture2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Resources\resourceFactory.h">
+    <ClInclude Include="src\Dog\Assets\assetFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Resources\resource.h">
+    <ClInclude Include="src\Dog\Assets\asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dog\Input\input.h">
@@ -362,10 +374,10 @@
     <ClInclude Include="src\Dog\Graphics\Editor\Windows\toolbarWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Resources\FileWatcher\fileWatcher.h">
+    <ClInclude Include="src\Dog\Assets\FileWatcher\fileWatcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dog\Graphics\Editor\Windows\resourcesWindow.h">
+    <ClInclude Include="src\Dog\Graphics\Editor\Windows\assetsWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Dog\Graphics\Window\frameRate.h">
@@ -410,6 +422,18 @@
     <ClInclude Include="src\Dog\Graphics\Camera\SceneCamera\scenePerspectiveCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Dog\Assets\UUID\uuid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Assets\Packer\assetPacker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Scene\Serializer\sceneSerializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dog\Scene\Serializer\conversions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="externals\imgui\imgui_bezier_math.inl">
@@ -420,12 +444,6 @@
     </None>
     <None Include="externals\imgui\imgui_node_editor_internal.inl">
       <Filter>Header Files</Filter>
-    </None>
-    <None Include="DogAssets\Shaders\defaultsprite.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="DogAssets\Shaders\defaultsprite.frag">
-      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

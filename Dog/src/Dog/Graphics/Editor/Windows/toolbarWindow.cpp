@@ -25,13 +25,13 @@ namespace Dog {
 		// get tex id
 		unsigned texId = 0;
 		if (isPlaying) {
-			auto tex = Resources::GetImage<Texture2D>("stopButton.png");
+			auto tex = Assets::Get<Texture2D>("stopButton.png");
 			if (tex) {
 				texId = tex->ID;
 			}
 		}
 		else {
-			auto tex = Resources::GetImage<Texture2D>("playButton.png");
+			auto tex = Assets::Get<Texture2D>("playButton.png");
 			if (tex) {
 				texId = tex->ID;
 			}

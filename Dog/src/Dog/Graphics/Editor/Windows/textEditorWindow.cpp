@@ -92,7 +92,7 @@ namespace Dog {
                 std::string path = std::string((char*)payload->Data, payload->DataSize - 1); // -1 to remove null terminator
                 printf("Path from drag drop: %s\n", path.c_str());
 
-                std::string fullPath = Resources::ShadersPath + path;
+                std::string fullPath = Assets::ShadersPath + path;
                 std::string vertPath = fullPath + ".vert";
                 std::string fragPath = fullPath + ".frag";
                 std::string vertName = path + ".vert";
@@ -188,7 +188,7 @@ namespace Dog {
 
         if (numDocumentsOpen == 0) {
             ImGui::TextWrapped("No documents open.");
-            ImGui::TextWrapped("Drag and drop a shader file from the 'Resources' tab to open it!");
+            ImGui::TextWrapped("Drag and drop a shader file from the 'Assets' tab to open it!");
         }
 
         // Create a DockSpace node where any window can be docked

@@ -1,6 +1,7 @@
 #include <PCH/dogpch.h>
 #include "renderer2d.h"
 #include "Dog/Graphics/Texture/texture2d.h"
+#include "Dog/Graphics/Renderer/Shaders/shader.h"
 
 namespace Dog {
 
@@ -61,74 +62,46 @@ namespace Dog {
 
     }
 
-    void Renderer2D::DrawSprite(const std::string& texturePath, const glm::mat4& transform, glm::vec4 color, glm::vec2 repetition, float depth, const std::string& shaderPath)
+    void Renderer2D::DrawSprite(std::weak_ptr<Texture2D> textureP, std::weak_ptr<Shader> shaderP, const glm::mat4& transform, glm::vec4 color, glm::vec2 repetition, float depth)
     {
-        auto shaderPtr = Resources::GetShader<Shader>(shaderPath);
-
-        if (!shaderPtr) {
-            if (shaderPath == "error") return;
-
-            DrawSprite(texturePath, transform, glm::vec4(1), glm::vec2(0), depth, "error");
-            return;
+        std::shared_ptr<Texture2D> texture = textureP.lock();
+        std::shared_ptr<Shader> shader = shaderP.lock();
+        if (shader->ID != activeShaderID) {
+            activeShaderID = shader->ID;
+            Shader::SetShader(shader);
         }
 
-        if (shaderPtr->ID != activeShaderID) {
-            activeShaderID = shaderPtr->ID;
-            Shader::SetShader(shaderPtr);
-        }
+        Shader& activeShader = Shader::GetActiveShader();
 
-        const std::shared_ptr<Texture2D> texturePtr = Resources::GetImage<Texture2D>(texturePath);
-        if (!texturePtr) {
-            DOG_ERROR("Trying to render a sprite with a texture that doesn't exist: {0}", texturePath);
-            DrawSprite("error.png", transform, glm::vec4(1), glm::vec2(0), depth, shaderPath);
-            return;
-        }
-        const Texture2D& texture = *texturePtr;
-
-        Shader& shader = Shader::GetActiveShader();
-
-        shader.SetMatrix4("model", transform);
+        activeShader.SetMatrix4("model", transform);
 
         // render textured quad
-        shader.SetVector4f("spriteColor", color);
+        activeShader.SetVector4f("spriteColor", color);
 
-        if (texture.IsSpriteSheet) {
-            static unsigned index = texture.Index;
-            if (texture.Index != index) {
-                index = texture.Index;
-                shader.SetUnsigned("spriteIndex", index);
+        if (texture->IsSpriteSheet) {
+            static unsigned index = texture->Index;
+            if (texture->Index != index) {
+                index = texture->Index;
+                activeShader.SetUnsigned("spriteIndex", index);
             }
         }
 
         if ((repetition.x == 0 || repetition.y == 0)) {
-            shader.SetVector2f("repetition", 1.0f, 1.0f);
+            activeShader.SetVector2f("repetition", 1.0f, 1.0f);
         }
         else {
             glm::vec2 size = {
                 glm::length(glm::vec3(transform[0])),
                 glm::length(glm::vec3(transform[1]))
             };
-            shader.SetVector2f("repetition", size.x / repetition.x, size.y / repetition.y);
+            activeShader.SetVector2f("repetition", size.x / repetition.x, size.y / repetition.y);
         }
 
         // Set the texture handle as a uniform
-        shader.SetUniformHandle("textureHandle", texture.textureHandle);
+        activeShader.SetUniformHandle("textureHandle", texture->textureHandle);
 
         glBindVertexArray(this->quadVAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    }
-
-    void Renderer2D::DrawSprite(const std::string& texturePath, glm::vec2 position, glm::vec2 size, float rotation, glm::vec4 color, glm::vec2 repetition, float depth)
-    {
-        // prepare transformations
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(position + size * 0.5f, 0.0f));  // first translate
-        model = glm::rotate(model, rotation, glm::vec3(0.0f, 0.0f, 1.0f)); // then rotate
-        model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // translate
-        model = glm::scale(model, glm::vec3(size, 1.0f)); // scale by size
-        //model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
-
-        DrawSprite(texturePath, model, color, repetition, depth);
     }
 
 }

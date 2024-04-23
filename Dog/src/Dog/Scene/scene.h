@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sceneManager.h"
+#include "Dog/Assets/UUID/uuid.h"
 
 namespace Dog {
 
@@ -8,6 +9,7 @@ namespace Dog {
 	class OrthographicCamera;
 	class SceneOrthographicCamera;
 	class ScenePerspectiveCamera;
+	class SceneSerializer;
 
 	class Scene {
 	public:
@@ -22,9 +24,10 @@ namespace Dog {
 		const std::string& GetName() const { return sceneName; }
 
 		class Entity CreateEntity(const std::string& name = "Unnamed Entity");
+		class Entity CreateEntityFromUUID(const UUID& uuid, const std::string& name = "Unnamed Entity");
 
-		const std::shared_ptr<FrameBuffer>& GetFrameBuffer() const { return frameBuffer; }
-		std::shared_ptr<FrameBuffer>& GetFrameBuffer() { return frameBuffer; }
+		const std::shared_ptr<FrameBuffer>& GetFrameBuffer() const { return sceneFrameBuffer; }
+		std::shared_ptr<FrameBuffer>& GetFrameBuffer() { return sceneFrameBuffer; }
 
 		void OnPlayButtonPressed(const Event::PlayButtonPressed& event);
 		void OnStopButtonPressed(const Event::StopButtonPressed& event);
@@ -41,7 +44,7 @@ namespace Dog {
 		unsigned int height;
 
 		// Framebuffer for the editor to render the scene
-		std::shared_ptr<FrameBuffer> frameBuffer;
+		std::shared_ptr<FrameBuffer> sceneFrameBuffer;
 		
 		// Functions that run before or after the user's scene functions
 		friend SceneManager;
@@ -49,6 +52,9 @@ namespace Dog {
 		void InternalUpdate(float dt);
 		void InternalRender(float dt, bool renderEditor);
 		void InternalExit();
+
+		// Serializer
+		friend SceneSerializer;
 
 		// Scene camera
 		friend class Input;

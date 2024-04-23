@@ -2,7 +2,6 @@
 #include "editor.h"
 #include "Dog/engine.h"
 #include "Dog/Graphics/Texture/texture2d.h"
-#include "Dog/Resources/resources.h"
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
 #include "Dog/Input/input.h"
 
@@ -11,9 +10,11 @@
 #include "Windows/entitiesWindow.h"
 #include "Windows/inspectorWindow.h"
 #include "Windows/toolbarWindow.h"
-#include "Windows/resourcesWindow.h"
+#include "Windows/assetsWindow.h"
 #include "Windows/textEditorWindow.h"
 #include "Windows/noEditorWindow.h"
+
+#include "Dog/Assets/Packer/assetPacker.h"
 
 namespace Dog {
 	Editor::Editor()
@@ -73,6 +74,9 @@ namespace Dog {
 			if (ImGui::MenuItem("Open Scene")) {}
 			if (ImGui::MenuItem("Save Scene")) {}
 			if (ImGui::MenuItem("Exit")) {}
+			if (ImGui::MenuItem("Create Asset Pack")) {
+				DogFilePacker::packageAssets("DogAssets", "DogAssets/fetch.it");
+			}
 			ImGui::EndMenu();
 		}
 
@@ -86,7 +90,7 @@ namespace Dog {
 		UpdateEntitiesWindow();
 		UpdateInspectorWindow();
 		UpdateToolbarWindow();
-		UpdateResourcesWindow(*fileBrowser, *textEditorWrapper);
+		UpdateAssetsWindow(*fileBrowser, *textEditorWrapper);
 		UpdateTextEditorWindow(*textEditorWrapper);
 	}
 
@@ -107,6 +111,7 @@ namespace Dog {
 		{
 			if (!keyHeld) {
 				renderEditor = !renderEditor;
+				isActive = renderEditor;
 				keyHeld = true;
 				firstGameFrame = true;
 

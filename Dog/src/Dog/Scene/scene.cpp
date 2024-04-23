@@ -14,6 +14,9 @@
 #include "Dog/Graphics/Camera/SceneCamera/scenePerspectiveCamera.h"
 
 #include "Dog/Graphics/Window/Iwindow.h"
+#include "Dog/Graphics/Renderer/Shaders/shader.h"
+
+#include "Serializer/sceneSerializer.h"
 
 #define DOG_SCENE_LOGGING 0
 
@@ -28,7 +31,7 @@ namespace Dog {
 		fbSpec.height = 720;
 		fbSpec.samples = 1;
 		fbSpec.attachments = { FBAttachment::RGBA8, FBAttachment::Depth24Stencil8 };
-		frameBuffer = std::make_shared<FrameBuffer>(fbSpec);
+		sceneFrameBuffer = std::make_shared<FrameBuffer>(fbSpec);
 
 		width = Engine::Get().GetWindow()->GetWidth();
 		height = Engine::Get().GetWindow()->GetHeight();
@@ -41,7 +44,7 @@ namespace Dog {
 		scenePerspectiveCamera = std::make_shared<ScenePerspectiveCamera>();
 		scenePerspectiveCamera->UpdateUniforms(); // Should be moved to the renderer (?) or somewhere else
 
-		eventSceneFBResize = SUBSCRIBE_EVENT(Event::SceneResize, frameBuffer->OnSceneResize);
+		eventSceneFBResize = SUBSCRIBE_EVENT(Event::SceneResize, sceneFrameBuffer->OnSceneResize);
 		eventSceneOrthoCamResize = SUBSCRIBE_EVENT(Event::SceneResize, sceneOrthographicCamera->OnSceneResize);
 		eventScenePerspCamResize = SUBSCRIBE_EVENT(Event::SceneResize, scenePerspectiveCamera->OnSceneResize);
 		eventPlayButtonPressed = SUBSCRIBE_EVENT(Event::PlayButtonPressed, OnPlayButtonPressed);
@@ -66,10 +69,26 @@ namespace Dog {
 	{
 		Entity newEnt(this);
 
+		newEnt.AddComponent<UUID>();
 		TagComponent& tg = newEnt.AddComponent<TagComponent>();
 		TransformComponent& tr = newEnt.AddComponent<TransformComponent>();
 		SpriteComponent& sc = newEnt.AddComponent<SpriteComponent>();
 		
+		tg.Tag = name;
+		tr.Translation -= tr.Scale * 0.5f;
+
+		return newEnt;
+	}
+
+	Entity Scene::CreateEntityFromUUID(const UUID& uuid, const std::string& name)
+	{
+		Entity newEnt(this);
+
+		newEnt.AddComponent<UUID>(uuid);
+		TagComponent& tg = newEnt.AddComponent<TagComponent>();
+		TransformComponent& tr = newEnt.AddComponent<TransformComponent>();
+		SpriteComponent& sc = newEnt.AddComponent<SpriteComponent>();
+
 		tg.Tag = name;
 		tr.Translation -= tr.Scale * 0.5f;
 
@@ -108,32 +127,49 @@ namespace Dog {
 		std::shared_ptr<Renderer2D>& renderer2D = Engine::Get().GetRenderer2D();
 
 		if (renderEditor) {
-			frameBuffer->Bind();
+			sceneFrameBuffer->Bind();
 		}
 
 		renderer2D->beginFrame();
 
 		registry.view<TransformComponent, SpriteComponent>().each
 		([&](const auto& entity, const TransformComponent& transform, const SpriteComponent& sprite) {
-			if (registry.all_of<ShaderComponent>(entity)) {
-				ShaderComponent& shader = registry.get<ShaderComponent>(entity);
-				renderer2D->DrawSprite(sprite.texturePath, transform.GetTransform(), sprite.Color, glm::vec2(0), 0.0f, shader.shaderPath);
-			}
-			else {
-				renderer2D->DrawSprite(sprite.texturePath, transform.GetTransform(), sprite.Color);
+			
+			auto texPtr = Assets::Get<Texture2D>(sprite.texturePath);
+			if (!texPtr) {
+				texPtr = Assets::Get<Texture2D>("error.png");
+				if (!texPtr) return;
 			}
 
+			std::shared_ptr<Shader> shaderPtr;
+			if (registry.all_of<ShaderComponent>(entity)) {
+				ShaderComponent& shader = registry.get<ShaderComponent>(entity);
+				shaderPtr = Assets::Get<Shader>(shader.shaderPath);
+
+				if (!shaderPtr) {
+					shaderPtr = Assets::Get<Shader>("error");
+					if (!shaderPtr) {
+						return;
+					}
+				}
+			}
+			else {
+				shaderPtr = Assets::Get<Shader>("defaultsprite");
+				if (!shaderPtr) {
+					shaderPtr = Assets::Get<Shader>("error");
+					if (!shaderPtr) {
+						return;
+					}
+				}
+			}
+
+			renderer2D->DrawSprite(texPtr, shaderPtr, transform.GetTransform(), sprite.Color);
 		});
 
 		renderer2D->endFrame();
 
-		// log currently bound fbo from opengl
-		// int fbo;
-		// glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
-		// DOG_INFO("Currently bound FBO: {0}", fbo);
-
 		if (renderEditor) {
-			frameBuffer->Unbind();
+			sceneFrameBuffer->Unbind();
 		}
 
 	}
@@ -143,6 +179,8 @@ namespace Dog {
 #if DOG_SCENE_LOGGING
 		DOG_INFO("Scene {0} exit.", sceneName);
 #endif
+
+		SceneSerializer::Serialize(this, "DogAssets/Scenes/sandbox.dog");
 	}
 
 	glm::mat4 Scene::GetProjectionMatrix()

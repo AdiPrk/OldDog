@@ -20,24 +20,15 @@ namespace Dog {
 
     bool Shader::load(const std::string& path)
     {
-        std::string vShaderFile = path + ".vert";
-        std::string fShaderFile = path + ".frag";
-
         // check if those files exist
-        std::ifstream vFile(vShaderFile);
-        std::ifstream fFile(fShaderFile);
-        if (!vFile.good() || !fFile.good()) {
-            if (!vFile.good()) {
-                DOG_CRITICAL("Shader files not found: {0}", vShaderFile);
-            }
-            if (!fFile.good()) {
-                DOG_CRITICAL("Shader files not found: {0}", fShaderFile);
-            }
-
+        std::ifstream sFile(path + ".glsl");
+        if (!sFile.good()) {
+            DOG_CRITICAL("Shader files not found: {0}", (path + ".glsl"));
+            
             return false;
 		}
 
-        if (!loadShaderFromFile(vShaderFile, fShaderFile)) {
+        if (!loadShaderFromFile(path)) {
             return false;
         }
 
@@ -50,7 +41,73 @@ namespace Dog {
         return true;
     }
 
-    bool Shader::loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile)
+    bool Shader::loadFromData(const std::vector<char>& data)
+    {
+        // 1. retrieve the vertex/fragment source code from filePath
+		std::string vertexCode;
+		std::string fragmentCode;
+        try
+        {
+			// open files
+			std::stringstream shaderStream(std::string(data.begin(), data.end()));
+
+			std::stringstream vShaderStream, fShaderStream;
+
+			// read till it finds a "#shadertype" line
+			std::string line;
+			std::streampos oldPos = shaderStream.tellg();
+
+            while (true) {
+				oldPos = shaderStream.tellg();
+				if (!std::getline(shaderStream, line)) break;
+
+                if (line.find("#shadertype") != std::string::npos) {
+                    if (line.find("vertex") != std::string::npos) {
+						oldPos = shaderStream.tellg();
+                        while (std::getline(shaderStream, line)) {
+                            if (line.find("#shadertype") != std::string::npos) {
+								// go back a line
+								shaderStream.seekg(oldPos);
+								break;
+							}
+							vShaderStream << line << '\n';
+						}
+					}
+                    else if (line.find("fragment") != std::string::npos) {
+						oldPos = shaderStream.tellg();
+                        while (std::getline(shaderStream, line)) {
+                            if (line.find("#shadertype") != std::string::npos) {
+								// go back a line
+								shaderStream.seekg(oldPos);
+								break;
+							}
+							fShaderStream << line << '\n';
+						}
+					}
+				}
+			}
+
+            vertexCode = vShaderStream.str();
+            fragmentCode = fShaderStream.str();
+        }
+        catch (std::exception e)
+        {
+			DOG_CRITICAL("Failed to read shader files");
+			return false;
+		}
+
+        if (Compile(vertexCode.c_str(), fragmentCode.c_str())) {
+            BindUBO("Matricies", Shader::uboMatricesBindingPoint);
+            BindUBO("Time", Shader::uboTimeBindingPoint);
+            BindUBO("Resolution", Shader::uboResolutionBindingPoint);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool Shader::loadShaderFromFile(const std::string& shaderFile)
     {
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;
@@ -58,22 +115,54 @@ namespace Dog {
         try
         {
             // open files
-            std::ifstream vertexShaderFile(vShaderFile);
-            std::ifstream fragmentShaderFile(fShaderFile);
+            std::ifstream shaderStream(shaderFile + ".glsl");
+
             std::stringstream vShaderStream, fShaderStream;
-            // read file's buffer contents into streams
-            vShaderStream << vertexShaderFile.rdbuf();
-            fShaderStream << fragmentShaderFile.rdbuf();
+
+            // read till it finds a "#shadertype" line
+            std::string line;
+            std::streampos oldPos = shaderStream.tellg();
+
+            while (true) {
+                oldPos = shaderStream.tellg();
+                if (!std::getline(shaderStream, line)) break;
+				
+                if (line.find("#shadertype") != std::string::npos) {
+                    if (line.find("vertex") != std::string::npos) {
+                        oldPos = shaderStream.tellg();
+                        while (std::getline(shaderStream, line)) {
+                            if (line.find("#shadertype") != std::string::npos) {
+                                // go back a line
+                                shaderStream.seekg(oldPos);
+                                break;
+							}
+							vShaderStream << line << '\n';
+						}
+					}
+                    else if (line.find("fragment") != std::string::npos) {
+                        oldPos = shaderStream.tellg();
+                        while (std::getline(shaderStream, line)) {
+                            if (line.find("#shadertype") != std::string::npos) {
+								// go back a line
+								shaderStream.seekg(oldPos);
+								break;
+							}
+							fShaderStream << line << '\n';
+                        }
+					}
+				}
+            }
+
+
             // close file handlers
-            vertexShaderFile.close();
-            fragmentShaderFile.close();
+            shaderStream.close();
             // convert stream into string
             vertexCode = vShaderStream.str();
             fragmentCode = fShaderStream.str();
         }
         catch (std::exception e)
         {
-            std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
+            DOG_CRITICAL("Failed to read shader files");
             return false;
         }
         const char* vShaderCode = vertexCode.c_str();

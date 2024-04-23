@@ -12,9 +12,13 @@
 
 #include "Dog/Graphics/Editor/editor.h"
 
-#include "Dog/Resources/FileWatcher/fileWatcher.h"
+#include "Dog/Assets/FileWatcher/fileWatcher.h"
+#include "Dog/Assets/Packer/assetPacker.h"
 
 #include "Dog/Graphics/Window/frameRate.h"
+#include "Dog/Graphics/Renderer/Shaders/shader.h"
+
+
 
 namespace Dog {
 
@@ -26,7 +30,6 @@ namespace Dog {
 		, targetFPS(specs.fps)
 	{
 		Logger::Init();
-		Resources::Init();
 
 		sceneSize = glm::vec2(specs.width, specs.height);
 
@@ -45,14 +48,16 @@ namespace Dog {
 		// Setup Editor
 		editor->Init(window->GetWindowHandle());
 
+		Assets::Init();
+
 		window->SetVSync(false);
 
-		imageFileCreatedHandle = SUBSCRIBE_EVENT(Event::ImageFileCreated, Resources::OnImageFileCreate);
-		imageFileDeletedHandle = SUBSCRIBE_EVENT(Event::ImageFileDeleted, Resources::OnImageFileDelete);
-		imageFileModifiedHandle = SUBSCRIBE_EVENT(Event::ImageFileModified, Resources::OnImageFileModify);
-		shaderFileCreatedHandle = SUBSCRIBE_EVENT(Event::ShaderFileCreated, Resources::OnShaderFileCreate);
-		shaderFileDeletedHandle = SUBSCRIBE_EVENT(Event::ShaderFileDeleted, Resources::OnShaderFileDelete);
-		shaderFileModifiedHandle = SUBSCRIBE_EVENT(Event::ShaderFileModified, Resources::OnShaderFileModify);
+		imageFileCreatedHandle = SUBSCRIBE_EVENT(Event::ImageFileCreated, Assets::OnImageFileCreate);
+		imageFileDeletedHandle = SUBSCRIBE_EVENT(Event::ImageFileDeleted, Assets::OnImageFileDelete);
+		imageFileModifiedHandle = SUBSCRIBE_EVENT(Event::ImageFileModified, Assets::OnImageFileModify);
+		shaderFileCreatedHandle = SUBSCRIBE_EVENT(Event::ShaderFileCreated, Assets::OnShaderFileCreate);
+		shaderFileDeletedHandle = SUBSCRIBE_EVENT(Event::ShaderFileDeleted, Assets::OnShaderFileDelete);
+		shaderFileModifiedHandle = SUBSCRIBE_EVENT(Event::ShaderFileModified, Assets::OnShaderFileModify);
 	}
 
 	Engine::~Engine()
@@ -82,10 +87,12 @@ namespace Dog {
 	{
 		Init(startScene);
 
-		// Watch directories for resources.
+		// Watch directories for assets.
+#ifndef DOG_SHIP
 		WATCH_DIRECTORY(Image);
 		WATCH_DIRECTORY(Shader);
-		
+#endif
+
 		/* Loop until the user closes the window */
 		const float fixedTimeStep = 1.0f / 60.0f;
 		float accumulator = 0.0f;
@@ -104,15 +111,17 @@ namespace Dog {
 				break;
 			}
 
-			// Update resources
-			Resources::UpdateResources(deltaTime);
+			// Update assets
+			Assets::UpdateAssets(deltaTime);
 
 			// Swap scenes if necessary (Init/Exit)
 			SceneManager::SwapScenes();
 
 			// Update Editor.
+#ifndef DOG_SHIP
 			editor->UpdateVisibility(window->GetWidth(), window->GetHeight());
 			editor->beginFrame();
+#endif
 
 			// Just a little window fps counter.
 			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM1));
@@ -122,18 +131,24 @@ namespace Dog {
 			SceneManager::Update(deltaTime);
 
 			// Render scenes.
+#ifndef DOG_SHIP
 			SceneManager::Render(deltaTime, editor->IsActive());
-
+#else
+			SceneManager::Render(deltaTime, false);
+#endif
 			// Render Editor (if active)
+#ifndef DOG_SHIP
 			editor->endFrame();
-			
+#endif
 			// Swap buffers
 			glfwSwapBuffers(window->GetWindowHandle());
 		}
 
-		// Clean up resources.
+		// Clean up assets.
+#ifndef DOG_SHIP
 		STOP_WATCHING(Image);
 		STOP_WATCHING(Shader);
+#endif
 		Shutdown();
 
 		return 0;

@@ -33,6 +33,7 @@
 #include <typeindex>
 #include <mutex>
 #include <filesystem>
+#include <random>
 
 // spdlog
 #include "spdlog/spdlog.h"
@@ -61,8 +62,12 @@
 // EnTT
 #include "entt/entt.hpp"
 
+// Yaml
+#define YAML_CPP_STATIC_DEFINE
+#include "yaml-cpp/yaml.h"
+
 // Dog headers:
 #include "Dog/Math/rect.h"
 #include "Dog/Logger/logger.h"
 #include "Dog/Events/event.h"
-#include "Dog/Resources/resources.h"
+#include "Dog/Assets/assets.h"

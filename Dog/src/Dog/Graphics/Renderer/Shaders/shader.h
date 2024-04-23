@@ -1,18 +1,17 @@
 #pragma once
 
-#include "Dog/Resources/resource.h"
-
 namespace Dog {
 
     // General purpose shader object. Compiles from file, generates
     // compile/link-time error messages and hosts several utility 
     // functions for easy management.
-    class Shader : public Resource
+    class Shader : public Asset
     {
     public:
         static const std::string GetTypeName() { return "Shader"; }
 
         bool load(const std::string& path) override;
+        bool loadFromData(const std::vector<char>& data) override;
         void save(const std::string& path) override {};
         
         // state
@@ -24,7 +23,7 @@ namespace Dog {
         // sets the current shader as active
         Shader& Use();
         // compiles the shader from given source code
-        bool Compile(const char* vertexSource, const char* fragmentSource); // note: geometry source code is optional 
+        bool Compile(const char* vertexSource, const char* fragmentSource);
         void SetUniformsFromCode();
         // utility functions
         void SetFloat(const std::string& name, float value);
@@ -68,7 +67,7 @@ namespace Dog {
     private:
         // checks if compilation or linking failed and if so, print the error logs
         bool checkCompileErrors(unsigned int object, std::string type);
-        bool loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile);
+        bool loadShaderFromFile(const std::string& shaderFile);
 
         static Shader activeShader;
     };

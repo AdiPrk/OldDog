@@ -1,38 +1,34 @@
 Scene: Untitled
 Entities:
-  - Entity: Untitled
-    TagComponent:
-      Tag: Blue Box
+  - Entity: Blue Box
     TransformComponent:
       Translation: [0.75, -0.5, -0.5]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteComponent:
       Color: [0, 0, 1, 1]
-  - Entity: Untitled
-    TagComponent:
-      Tag: Red Box
+      Texture: square.png
+  - Entity: Red Box
     TransformComponent:
       Translation: [-1.75, -0.5, -0.5]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteComponent:
       Color: [1, 0, 0, 1]
-  - Entity: Untitled
-    TagComponent:
-      Tag: Green Box
+      Texture: square.png
+  - Entity: Green Box
     TransformComponent:
       Translation: [-0.5, -0.5, -0.5]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteComponent:
       Color: [0, 1, 0, 1]
-  - Entity: Untitled
-    TagComponent:
-      Tag: White Box
+      Texture: square.png
+  - Entity: White Box
     TransformComponent:
       Translation: [-0.5, -1.75, -0.5]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteComponent:
       Color: [1, 1, 1, 1]
+      Texture: square.png

@@ -1,5 +1,7 @@
 #pragma once
 
+#ifndef DOG_SHIP
+
 namespace Dog {
 
 	class FileBrowser;
@@ -40,3 +42,5 @@ namespace Dog {
 	};
 
 } // namespace Dog
+
+#endif

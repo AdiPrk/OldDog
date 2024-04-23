@@ -2,7 +2,7 @@
 
 namespace Dog {
 
-	class IWindow;
+	class Window;
 	class Renderer2D;
 	class DeferredRenderer;
 	class Scene;
@@ -38,10 +38,13 @@ namespace Dog {
 		int Run(Scene* startScene);
 
 		static glm::vec2 GetSceneSize() { return sceneSize; }
-		static std::shared_ptr<IWindow>& GetWindow() { return Get().window; }
+		static std::shared_ptr<Window>& GetWindow() { return Get().window; }
 		static std::shared_ptr<Renderer2D>& GetRenderer2D() { return Get().renderer2D; }
 		static std::shared_ptr<DeferredRenderer>& GetDeferredRenderer() { return Get().deferredRenderer; }
+
+#ifndef DOG_SHIP
 		static std::shared_ptr<Editor>& GetEditor() { return Get().editor; }
+#endif
 
 		std::string GetName() const { return name; }
 		unsigned GetTargetFPS() const { return targetFPS; }
@@ -57,10 +60,13 @@ namespace Dog {
 
 		static glm::vec2 sceneSize;
 
-		std::shared_ptr<IWindow> window;
+		std::shared_ptr<Window> window;
 		std::shared_ptr<Renderer2D> renderer2D;
 		std::shared_ptr<DeferredRenderer> deferredRenderer;
+
+#ifndef DOG_SHIP
 		std::shared_ptr<Editor> editor;
+#endif
 
 		Events::Handle<Event::ImageFileCreated> imageFileCreatedHandle;
 		Events::Handle<Event::ImageFileDeleted> imageFileDeletedHandle;

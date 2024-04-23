@@ -1,18 +1,13 @@
 #pragma once
 
-
-#include "Iwindow.h"
-
 namespace Dog {
 
-	class Window : public IWindow {
+	class Window {
 	public:
 		Window(unsigned int screenWidth, unsigned int screenHeight, const std::string& name);
 		~Window();
 
 		bool IsRunning();
-
-		void UpdateTitle();
 
 		void ToggleFullscreen();
 
@@ -36,6 +31,7 @@ namespace Dog {
 		float GetAspectRatio() { return m_AspectRatio; }
 
 	private:
+		GLFWwindow* window;
 		//std::chrono::high_resolution_clock::time_point m_LastFrameTime;
 		std::chrono::high_resolution_clock::time_point m_LastFrameTime;
 		unsigned int m_Width = 0;

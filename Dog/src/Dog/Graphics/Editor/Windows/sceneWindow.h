@@ -1,8 +1,12 @@
 #pragma once
 
+#ifndef DOG_SHIP
+
 namespace Dog {
 
 	void UpdateSceneWindow();
-	ImVec2 GetRelativeSceneImagePosition();
+	glm::vec2 GetRelativeSceneImagePosition();
 
 }
+
+#endif

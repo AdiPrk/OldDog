@@ -1,4 +1,7 @@
 #include <PCH/dogpch.h>
+
+#ifndef DOG_SHIP
+
 #include "assetsWindow.h"
 #include "Dog/Graphics/Texture/texture2d.h"
 #include "textEditorWindow.h"
@@ -119,14 +122,8 @@ namespace Dog {
 					// Get the texture from the path
 					std::string fileName = path.filename().string();
 					std::string filePath = path.string();
-
-					// only display if it is a .vert file
-					// and then truncate the vert part.
-					if (fileName.find(".vert") == std::string::npos) {
-						continue;
-					}
-
-					fileName = fileName.substr(0, fileName.find(".vert"));
+					std::string shaderAssetName = fileName;
+					shaderAssetName = shaderAssetName.substr(0, shaderAssetName.find_last_of("."));
 
 					// tex id
 					unsigned texId = 0;
@@ -147,24 +144,14 @@ namespace Dog {
 
 					// get if item is double clicked
 					if (isImageHovered && doubleClicked) {
-						std::string vertName = fileName + ".vert";
-						std::string fragName = fileName + ".frag";
-						std::string vertPath = Assets::ShadersPath + vertName;
-						std::string fragPath = Assets::ShadersPath + fragName;
+						std::string shaderPath = Assets::ShadersPath + fileName;
 
-						TextEditorWrapper::MyDocument vertDoc(vertName, true, vertPath);
-						textEditor.CreateNewDocument(vertDoc);
-
-						TextEditorWrapper::MyDocument fragDoc(fragName, true, fragPath);
-						textEditor.CreateNewDocument(fragDoc);
-
-						// printf("Adding shader: %s\n", fileName.c_str());
-						// printf("\tvert path: %s\n", vertPath.c_str());
-						// printf("\tfrag path: %s\n", fragPath.c_str());
+						TextEditorWrapper::MyDocument shaderDoc(fileName, true, shaderPath);
+						textEditor.CreateNewDocument(shaderDoc);
 					}
 
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID)) {
-						ImGui::SetDragDropPayload("Shader", fileName.c_str(), fileName.size() + 1);
+						ImGui::SetDragDropPayload("Shader", shaderAssetName.c_str(), shaderAssetName.size() + 1);
 						ImGui::Image((void*)(intptr_t)texId, ImVec2(imageSize, imageSize));
 						ImGui::Text(fileName.c_str());
 						ImGui::EndDragDropSource();
@@ -179,7 +166,7 @@ namespace Dog {
 					// for multi-line centered text
 					ImVec2 textSize = ImGui::CalcTextSize(fileName.c_str(), NULL, true, imageSize);
 					ImGui::SetCursorPosX(ImGui::GetCursorPosX() + (imageSize - textSize.x) * 0.5f);
-					ImGui::TextWrapped(fileName.c_str());
+					ImGui::TextWrapped(shaderAssetName.c_str());
 				}
 
 				ImGui::NextColumn();
@@ -193,3 +180,5 @@ namespace Dog {
 	}
 
 }
+
+#endif // DOG_SHIP

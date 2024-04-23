@@ -18,8 +18,6 @@
 #include "Dog/Graphics/Window/frameRate.h"
 #include "Dog/Graphics/Renderer/Shaders/shader.h"
 
-
-
 namespace Dog {
 
 	glm::vec2 Engine::sceneSize = glm::vec2(1280, 720);
@@ -36,7 +34,7 @@ namespace Dog {
 		window = std::make_shared<Window>(specs.width, specs.height, name);
 		renderer2D = std::make_shared<Renderer2D>();
 		deferredRenderer = std::make_shared<DeferredRenderer>();
-		editor = std::make_shared<Editor>();
+
 
 		Shader::SetupUBO();
 
@@ -46,7 +44,10 @@ namespace Dog {
 		deferredRenderer->initialize();
 
 		// Setup Editor
+#ifndef DOG_SHIP
+		editor = std::make_shared<Editor>();
 		editor->Init(window->GetWindowHandle());
+#endif
 
 		Assets::Init();
 
@@ -80,7 +81,10 @@ namespace Dog {
 		UNSUBSCRIBE_EVENT(Event::ShaderFileModified, shaderFileModifiedHandle);
 
 		SceneManager::Exit();
+
+#ifndef DOG_SHIP
 		editor->Exit();
+#endif
 	}
 
 	int Engine::Run(Scene* startScene)
@@ -117,27 +121,24 @@ namespace Dog {
 			// Swap scenes if necessary (Init/Exit)
 			SceneManager::SwapScenes();
 
-			// Update Editor.
 #ifndef DOG_SHIP
+			// Update Editor.
 			editor->UpdateVisibility(window->GetWidth(), window->GetHeight());
 			editor->beginFrame();
 #endif
 
-			// Just a little window fps counter.
-			window->ShowFPSInTitle(Input::isKeyDown(Key::NUM1));
-			window->UpdateTitle();
-
 			// Update scenes.
 			SceneManager::Update(deltaTime);
 
-			// Render scenes.
 #ifndef DOG_SHIP
+			// Render scenes.
 			SceneManager::Render(deltaTime, editor->IsActive());
 #else
 			SceneManager::Render(deltaTime, false);
 #endif
-			// Render Editor (if active)
+
 #ifndef DOG_SHIP
+			// Render Editor (if active)
 			editor->endFrame();
 #endif
 			// Swap buffers

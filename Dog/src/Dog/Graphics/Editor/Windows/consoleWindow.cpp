@@ -1,4 +1,7 @@
 #include <PCH/dogpch.h>
+
+#ifndef DOG_SHIP
+
 #include "consoleWindow.h"
 
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
@@ -19,3 +22,5 @@ namespace Dog {
 	}
 
 }
+
+#endif

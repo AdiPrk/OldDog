@@ -1,4 +1,7 @@
 #include <PCH/dogpch.h>
+
+#ifndef DOG_SHIP
+
 #include "noEditorWindow.h"
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
 #include "Dog/Input/input.h"
@@ -58,3 +61,5 @@ namespace Dog {
 	}
 
 }
+
+#endif

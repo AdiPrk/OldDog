@@ -1,5 +1,7 @@
 #pragma once
 
+#ifndef DOG_SHIP
+
 namespace Dog {
 
 	class FileBrowser
@@ -14,3 +16,5 @@ namespace Dog {
 	void UpdateAssetsWindow(FileBrowser& browser, class TextEditorWrapper& textEditor);
 
 }
+
+#endif

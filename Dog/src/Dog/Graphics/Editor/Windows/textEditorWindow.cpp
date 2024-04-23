@@ -1,4 +1,7 @@
 #include <PCH/dogpch.h>
+
+#ifndef DOG_SHIP
+
 #include "textEditorWindow.h"
 
 namespace Dog {
@@ -92,19 +95,11 @@ namespace Dog {
                 std::string path = std::string((char*)payload->Data, payload->DataSize - 1); // -1 to remove null terminator
                 printf("Path from drag drop: %s\n", path.c_str());
 
-                std::string fullPath = Assets::ShadersPath + path;
-                std::string vertPath = fullPath + ".vert";
-                std::string fragPath = fullPath + ".frag";
-                std::string vertName = path + ".vert";
-                std::string fragName = path + ".frag";
+                std::string fullPath = Assets::ShadersPath + path + ".glsl";
 
-                TextEditorWrapper::MyDocument vertDoc(vertName, true, vertPath);
-                TextEditorWrapper::MyDocument fragDoc(fragName, true, fragPath);
+                TextEditorWrapper::MyDocument shaderDoc(path, true, fullPath);
 
-                textEditorWrapper.CreateNewDocument(vertDoc);
-                textEditorWrapper.CreateNewDocument(fragDoc);
-
-                //shaderPath = path;
+                textEditorWrapper.CreateNewDocument(shaderDoc);
             }
 
             ImGui::EndDragDropTarget();
@@ -379,3 +374,5 @@ namespace Dog {
     }
 
 }
+
+#endif // DOG_SHIP

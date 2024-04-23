@@ -85,23 +85,22 @@ namespace Dog {
 
 		glm::vec2 windowSize(windowWidth, windowHeight);
 
-		auto imguiWin = ImGui::FindWindowByName("Scene");
-		glm::vec2 imguiTranslation;
-		glm::vec2 imguiScale;
 
+		glm::vec2 imguiTranslation = glm::vec2(0.0f, 0.0f);
+		glm::vec2 imguiScale = glm::vec2(1.0f, 1.0f);
+
+#ifndef DOG_SHIP
 		// check if imgui window was rendered
+		auto imguiWin = ImGui::FindWindowByName("Scene");
 		if (imguiWin) {
-			ImVec2 relPos = GetRelativeSceneImagePosition();
-			imguiTranslation = imguiWin->Pos + relPos;
+			glm::vec2 relPos = GetRelativeSceneImagePosition();
+			imguiTranslation = glm::vec2(imguiWin->Pos.x, imguiWin->Pos.y) + relPos;
 			ImVec2 winSize = imguiWin->Size;
 			winSize.y -= relPos.y;
 
 			imguiScale = glm::vec2(winSize) / windowSize;
 		}
-		else {
-			imguiTranslation = glm::vec2(0.0f, 0.0f);
-			imguiScale = glm::vec2(1.0f, 1.0f);
-		}
+#endif
 
 		// Get mouse coordinates in screen space
 		double cursorX, cursorY;

@@ -13,7 +13,7 @@
 #include "Dog/Graphics/Camera/SceneCamera/sceneOrthographicCamera.h"
 #include "Dog/Graphics/Camera/SceneCamera/scenePerspectiveCamera.h"
 
-#include "Dog/Graphics/Window/Iwindow.h"
+#include "Dog/Graphics/Window/window.h"
 #include "Dog/Graphics/Renderer/Shaders/shader.h"
 
 #include "Serializer/sceneSerializer.h"
@@ -65,6 +65,12 @@ namespace Dog {
 		DOG_INFO("Stop button pressed.");
 	}
 
+	void Scene::ClearEntities()
+	{
+		// reset registry
+		registry.clear();
+	}
+
 	Entity Scene::CreateEntity(const std::string& name)
 	{
 		Entity newEnt(this);
@@ -85,12 +91,19 @@ namespace Dog {
 		Entity newEnt(this);
 
 		newEnt.AddComponent<UUID>(uuid);
-		TagComponent& tg = newEnt.AddComponent<TagComponent>();
+		TagComponent& tg = newEnt.AddComponent<TagComponent>(name);
 		TransformComponent& tr = newEnt.AddComponent<TransformComponent>();
 		SpriteComponent& sc = newEnt.AddComponent<SpriteComponent>();
 
-		tg.Tag = name;
-		tr.Translation -= tr.Scale * 0.5f;
+		return newEnt;
+	}
+
+	Entity Scene::CreateEmptyEntity(const std::string& name)
+	{
+		Entity newEnt(this);
+
+		newEnt.AddComponent<UUID>();
+		TagComponent& tg = newEnt.AddComponent<TagComponent>(name);
 
 		return newEnt;
 	}
@@ -179,8 +192,6 @@ namespace Dog {
 #if DOG_SCENE_LOGGING
 		DOG_INFO("Scene {0} exit.", sceneName);
 #endif
-
-		SceneSerializer::Serialize(this, "DogAssets/Scenes/sandbox.dog");
 	}
 
 	glm::mat4 Scene::GetProjectionMatrix()

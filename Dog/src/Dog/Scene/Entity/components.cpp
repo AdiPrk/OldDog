@@ -4,7 +4,7 @@
 #include "Dog/Graphics/Texture/texture2d.h"
 #include "Dog/Graphics/Camera/orthoCamera.h"
 #include "Dog/Graphics/Camera/perspectiveCamera.h"
-#include "Dog/Graphics/Window/Iwindow.h"
+#include "Dog/Graphics/Window/window.h"
 
 namespace Dog {
 

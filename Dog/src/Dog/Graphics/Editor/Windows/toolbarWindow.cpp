@@ -1,4 +1,7 @@
 #include <PCH/dogpch.h>
+
+#ifndef DOG_SHIP
+
 #include "toolbarWindow.h"
 #include "Dog/engine.h"
 #include "Dog/Graphics/Texture/texture2d.h"
@@ -66,3 +69,5 @@ namespace Dog {
 		PUBLISH_EVENT(Event::StopButtonPressed);
 	}
 }
+
+#endif // DOG_SHIP

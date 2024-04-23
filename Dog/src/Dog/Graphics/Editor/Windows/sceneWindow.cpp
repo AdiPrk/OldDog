@@ -1,4 +1,7 @@
 #include <PCH/dogpch.h>
+
+#ifndef DOG_SHIP
+
 #include "sceneWindow.h"
 
 #include "Dog/Graphics/Framebuffer/framebuffer.h"
@@ -10,9 +13,9 @@
 
 namespace Dog {
 
-	ImVec2 sceneImagePosition = { 0.0f, 0.0f };
+	glm::vec2 sceneImagePosition = { 0.0f, 0.0f };
 
-	ImVec2 GetRelativeSceneImagePosition() {
+	glm::vec2 GetRelativeSceneImagePosition() {
 		return sceneImagePosition;
 	}
 
@@ -70,3 +73,5 @@ namespace Dog {
 	}
 
 }
+
+#endif // DOG_SHIP

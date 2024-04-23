@@ -151,29 +151,6 @@ namespace Dog {
         return glfwWindowShouldClose(window) == 0;
     }
 
-    void Window::UpdateTitle()
-    {
-        static bool lastShowFPS = showFPS;
-
-        if (showFPS) {
-            std::string curTitle = GetTitle();
-            curTitle = curTitle.substr(0, curTitle.find(" - FPS: "));
-
-            std::string fpsStr = std::to_string(ImGui::GetIO().Framerate);
-            fpsStr = fpsStr.substr(0, fpsStr.find(".") + 2);
-            fpsStr = curTitle + " - FPS: " + fpsStr;
-
-            SetTitle(fpsStr.c_str());
-        }
-        else if (lastShowFPS != showFPS) {
-            std::string curTitle = GetTitle();
-            curTitle = curTitle.substr(0, curTitle.find(" - FPS: "));
-            SetTitle(curTitle.c_str());
-        }
-
-        lastShowFPS = showFPS;
-    }
-
     void Window::SwapBuffers()
     {
         glfwSwapBuffers(window);

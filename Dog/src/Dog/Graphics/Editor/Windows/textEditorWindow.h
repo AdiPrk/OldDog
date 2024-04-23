@@ -1,5 +1,7 @@
 #pragma once
 
+#ifndef DOG_SHIP
+
 class TextEditor;
 
 namespace Dog {
@@ -51,3 +53,5 @@ namespace Dog {
 	void UpdateTextEditorWindow(TextEditorWrapper& textEditorWrapper);
 
 }
+
+#endif

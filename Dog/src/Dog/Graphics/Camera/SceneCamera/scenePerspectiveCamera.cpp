@@ -50,11 +50,13 @@ namespace Dog {
 		camera->Yaw += xoffset;
 		camera->Pitch -= yoffset;
 
-		// scroll for zoom
+		// scroll to move back and forth too
 		float zoomSpeed = 1.0f;
 		float yoffsetscroll = Input::getMouseScrollDeltaY();
 
-		camera->Zoom -= yoffsetscroll * zoomSpeed;
+		if (yoffsetscroll != 0) {
+			camera->Position += front * yoffsetscroll * zoomSpeed;
+		}
 
 		// log mouse world pos
 		float screenXDelta = Input::getMouseScreenXDelta();

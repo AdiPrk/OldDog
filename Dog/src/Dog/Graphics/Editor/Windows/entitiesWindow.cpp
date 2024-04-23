@@ -1,4 +1,7 @@
 #include <PCH/dogpch.h>
+
+#ifndef DOG_SHIP
+
 #include "entitiesWindow.h"
 #include "Dog/Scene/sceneManager.h"
 #include "Dog/Scene/scene.h"
@@ -117,3 +120,5 @@ namespace Dog {
 	}
 
 }
+
+#endif

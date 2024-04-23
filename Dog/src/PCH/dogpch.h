@@ -40,6 +40,8 @@
 #include "spdlog/fmt/ostr.h"
 
 // ImGui
+#ifndef DOG_SHIP
+
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
@@ -58,6 +60,8 @@
 
 // ImGui Text Editor
 #include "ImGuiColorTextEdit/TextEditor.h"
+
+#endif
 
 // EnTT
 #include "entt/entt.hpp"

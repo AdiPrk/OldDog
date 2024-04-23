@@ -33,20 +33,55 @@ namespace Dog {
 
 	void SceneSerializer::Deserialize(Scene* scene, const std::string& filepath)
 	{
+		YAML::Node data = YAML::LoadFile(filepath);
+
+		if (!data["Scene"])
+		{
+			DOG_ERROR("SceneSerializer::Deserialize: Scene file does not contain a Scene tag");
+			return;
+		}
+
+		scene->ClearEntities();
+
+		std::string sceneName = data["Scene"].as<std::string>();
+
+		auto entities = data["Entities"];
+
+		if (entities)
+		{
+			for (auto entity : entities)
+			{
+				std::string name = entity["Entity"].as<std::string>();
+				DOG_TRACE("Deserializing entity: {0}", name);
+
+				Entity deserializedEntity = scene->CreateEmptyEntity(name);
+
+				auto transformComponent = entity["TransformComponent"];
+				if (transformComponent)
+				{
+					glm::vec3 translation = transformComponent["Translation"].as<glm::vec3>();
+					glm::vec3 rotation = transformComponent["Rotation"].as<glm::vec3>();
+					glm::vec3 scale = transformComponent["Scale"].as<glm::vec3>();
+					deserializedEntity.AddComponent<TransformComponent>(translation, rotation, scale);
+				}
+
+				auto spriteComponent = entity["SpriteComponent"];
+				if (spriteComponent)
+				{
+					glm::vec4 color = spriteComponent["Color"].as<glm::vec4>();
+					std::string texturePath = spriteComponent["Texture"].as<std::string>();
+					deserializedEntity.AddComponent<SpriteComponent>(color, texturePath);
+				}
+			}
+		}
 	}
 
 	void SceneSerializer::SerializeEntity(YAML::Emitter& out, Entity* entity)
 	{
-		out << YAML::BeginMap;
-		out << YAML::Key << "Entity" << YAML::Value << "Untitled";
+		if (!entity->HasComponent<TagComponent>()) return;
 
-		if (entity->HasComponent<TagComponent>())
-		{
-			out << YAML::Key << "TagComponent";
-			out << YAML::BeginMap;
-			out << YAML::Key << "Tag" << YAML::Value << entity->GetComponent<TagComponent>().Tag;
-			out << YAML::EndMap;
-		}
+		out << YAML::BeginMap;
+		out << YAML::Key << "Entity" << YAML::Value << entity->GetComponent<TagComponent>().Tag;
 
 		if (entity->HasComponent<TransformComponent>())
 		{
@@ -71,9 +106,12 @@ namespace Dog {
 
 		if (entity->HasComponent<SpriteComponent>())
 		{
+			auto& spriteComponent = entity->GetComponent<SpriteComponent>();
+
 			out << YAML::Key << "SpriteComponent";
 			out << YAML::BeginMap;
-			out << YAML::Key << "Color" << YAML::Value << entity->GetComponent<SpriteComponent>().Color;
+			out << YAML::Key << "Color" << YAML::Value << spriteComponent.Color;
+			out << YAML::Key << "Texture" << YAML::Value << spriteComponent.texturePath;
 			out << YAML::EndMap;
 		}
 

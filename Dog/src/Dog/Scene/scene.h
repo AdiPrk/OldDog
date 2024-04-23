@@ -23,8 +23,10 @@ namespace Dog {
 
 		const std::string& GetName() const { return sceneName; }
 
+		void ClearEntities();
 		class Entity CreateEntity(const std::string& name = "Unnamed Entity");
 		class Entity CreateEntityFromUUID(const UUID& uuid, const std::string& name = "Unnamed Entity");
+		class Entity CreateEmptyEntity(const std::string& name = "Unnamed Entity");
 
 		const std::shared_ptr<FrameBuffer>& GetFrameBuffer() const { return sceneFrameBuffer; }
 		std::shared_ptr<FrameBuffer>& GetFrameBuffer() { return sceneFrameBuffer; }

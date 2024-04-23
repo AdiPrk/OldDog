@@ -19,7 +19,7 @@ namespace Dog {
 		return sceneImagePosition;
 	}
 
-	void UpdateSceneWindow()
+	void UpdateSceneWindow(bool& resize)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Scene");
@@ -50,8 +50,8 @@ namespace Dog {
 				Input::SetMouseInputLocked(!ImGui::IsWindowHovered());
 
 				// Update things if viewport size changed (eg camera, framebuffer)
-				if (vpSize.x != lastSceneWindowSize.x || vpSize.y != lastSceneWindowSize.y) {
-
+				if (resize || vpSize.x != lastSceneWindowSize.x || vpSize.y != lastSceneWindowSize.y) {
+					resize = false;
 					PUBLISH_EVENT(Event::SceneResize, (int)vpSize.x, (int)vpSize.y);
 					lastSceneWindowSize = vpSize;
 				}
@@ -62,6 +62,16 @@ namespace Dog {
 				sceneImagePosition = { image_x, image_y };
 
 				ImGui::Image((void*)(uintptr_t)fboID, vpSize, { 0, 1 }, { 1, 0 });
+
+				if (ImGui::BeginDragDropTarget()) {
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Scene")) {
+						// get string from payload data and data size
+						std::string path = std::string((char*)payload->Data, payload->DataSize - 1); // -1 to remove null terminator
+
+						SceneManager::SetNextScene(path);
+					}
+					ImGui::EndDragDropTarget();
+				}
 			}
 		}
 		else {

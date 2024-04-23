@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 //------------------------------------------------------------------------------
 // VERSION 0.9.1
 //
@@ -522,3 +524,5 @@ struct PinId final: Details::SafePointerType<PinId>
 
 //------------------------------------------------------------------------------
 # endif // __IMGUI_NODE_EDITOR_H__
+
+#endif // dog ship

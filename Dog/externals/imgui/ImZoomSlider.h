@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // https://github.com/CedricGuillemet/ImGuizmo
 // v 1.89 WIP
 //
@@ -243,3 +245,5 @@ namespace ImZoomSlider
    }
 
 } // namespace
+
+#endif // dog ship

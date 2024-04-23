@@ -1,13 +1,12 @@
 #pragma once
 
-#include "Dog/Assets/asset.h"
-#include "Dog/Assets/Packer/assetPacker.h"
-
 namespace Dog {
 	
 	class AssetFactory;
 	class Texture2D;
 	class Shader;
+	struct AssetData;
+	class Asset;
 
 #define INSTANTIATE_GET_EXT(T) \
 	extern template std::shared_ptr<T> Assets::Get<T>(const std::string& filePath); \
@@ -19,7 +18,7 @@ namespace Dog {
 		static void Shutdown();
 
 		static std::shared_ptr<Asset> Load(const std::string& type, const std::string& filePath);
-		static std::shared_ptr<Asset> LoadFromData(const DogFilePacker::AssetData& data);
+		static std::shared_ptr<Asset> LoadFromData(const AssetData& data);
 
 		// templated Load
 		template <typename T>
@@ -34,7 +33,7 @@ namespace Dog {
 
 		// Load from the packed file
 		template <typename T>
-		static std::shared_ptr<T> LoadFromData(const DogFilePacker::AssetData& data) {
+		static std::shared_ptr<T> LoadFromData(const AssetData& data) {
 			// static assert if T doesn't derive from asset
 			static_assert(std::is_base_of<Asset, T>::value, "T must derive from Asset");
 
@@ -59,10 +58,12 @@ namespace Dog {
 		inline static const std::string EditorDir = "Editor/";
 		inline static const std::string ShadersDir = "Shaders/";
 		inline static const std::string ImagesDir = "Images/";
+		inline static const std::string ScenesDir = "Scenes/";
 
 		inline static const std::string EditorPath = "DogAssets/Editor/";
 		inline static const std::string ShadersPath = "DogAssets/Shaders/";
 		inline static const std::string ImagesPath = "DogAssets/Images/";
+		inline static const std::string ScenesPath = "DogAssets/Scenes/";
 
 	private:
 		static std::unordered_map<UUID, std::shared_ptr<Asset>> assets;

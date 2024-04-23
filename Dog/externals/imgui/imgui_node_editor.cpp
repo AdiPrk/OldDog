@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 //------------------------------------------------------------------------------
 // VERSION 0.9.1
 //
@@ -5828,3 +5830,5 @@ void ed::Config::EndSave()
     if (EndSaveSession)
         EndSaveSession(UserPointer);
 }
+
+#endif // dog ship

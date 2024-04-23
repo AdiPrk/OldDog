@@ -35,7 +35,7 @@ namespace Dog {
 		Engine(const Engine&) = delete;
 		Engine& operator=(const Engine&) = delete;
 
-		int Run(Scene* startScene);
+		int Run(const std::string& startScene);
 
 		static glm::vec2 GetSceneSize() { return sceneSize; }
 		static std::shared_ptr<Window>& GetWindow() { return Get().window; }
@@ -51,7 +51,7 @@ namespace Dog {
 		void SetTargetFPS(unsigned fps) { targetFPS = fps; }
 
 	private:
-		void Init(Scene* startScene);
+		void Init(const std::string& startScene);
 		void Shutdown();
 
 		bool running;

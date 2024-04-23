@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 #define DEBUG_BEGIN_END 0
 #if DEBUG_BEGIN_END
 #include <string>
@@ -21589,3 +21591,5 @@ void ImGui::UpdateDebugToolStackQueries() {}
 //-----------------------------------------------------------------------------
 
 #endif // #ifndef IMGUI_DISABLE
+
+#endif // Dog ship

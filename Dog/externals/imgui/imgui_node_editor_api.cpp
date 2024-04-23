@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 //------------------------------------------------------------------------------
 // VERSION 0.9.1
 //
@@ -760,3 +762,6 @@ int ax::NodeEditor::GetOrderedNodeIds(NodeId* nodes, int size)
 {
     return s_Editor->GetNodeIds(nodes, size);
 }
+
+
+#endif // dog ship

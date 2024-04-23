@@ -72,6 +72,8 @@
 
 // Dog headers:
 #include "Dog/Math/rect.h"
+#include "Dog/Assets/UUID/uuid.h"
 #include "Dog/Logger/logger.h"
 #include "Dog/Events/event.h"
+#include "Dog/Assets/asset.h"
 #include "Dog/Assets/assets.h"

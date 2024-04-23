@@ -65,7 +65,7 @@ namespace Dog {
 	{
 	}
 
-	void Engine::Init(Scene* startScene)
+	void Engine::Init(const std::string& startScene)
 	{
 		SceneManager::Init(startScene);
 	}
@@ -87,7 +87,7 @@ namespace Dog {
 #endif
 	}
 
-	int Engine::Run(Scene* startScene)
+	int Engine::Run(const std::string& startScene)
 	{
 		Init(startScene);
 
@@ -99,6 +99,7 @@ namespace Dog {
 
 		/* Loop until the user closes the window */
 		const float fixedTimeStep = 1.0f / 60.0f;
+		float lastTime = (float)glfwGetTime();
 		float accumulator = 0.0f;
 			
 		FrameRateController frameRateController(targetFPS);
@@ -106,7 +107,10 @@ namespace Dog {
 		while (running && !glfwWindowShouldClose(window->GetWindowHandle())) 
 		{
 			// Control FPS
-			float deltaTime = frameRateController.waitForNextFrame();
+			float now = (float)glfwGetTime();
+			float deltaTime = now - lastTime;
+			lastTime = now;
+			//float deltaTime = frameRateController.waitForNextFrame();
 
 			// Update input
 			Input::Update();

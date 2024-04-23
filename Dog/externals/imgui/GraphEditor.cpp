@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // https://github.com/CedricGuillemet/ImGuizmo
 // v 1.89 WIP
 //
@@ -1109,3 +1111,5 @@ bool EditOptions(Options& options)
 }
 
 } // namespace
+
+#endif // DOG_SHIP

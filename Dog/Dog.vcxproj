@@ -314,8 +314,8 @@ goto copy_assets</Command>
 
 echo ProjectDir: $(ProjectDir)
 echo TargetDir: $(TargetDir)
-echo Copying from $(ProjectDir)DogAssets\fetch.it to $(TargetDir)fetch.it
-copy "$(ProjectDir)DogAssets\fetch.it" "$(TargetDir)fetch.it"
+echo Copying from $(ProjectDir)fetch.it to $(TargetDir)fetch.it
+copy "$(ProjectDir)fetch" "$(TargetDir)fetch"
 
 if %ERRORLEVEL% leq 3 goto :eof
 goto copy_assets</Command>
@@ -376,6 +376,7 @@ goto copy_assets</Command>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -394,8 +395,8 @@ goto copy_assets</Command>
 
 echo ProjectDir: $(ProjectDir)
 echo TargetDir: $(TargetDir)
-echo Copying from $(ProjectDir)DogAssets\fetch.it to $(TargetDir)fetch.it
-copy "$(ProjectDir)DogAssets\fetch.it" "$(TargetDir)fetch.it"
+echo Copying from $(ProjectDir)fetch.it to $(TargetDir)fetch.it
+copy "$(ProjectDir)fetch" "$(TargetDir)fetch"
 
 if %ERRORLEVEL% leq 3 goto :eof
 goto copy_assets</Command>
@@ -539,8 +540,8 @@ goto copy_assets</Command>
 
 echo ProjectDir: $(ProjectDir)
 echo TargetDir: $(TargetDir)
-echo Copying from $(ProjectDir)DogAssets\fetch.it to $(TargetDir)fetch.it
-copy "$(ProjectDir)DogAssets\fetch.it" "$(TargetDir)fetch.it"
+echo Copying from $(ProjectDir)fetch.it to $(TargetDir)fetch.it
+copy "$(ProjectDir)fetch" "$(TargetDir)fetch"
 
 if %ERRORLEVEL% leq 3 goto :eof
 goto copy_assets</Command>
@@ -599,6 +600,7 @@ goto copy_assets</Command>
       <PrecompiledHeaderFile>PCH/dogpch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -617,8 +619,8 @@ goto copy_assets</Command>
 
 echo ProjectDir: $(ProjectDir)
 echo TargetDir: $(TargetDir)
-echo Copying from $(ProjectDir)DogAssets\fetch.it to $(TargetDir)fetch.it
-copy "$(ProjectDir)DogAssets\fetch.it" "$(TargetDir)fetch.it"
+echo Copying from $(ProjectDir)fetch.it to $(TargetDir)fetch.it
+copy "$(ProjectDir)fetch" "$(TargetDir)fetch"
 
 if %ERRORLEVEL% leq 3 goto :eof
 goto copy_assets</Command>
@@ -1063,21 +1065,7 @@ goto copy_assets</Command>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">dogpch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">dogpch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="src\Sandbox\main.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='DebugShip|Win32'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='DebugShip|x64'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Ship|Win32'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PCH/dogpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Ship|x64'">PCH/dogpch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="src\Sandbox\Scenes\sandbox.cpp">
+    <ClCompile Include="src\main.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PCH/dogpch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='DebugShip|Win32'">PCH/dogpch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PCH/dogpch.h</PrecompiledHeaderFile>
@@ -1167,7 +1155,6 @@ goto copy_assets</Command>
     <ClInclude Include="src\Dog\Scene\Serializer\conversions.h" />
     <ClInclude Include="src\Dog\Scene\Serializer\sceneSerializer.h" />
     <ClInclude Include="src\PCH\dogpch.h" />
-    <ClInclude Include="src\Sandbox\Scenes\sandbox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="externals\imgui\imgui_bezier_math.inl" />

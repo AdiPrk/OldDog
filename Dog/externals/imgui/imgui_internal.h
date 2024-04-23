@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // dear imgui, v1.89.9 WIP
 // (internal structures/api)
 
@@ -3730,3 +3732,5 @@ extern const char*  ImGuiTestEngine_FindItemDebugLabel(ImGuiContext* ctx, ImGuiI
 #endif
 
 #endif // #ifndef IMGUI_DISABLE
+
+#endif // dog ship

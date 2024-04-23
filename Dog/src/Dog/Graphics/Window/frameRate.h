@@ -6,27 +6,11 @@ namespace Dog {
 
     class FrameRateController {
     public:
-        explicit FrameRateController(unsigned int targetFrameRate)
-            : targetFPS(targetFrameRate) {
-            targetFrameDuration = std::chrono::duration<double>(1.0 / targetFrameRate);
-        }
+        explicit FrameRateController(unsigned int targetFrameRate);
 
-        float waitForNextFrame() {
-            auto now = std::chrono::high_resolution_clock::now();
-            auto timeSinceLastFrame = now - m_lastFrameTime;
-            while (timeSinceLastFrame < targetFrameDuration) {
-                // Busy-wait loop to delay until the next frame
-                now = std::chrono::high_resolution_clock::now();
-                timeSinceLastFrame = now - m_lastFrameTime;
-            }
-            m_lastFrameTime = now;
-            return std::chrono::duration<float>(timeSinceLastFrame).count();
-        }
+        float waitForNextFrame();
 
-        void setTargetFPS(unsigned int targetFPS) {
-            targetFPS = targetFPS;
-            targetFrameDuration = std::chrono::duration<double>(1.0 / targetFPS);
-        }
+        void setTargetFPS(unsigned int targetFPS);
 
     private:
         unsigned int targetFPS;

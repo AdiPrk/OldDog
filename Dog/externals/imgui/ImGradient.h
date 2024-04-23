@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // https://github.com/CedricGuillemet/ImGuizmo
 // v 1.89 WIP
 //
@@ -43,3 +45,5 @@ namespace ImGradient
 
    bool Edit(Delegate& delegate, const ImVec2& size, int& selection);
 }
+
+#endif // Dog ship

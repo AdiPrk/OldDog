@@ -1,7 +1,5 @@
 #pragma once
 
-#include "UUID/uuid.h"
-
 namespace Dog {
 
 	class Asset {

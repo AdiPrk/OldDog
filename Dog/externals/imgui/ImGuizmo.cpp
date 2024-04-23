@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // https://github.com/CedricGuillemet/ImGuizmo
 // v 1.89 WIP
 //
@@ -2994,3 +2996,6 @@ namespace IMGUIZMO_NAMESPACE
       ComputeContext(svgView.m16, svgProjection.m16, gContext.mModelSource.m16, gContext.mMode);
    }
 };
+
+
+#endif // dog ship

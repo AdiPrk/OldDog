@@ -17,6 +17,7 @@
 #include "Dog/Graphics/Renderer/Shaders/shader.h"
 
 #include "Serializer/sceneSerializer.h"
+#include "Dog/Graphics/Editor/editor.h"
 
 #define DOG_SCENE_LOGGING 0
 
@@ -49,6 +50,10 @@ namespace Dog {
 		eventScenePerspCamResize = SUBSCRIBE_EVENT(Event::SceneResize, scenePerspectiveCamera->OnSceneResize);
 		eventPlayButtonPressed = SUBSCRIBE_EVENT(Event::PlayButtonPressed, OnPlayButtonPressed);
 		eventStopButtonPressed = SUBSCRIBE_EVENT(Event::StopButtonPressed, OnStopButtonPressed);
+
+#ifndef DOG_SHIP
+		Engine::GetEditor()->DoSceneResize();
+#endif
 	}
 
 	Scene::~Scene()

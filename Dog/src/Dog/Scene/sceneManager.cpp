@@ -1,18 +1,18 @@
 #include <PCH/dogpch.h>
 #include "sceneManager.h"
 #include "scene.h"
+#include "Serializer/sceneSerializer.h"
+#include "Dog/Assets/Packer/assetPacker.h"
 
 namespace Dog {
 
 	SceneManager SceneManager::m_Instance;
 	Scene* SceneManager::m_ActiveScene = nullptr;
-	Scene* SceneManager::m_NextScene = nullptr;
+	std::string SceneManager::m_NextScene;
 	bool SceneManager::m_IsRestarting = false;
 
-	void SceneManager::SetNextScene(Scene* next)
+	void SceneManager::SetNextScene(const std::string& next)
 	{
-		if (!next) return;
-
 		if (m_NextScene == next) {
 			m_IsRestarting = true;
 		}
@@ -21,7 +21,7 @@ namespace Dog {
 		}
 	}
 
-	void SceneManager::Init(Scene* startScene)
+	void SceneManager::Init(const std::string& startScene)
 	{
 		m_NextScene = startScene;
 	}
@@ -29,17 +29,28 @@ namespace Dog {
 	void SceneManager::SwapScenes()
 	{
 		// Check for a scene change.
-		if (IsChangingScenes())
+		if (!m_NextScene.empty())
 		{
 			// Exit the current scene.
 			Exit();
 
-			if (m_IsRestarting) {
-				m_IsRestarting = false;
-			}
-			else {
-				m_ActiveScene = m_NextScene;
-			}
+			//if (m_IsRestarting) {
+			//	m_IsRestarting = false;
+			//}
+			//else {
+				// delete old scene
+				if (m_ActiveScene) {
+					delete m_ActiveScene;
+				}
+
+				// Create the new scene.
+				m_ActiveScene = new Scene(m_NextScene);
+
+				// load it
+				SceneSerializer::Deserialize(m_ActiveScene, "DogAssets/Scenes/" + m_NextScene + ".yaml");
+			//}
+
+			m_NextScene.clear();
 
 			// Initialize the new scene.
 			m_ActiveScene->InternalInit();
@@ -49,6 +60,8 @@ namespace Dog {
 
 	void SceneManager::Update(float dt)
 	{
+		if (!m_ActiveScene) return;
+
 		// Update the active scene.
 		m_ActiveScene->InternalUpdate(dt);
 		m_ActiveScene->Update(dt);
@@ -56,6 +69,8 @@ namespace Dog {
 
 	void SceneManager::Render(float dt, bool renderEditor)
 	{
+		if (!m_ActiveScene) return;
+
 		m_ActiveScene->InternalRender(dt, renderEditor);
 		m_ActiveScene->Render(dt);
 	}
@@ -66,6 +81,12 @@ namespace Dog {
 			m_ActiveScene->Exit();
 			m_ActiveScene->InternalExit();
 		}
+	}
+
+	bool SceneManager::IsChangingScenes()
+	{
+		if (!m_ActiveScene) return true;
+		return m_IsRestarting || (m_ActiveScene->GetName() != m_NextScene);
 	}
 
 }

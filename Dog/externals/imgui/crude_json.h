@@ -1,4 +1,6 @@
-﻿// Crude implementation of JSON value object and parser.
+﻿#ifndef DOG_SHIP
+
+// Crude implementation of JSON value object and parser.
 //
 // VERSION 0.1
 //
@@ -248,3 +250,5 @@ template <> inline       number*  value::get_ptr<number>()        { if (m_Type =
 } // namespace crude_json
 
 # endif // __CRUDE_JSON_H__
+
+#endif //dog ship

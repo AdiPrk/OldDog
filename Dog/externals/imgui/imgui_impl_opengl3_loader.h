@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 //-----------------------------------------------------------------------------
 // About imgui_impl_opengl3_loader.h:
 //
@@ -807,3 +809,5 @@ static void load_procs(GL3WGetProcAddressProc proc)
 }
 #endif
 #endif
+
+#endif // dog ship

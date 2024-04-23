@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 //------------------------------------------------------------------------------
 // VERSION 0.1
 //
@@ -142,3 +144,5 @@ template <typename F> inline void ImCubicBezierFixedStep(F& callback, const ImCu
 
 //------------------------------------------------------------------------------
 # endif // __IMGUI_BEZIER_MATH_H__
+
+#endif // DOG_SHIP

@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // https://github.com/CedricGuillemet/ImGuizmo
 // v 1.89 WIP
 //
@@ -270,3 +272,5 @@ namespace IMGUIZMO_NAMESPACE
 
    IMGUI_API Style& GetStyle();
 }
+
+#endif // dog ship

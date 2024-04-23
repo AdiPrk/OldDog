@@ -15,6 +15,9 @@ namespace Dog {
 		bool operator==(const UUID& other) const { return m_UUID == other.m_UUID; }
 		bool operator!=(const UUID& other) const { return m_UUID != other.m_UUID; }
 
+		bool operator==(uint64_t other) const { return m_UUID == other; }
+		bool operator!=(uint64_t other) const { return m_UUID != other; }
+
 	private:
 		uint64_t m_UUID;
 	};

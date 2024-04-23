@@ -153,20 +153,72 @@ namespace Dog {
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID)) {
 						ImGui::SetDragDropPayload("Shader", shaderAssetName.c_str(), shaderAssetName.size() + 1);
 						ImGui::Image((void*)(intptr_t)texId, ImVec2(imageSize, imageSize));
-						ImGui::Text(fileName.c_str());
+						ImGui::Text(shaderAssetName.c_str());
 						ImGui::EndDragDropSource();
 					}
 
 					if (ImGui::IsItemHovered()) {
 						ImGui::BeginTooltip();
-						ImGui::Text(fileName.c_str());
+						ImGui::Text(shaderAssetName.c_str());
 						ImGui::EndTooltip();
 					}
 
 					// for multi-line centered text
-					ImVec2 textSize = ImGui::CalcTextSize(fileName.c_str(), NULL, true, imageSize);
+					ImVec2 textSize = ImGui::CalcTextSize(shaderAssetName.c_str(), NULL, true, imageSize);
 					ImGui::SetCursorPosX(ImGui::GetCursorPosX() + (imageSize - textSize.x) * 0.5f);
 					ImGui::TextWrapped(shaderAssetName.c_str());
+				}
+				else if (SameDir(currentDirName, Assets::ScenesDir)) {
+					// Get the scene from the path
+					std::string fileName = path.filename().string();
+					std::string filePath = path.string();
+					std::string sceneAssetName = Assets::ScenesPath + fileName;
+
+					std::string sceneName = fileName;
+					sceneName = sceneName.substr(0, sceneName.find_last_of("."));
+
+					// tex id
+					unsigned texId = 0;
+					std::shared_ptr<Texture2D> tex = Assets::Get<Texture2D>("dog.png");
+					if (tex) {
+						texId = tex->ID;
+					}
+					else {
+						texId = Assets::Get<Texture2D>("error.png")->ID;
+					}
+
+					std::string fullPath = path.string();
+
+					bool clicked = ImGui::ImageButton(fullPath.c_str(), (void*)(intptr_t)texId, ImVec2(imageSize, imageSize));
+
+					bool isImageHovered = ImGui::IsItemHovered();
+					bool doubleClicked = ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left);
+
+					// get if item is double clicked
+					if (isImageHovered && doubleClicked) {
+						std::string shaderPath = sceneAssetName;
+
+						TextEditorWrapper::MyDocument sceneDoc(fileName, true, shaderPath);
+						textEditor.CreateNewDocument(sceneDoc);
+					}
+
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID)) {
+						ImGui::SetDragDropPayload("Scene", sceneName.c_str(), sceneName.size() + 1);
+						ImGui::Image((void*)(intptr_t)texId, ImVec2(imageSize, imageSize));
+						ImGui::Text(sceneName.c_str());
+						ImGui::EndDragDropSource();
+					}
+
+					if (ImGui::IsItemHovered()) {
+						ImGui::BeginTooltip();
+						ImGui::Text(sceneName.c_str());
+						ImGui::EndTooltip();
+					}
+
+					// for multi-line centered text
+					ImVec2 textSize = ImGui::CalcTextSize(sceneName.c_str(), NULL, true, imageSize);
+					ImGui::SetCursorPosX(ImGui::GetCursorPosX() + (imageSize - textSize.x) * 0.5f);
+					ImGui::TextWrapped(sceneName.c_str());
 				}
 
 				ImGui::NextColumn();

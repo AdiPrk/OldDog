@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // dear imgui, v1.89.9 WIP
 // (widgets code)
 
@@ -8781,3 +8783,5 @@ void ImGui::TabItemLabelAndCloseButton(ImDrawList* draw_list, const ImRect& bb, 
 
 
 #endif // #ifndef IMGUI_DISABLE
+
+#endif // dog ship

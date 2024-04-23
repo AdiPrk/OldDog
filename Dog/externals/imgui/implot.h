@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // MIT License
 
 // Copyright (c) 2023 Evan Pezent
@@ -1295,3 +1297,5 @@ IMPLOT_DEPRECATED( IMPLOT_API bool BeginPlot(const char* title_id,
 } // namespace ImPlot
 
 #endif
+
+#endif // dog ship

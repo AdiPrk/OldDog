@@ -5,6 +5,7 @@
 #include "Dog/Logger/logger.h"
 #include "Dog/Graphics/Renderer/Shaders/shader.h"
 #include "Dog/Graphics/Texture/texture2d.h"
+#include "Dog/Assets/Packer/assetPacker.h"
 
 // Registration and instantiation macros
 #define REGISTER_TYPE(type) factory->registerType<type>(type::GetTypeName())
@@ -44,7 +45,7 @@ namespace Dog {
 		REGISTER_TYPE(Texture2D);
 
 #ifdef DOG_SHIP
-		DogFilePacker::unpackAssets("fetch.it");
+		DogFilePacker::unpackAssets("fetch");
 		DogFilePacker::loadImages();
 		DogFilePacker::loadShaders();
 #endif
@@ -93,7 +94,7 @@ namespace Dog {
 		return asset;
 	}
 
-	std::shared_ptr<Asset> Assets::LoadFromData(const DogFilePacker::AssetData& data)
+	std::shared_ptr<Asset> Assets::LoadFromData(const AssetData& data)
 	{
 		std::lock_guard<std::mutex> lock(assetsMutex);
 

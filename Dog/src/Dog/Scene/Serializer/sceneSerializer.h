@@ -8,6 +8,7 @@ namespace Dog {
 	public:
 		static void Serialize(Scene* scene, const std::string& filepath);
 		static void Deserialize(Scene* scene, const std::string& filepath);
+		static void DeserializeData(Scene* scene, const std::string& filepath);
 
 	private:
 		static void SerializeEntity(YAML::Emitter& out, class Entity* entity);

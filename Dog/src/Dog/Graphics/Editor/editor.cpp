@@ -22,6 +22,7 @@
 #include "Dog/Scene/sceneManager.h"
 #include "Dog/Scene/scene.h"
 #include "Dog/Scene/Serializer/sceneSerializer.h"
+#include "Dog/Graphics/Window/window.h"
 
 
 namespace Dog {
@@ -129,17 +130,26 @@ namespace Dog {
 
 			if (ImGui::MenuItem("Exit")) {}
 			if (ImGui::MenuItem("Create Asset Pack")) {
-				DogFilePacker::packageAssets("DogAssets", "DogAssets/fetch.it");
+				DogFilePacker::packageAssets("DogAssets", "fetch");
 			}
 			ImGui::EndMenu();
 		}
+
+		// FPS
+		bool vSync = Engine::GetWindow()->GetVSync();
+		char fpsText[32];
+		sprintf_s(fpsText, "FPS: %.1f %s", ImGui::GetIO().Framerate, (vSync ? "(VSync)" : ""));
+
+		ImVec2 textSize = ImGui::CalcTextSize(fpsText, NULL, true);
+		ImGui::SetCursorPosX(ImGui::GetWindowWidth() - textSize.x - 10);
+		ImGui::Text(fpsText);
 
 		ImGui::EndMainMenuBar(); // File
 
 		ImGui::ShowDemoWindow(); // Show demo window! :)
 
 		// Update and render all the different windows
-		UpdateSceneWindow();
+		UpdateSceneWindow(doResize);
 		UpdateConsoleWindow();
 		UpdateEntitiesWindow();
 		UpdateInspectorWindow();
@@ -170,7 +180,6 @@ namespace Dog {
 				firstGameFrame = true;
 
 				if (!renderEditor) {
-					// trigger glfw window resize callback manually
 					PUBLISH_EVENT(Event::SceneResize, (int)windowWidth, (int)windowHeight);
 					glViewport(0, 0, windowWidth, windowHeight);
 					Input::SetKeyInputLocked(false);

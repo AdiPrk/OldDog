@@ -42,13 +42,13 @@ namespace Dog {
      */
 
     bool DogFilePacker::s_HasBeenUnpacked = false;
-    std::vector<DogFilePacker::AssetData> DogFilePacker::unpackedData;
+    std::vector<AssetData> DogFilePacker::unpackedData;
 
     enum class AssetType {
         Unknown = 0,
         Texture = 1,
         Shader = 2,
-        Editor = 3
+        Scene = 3,
     };
 
     class FilePacker {
@@ -92,12 +92,11 @@ namespace Dog {
                     }
 
                     // Process file and add to assetData
-                    DogFilePacker::AssetData asset;
+                    AssetData asset;
                     asset.type = getAssetType(entry.path());
 
                     // Don't add these to the packed file
-                    if (asset.type == static_cast<uint8_t>(AssetType::Unknown) ||
-                        asset.type == static_cast<uint8_t>(AssetType::Editor)) {
+                    if (asset.type == static_cast<uint8_t>(AssetType::Unknown)) {
 						continue;
 					}
 
@@ -164,7 +163,7 @@ namespace Dog {
         uint64_t totalSize = 0;
         uint64_t assetCount = 0;
 
-        std::vector<DogFilePacker::AssetData> assetData;
+        std::vector<AssetData> assetData;
 
 
         uint8_t getAssetType(const fs::path& path) {
@@ -176,6 +175,7 @@ namespace Dog {
             auto ext = path.extension().string();
             if (ext == ".png" || ext == ".jpg") return AssetType::Texture;
             else if (ext == ".glsl") return AssetType::Shader;
+			else if (ext == ".yaml") return AssetType::Scene;
 
             return AssetType::Unknown;
         }
@@ -213,7 +213,7 @@ namespace Dog {
             assetData.reserve(assetCount);
 
             for (uint64_t i = 0; i < assetCount; ++i) {
-				DogFilePacker::AssetData asset;
+				AssetData asset;
 				input.read(reinterpret_cast<char*>(&asset.uuid), sizeof(asset.uuid));
 				input.read(reinterpret_cast<char*>(&asset.type), sizeof(asset.type));
 				input.read(reinterpret_cast<char*>(&asset.size), sizeof(asset.size));
@@ -241,7 +241,7 @@ namespace Dog {
     private:
         std::ifstream input;
 
-        std::vector<DogFilePacker::AssetData> assetData;
+        std::vector<AssetData> assetData;
     };
 
     // Main function to package assets
@@ -270,6 +270,19 @@ namespace Dog {
 				Assets::LoadFromData<Shader>(asset);
             }
         }
+    }
+
+    std::string DogFilePacker::getSceneYAMLString(const std::string& filePath)
+    {
+        UUID uuid = UUID(filePath);
+
+        for (auto& asset : unpackedData) {
+            if (asset.uuid == uuid && asset.type == static_cast<uint8_t>(AssetType::Scene)) {
+				return std::string(asset.data.begin(), asset.data.end());
+			}
+		}
+        
+		return "";
     }
 
     std::string DogFilePacker::MapAssetTypeToString(uint8_t type)

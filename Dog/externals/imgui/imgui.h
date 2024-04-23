@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 #include <glm/glm.hpp>
 // dear imgui, v1.89.9 WIP
 // (headers)
@@ -3490,3 +3492,5 @@ enum ImGuiModFlags_ { ImGuiModFlags_None = 0, ImGuiModFlags_Ctrl = ImGuiMod_Ctrl
 #endif
 
 #endif // #ifndef IMGUI_DISABLE
+
+#endif // Dog ship

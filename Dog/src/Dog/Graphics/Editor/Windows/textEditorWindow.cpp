@@ -93,13 +93,23 @@ namespace Dog {
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Shader")) {
                 // get string from payload data and data size
                 std::string path = std::string((char*)payload->Data, payload->DataSize - 1); // -1 to remove null terminator
-                printf("Path from drag drop: %s\n", path.c_str());
 
                 std::string fullPath = Assets::ShadersPath + path + ".glsl";
 
                 TextEditorWrapper::MyDocument shaderDoc(path, true, fullPath);
 
                 textEditorWrapper.CreateNewDocument(shaderDoc);
+            }
+
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Scene")) {
+                // get string from payload data and data size
+                std::string path = std::string((char*)payload->Data, payload->DataSize - 1); // -1 to remove null terminator
+
+                std::string fullPath = Assets::ScenesPath + path + ".yaml";
+
+                TextEditorWrapper::MyDocument sceneDoc(path, true, fullPath);
+
+                textEditorWrapper.CreateNewDocument(sceneDoc);
             }
 
             ImGui::EndDragDropTarget();

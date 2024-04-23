@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 # ifndef IMGUI_DEFINE_MATH_OPERATORS
 #     define IMGUI_DEFINE_MATH_OPERATORS
 # endif
@@ -623,3 +625,5 @@ void ImGuiEx::Canvas::LeaveLocalSpace()
     RestoreInputState();
     RestoreViewportState();
 }
+
+#endif // Dog ship

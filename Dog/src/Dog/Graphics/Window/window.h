@@ -12,8 +12,8 @@ namespace Dog {
 		void ToggleFullscreen();
 
 		void SetVSync(bool enabled = true);
+		bool GetVSync() { return vSync; }
 
-		void SwapBuffers();
 		void SetFullscreen(bool fullScreen = true);
 
 		GLFWwindow* GetWindowHandle() { return window; };
@@ -32,6 +32,7 @@ namespace Dog {
 
 	private:
 		GLFWwindow* window;
+		bool vSync = false;
 		//std::chrono::high_resolution_clock::time_point m_LastFrameTime;
 		std::chrono::high_resolution_clock::time_point m_LastFrameTime;
 		unsigned int m_Width = 0;

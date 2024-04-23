@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // MIT License
 
 // Copyright (c) 2023 Evan Pezent
@@ -1667,3 +1669,5 @@ void Locator_Log10(ImPlotTicker& ticker, const ImPlotRange& range, float pixels,
 void Locator_SymLog(ImPlotTicker& ticker, const ImPlotRange& range, float pixels, bool vertical, ImPlotFormatter formatter, void* formatter_data);
 
 } // namespace ImPlot
+
+#endif // dog ship

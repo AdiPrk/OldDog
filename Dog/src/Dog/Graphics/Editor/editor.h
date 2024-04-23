@@ -32,8 +32,11 @@ namespace Dog {
 		void UpdateVisibility(unsigned windowWidth, unsigned windowHeight);
 		bool IsActive() const { return isActive; }
 
+		void DoSceneResize() { doResize = true; }
+
 	private:
 		bool isActive = true;
+		bool doResize = false;
 
 		std::unique_ptr<FileBrowser> fileBrowser;
 		std::unique_ptr<TextEditorWrapper> textEditorWrapper;

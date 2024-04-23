@@ -1,3 +1,5 @@
+#ifndef DOG_SHIP
+
 // dear imgui, v1.89.9 WIP
 // (drawing and font code)
 
@@ -4256,3 +4258,5 @@ static const char* GetDefaultCompressedFontDataTTFBase85()
 }
 
 #endif // #ifndef IMGUI_DISABLE
+
+#endif // dog ship

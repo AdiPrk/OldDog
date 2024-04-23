@@ -4,6 +4,7 @@
 #include "../scene.h"
 #include "../Entity/entity.h"
 #include "../Entity/components.h"
+#include "Dog/Assets/Packer/assetPacker.h"
 
 namespace Dog {
 
@@ -11,7 +12,7 @@ namespace Dog {
 	{
 		YAML::Emitter out;
 		out << YAML::BeginMap;
-		out << YAML::Key << "Scene" << YAML::Value << "Untitled";
+		out << YAML::Key << "Scene" << YAML::Value << scene->GetName();
 
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
 		
@@ -33,7 +34,19 @@ namespace Dog {
 
 	void SceneSerializer::Deserialize(Scene* scene, const std::string& filepath)
 	{
+#ifndef DOG_SHIP
 		YAML::Node data = YAML::LoadFile(filepath);
+#else
+		const std::string& sceneDataStr = DogFilePacker::getSceneYAMLString(filepath);
+		YAML::Node data = YAML::Load(sceneDataStr);
+#endif
+
+		// check if file loaded
+		if (!data)
+		{
+			DOG_ERROR("SceneSerializer::Deserialize: Scene {} not found", filepath);
+			return;
+		}
 
 		if (!data["Scene"])
 		{

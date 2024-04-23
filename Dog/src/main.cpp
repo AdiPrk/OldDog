@@ -1,5 +1,4 @@
 ﻿#include <PCH/dogpch.h>
-#include "Sandbox/Scenes/sandbox.h"
 #include "Dog/dog.h"
 
 int main() {
@@ -11,6 +10,5 @@ int main() {
 
 	Dog::Engine& Engine = Dog::Engine::Create(specs);
 
-	SandboxScene sandbox;
-	return Engine.Run(&sandbox);
+	return Engine.Run("Sandbox");
 }

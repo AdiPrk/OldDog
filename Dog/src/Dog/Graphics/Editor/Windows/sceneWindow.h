@@ -4,7 +4,7 @@
 
 namespace Dog {
 
-	void UpdateSceneWindow();
+	void UpdateSceneWindow(bool& resize);
 	glm::vec2 GetRelativeSceneImagePosition();
 
 }

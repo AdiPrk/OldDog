@@ -1,4 +1,6 @@
-﻿// Canvas widget - view over infinite virtual space.
+﻿#ifndef DOG_SHIP
+
+// Canvas widget - view over infinite virtual space.
 //
 // Canvas allows you to draw your widgets anywhere over infinite space and provide
 // view over it with support for panning and scaling.
@@ -273,3 +275,5 @@ private:
 } // namespace ImGuiEx
 
 # endif // __IMGUI_EX_CANVAS_H__
+
+#endif // DOG_SHIP

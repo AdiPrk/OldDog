@@ -128,6 +128,7 @@ namespace Dog {
         //glEnable(GL_CULL_FACE);
         //glCullFace(GL_BACK);
         glfwSwapInterval(0);
+        vSync = false;
 
 #if DEBUG_OPENGL_OUTPUT
         glEnable(GL_DEBUG_OUTPUT);
@@ -149,11 +150,6 @@ namespace Dog {
 
     bool Window::IsRunning() {
         return glfwWindowShouldClose(window) == 0;
-    }
-
-    void Window::SwapBuffers()
-    {
-        glfwSwapBuffers(window);
     }
 
     int windowedWidth = 1600, windowedHeight = 900;
@@ -182,12 +178,8 @@ namespace Dog {
 
     void Window::SetVSync(bool enabled)
     {
-        if (enabled) {
-			glfwSwapInterval(1);
-		}
-        else {
-			glfwSwapInterval(0);
-		}
+        glfwSwapInterval(enabled ? 1 : 0);
+        vSync = enabled;
     }
 
     void Window::SetFullscreen(bool fullScreen)

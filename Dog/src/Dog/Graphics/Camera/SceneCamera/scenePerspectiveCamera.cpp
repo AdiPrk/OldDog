@@ -64,7 +64,7 @@ namespace Dog {
 
 		// middle click to pan camera depending on where mouse is dragged after middle click
 		if (Input::isMouseDown(Mouse::LEFT)) {
-			const float panSpeed = 0.5f * dt;
+			const float panSpeed = 0.01f;
 			glm::vec3 newPos = camera->GetPosition();
 			newPos -= right * screenXDelta * panSpeed;
 			newPos.y += screenYDelta * panSpeed;
